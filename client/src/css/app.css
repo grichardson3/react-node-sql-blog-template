@@ -1,0 +1,134 @@
+#container {
+  padding: 20px;
+}
+
+body {
+  background: #324646;
+}
+
+button {
+  font-family: "Roboto Slab", serif;
+  font-size: 0.875em !important;
+}
+
+form {
+  width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: white;
+  font-family: "Roboto Slab", serif;
+  font-weight: 500;
+}
+
+input,
+textarea {
+  font-family: "Roboto Slab", serif;
+}
+
+label {
+  font-family: "Roboto Slab", serif;
+  color: white;
+}
+
+p {
+  color: white;
+  font-family: "Roboto Slab", serif;
+  font-weight: 200;
+}
+
+span {
+  font-family: "Roboto Slab", serif;
+  font-weight: 100;
+  color: white;
+}
+
+.bioArea {
+  padding: 0 20px 0 20px;
+}
+
+.block {
+  display: block;
+}
+
+.profileHeaderText {
+  color: white;
+  cursor: pointer;
+  transition: 0.15s ease;
+  text-align: center;
+}
+
+.profileHeaderText:hover {
+  transition: 0.15s ease;
+  color: #bbb;
+  text-decoration: none;
+}
+
+.detailDesc {
+  font-size: 0.875em;
+}
+
+.editDetailsArea {
+  background: #333;
+  border-radius: 8px;
+  padding: 20px 20px 0 20px;
+  margin: 20px 0 20px 0;
+}
+
+.linkText {
+  color: #9adada;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.linkText:hover {
+  color: #80b4b4;
+  text-decoration: none;
+  transition: 0.15s ease;
+}
+
+.profileArea {
+  background: #1b1b1b;
+  border-radius: 30px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  margin: 0 0 20px 0;
+  padding: 20px 20px 3px 20px;
+}
+
+.profilePicArea {
+  padding: 20px;
+}
+
+.profilePicBG {
+  background: black;
+  border-radius: 50%;
+}
+
+.profilePic {
+  width: 100%;
+  border-radius: 50%;
+  opacity: 1;
+  transition: 0.3s ease;
+}
+
+.profilePic:hover {
+  cursor: pointer;
+  opacity: 0.85;
+  transition: 0.3s ease;
+}
+
+.singleProfilePicArea {
+  max-width: 300px;
+  margin: 0 0 20px 0;
+}
+
+.inline {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0 20px 0;
+  align-items: center;
+}
