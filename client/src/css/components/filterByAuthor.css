@@ -1,0 +1,58 @@
+#profileArea {
+  margin: 0 0 30px 0;
+}
+
+#profilePictureArea {
+  padding: 0;
+}
+
+#profilePictureArea img {
+  width: 100%;
+  background-color: #ddd;
+  border-radius: 50%;
+}
+
+#profileDetailsArea {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+#profileSocialMediaAccounts ul {
+  padding: 0;
+  display: flex;
+  list-style-type: none;
+}
+
+#profileMeta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+#profileFullName,
+#profilePostCountAmount {
+  font-weight: 400;
+}
+
+#profileBio {
+  margin: 20px 0 20px 0;
+}
+
+#profileSocialMediaAccounts {
+  margin: 15px 0 0 0;
+}
+
+#profileSocialMediaAccounts ul li {
+  margin: 0 10px 0 0;
+}
+
+#profilePostsArea {
+  padding: 0 20px 0 20px;
+}
+
+@media screen and (max-width: 767px) {
+  #profilePictureArea {
+    padding: 30px;
+  }
+}

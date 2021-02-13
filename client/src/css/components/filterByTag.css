@@ -1,0 +1,17 @@
+#tagPostsResultString {
+  padding: 0 0 20px 0;
+  border-bottom: 1px solid #2a3b3b;
+  margin: 0 0 40px 0;
+}
+
+#tagPostsIndividualTag {
+  font-weight: 400;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: 0.15s ease;
+}
+
+#tagPostsIndividualTag:hover {
+  opacity: 0.75;
+  transition: 0.15s ease;
+}

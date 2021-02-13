@@ -1,9 +1,17 @@
 #container {
+  background-color: #517373;
   padding: 20px;
+  margin-top: 85px;
+}
+
+article {
+  font-family: "Roboto Slab", serif;
+  font-weight: 200;
+  color: white;
 }
 
 body {
-  background: #324646;
+  background: #3f5959;
 }
 
 button {

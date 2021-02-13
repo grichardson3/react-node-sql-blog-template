@@ -1,0 +1,33 @@
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #2a3b3b;
+  width: 100%;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+}
+
+#searchIcon {
+  cursor: pointer;
+  user-select: none;
+  position: absolute;
+  height: 19px;
+  width: 19px;
+  border-radius: 10px;
+  margin: 10px 0 0 10px;
+}
+
+#searchBar {
+  width: 300px;
+  border-radius: 19px;
+  padding: 0 0 0 36px;
+}
+
+@media screen and (max-width: 960px) {
+  #searchBar {
+    width: 200px;
+  }
+}

@@ -1,0 +1,75 @@
+.blogPost {
+  margin: 0 0 50px 0;
+}
+
+.blogPostFeaturePhoto {
+  cursor: pointer;
+  background: #ddd;
+  height: 350px;
+  width: 100%;
+  transition: 0.15s ease;
+}
+
+.blogPostFeaturePhoto:hover {
+  transition: 0.15s ease;
+  opacity: 0.75;
+}
+
+.blogPostTitle {
+  cursor: pointer;
+  margin: 12px 0 12px 0;
+  font-weight: 600;
+  text-decoration: underline;
+  transition: 0.15s ease;
+}
+
+.blogPostTitle:hover {
+  transition: 0.15s ease;
+  opacity: 0.75;
+}
+
+.blogPostMetaArea,
+.blogPostBottomMetaArea {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin: 0 0 12px 0;
+}
+
+.blogPostAuthorLink,
+.blogPostReadMore {
+  font-weight: 400;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.blogPostAuthorLink:hover,
+.blogPostReadMore:hover {
+  font-weight: 400;
+  text-decoration: underline;
+  opacity: 0.75;
+  transition: 0.15s ease;
+}
+
+.readMoreArea {
+  display: flex;
+  margin: 0 auto;
+}
+
+.blogPostDateText,
+.blogPostTagText {
+  text-align: right;
+  font-size: 14px;
+}
+
+.blogPostIndividualTagText {
+  cursor: pointer;
+  text-decoration: underline;
+  transition: 0.15s ease;
+}
+
+.blogPostIndividualTagText:hover {
+  opacity: 0.75;
+  transition: 0.15s ease;
+}
