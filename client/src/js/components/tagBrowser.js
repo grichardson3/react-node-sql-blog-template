@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-
-import '../../css/components/tagBrowser.css';
+import { Link } from 'react-router-dom';
 
 class TagBrowser extends Component {
-    constructor(props){
-        super(props);
-    }
     scrollHandler(e){
         const scrollEl = document.querySelector("#tagBrowserTagList");
         const eventId = e.target.id;
@@ -23,18 +18,7 @@ class TagBrowser extends Component {
                 <div id="tagBrowserScroller">
                     <button id="tagBrowserLeftArrow" onClick={this.scrollHandler.bind(this)}>&larr;</button>
                     <ul id="tagBrowserTagList">
-                        <li><span>tag1</span></li>
-                        <li><span>tag2</span></li>
-                        <li><span>tag3</span></li>
-                        <li><span>tag1</span></li>
-                        <li><span>tag2</span></li>
-                        <li><span>tag3</span></li>
-                        <li><span>tag1</span></li>
-                        <li><span>tag2</span></li>
-                        <li><span>tag3</span></li>
-                        <li><span>tag1</span></li>
-                        <li><span>tag2</span></li>
-                        <li><span>tag3</span></li>
+                        <li><Link to="tag/1"><span>tag1</span></Link></li>
                     </ul>
                     <button id="tagBrowserRightArrow" onClick={this.scrollHandler.bind(this)}>&rarr;</button>
                 </div>

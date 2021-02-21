@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-import '../../css/components/footer.css';
-
 class Footer extends Component {
     constructor(props){
         super(props);

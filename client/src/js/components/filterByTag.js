@@ -1,61 +1,33 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import FilterByAuthor from './filterByAuthor';
-import IndividualPost from './individualPost';
-import '../../css/components/postSection.css';
-import '../../css/components/filterByTag.css';
-
-class FilterByTag extends Component {
-    constructor(props){
-        super(props);
-    }
-    loadAuthorPosts(){
-        ReactDOM.render(<FilterByAuthor/>, document.querySelector("#container"));
-    }
-    loadTagPosts(){
-        ReactDOM.render(<FilterByTag/>, document.querySelector("#container"));
-    }
-    loadIndividualPost(){
-        ReactDOM.render(<IndividualPost/>, document.querySelector("#container"));
-    }
-    render(){
-        return (
-            <div>
-                <div id="tagPostsResultString">
-                    <h2>Filter by tag: <span id="tagPostsIndividualTag">undefined</span></h2>
-                </div>
-                <div className="row">
-                    <div className="col-xs-12 col-sm-6 col-md-6 col-lg-6 blogPost">
-                        <div className="blogPostFeaturePhoto" onClick={this.loadIndividualPost.bind(this)}></div>
-                        <h2 className="blogPostTitle" onClick={this.loadIndividualPost.bind(this)}>Title</h2>
-                        <div className="blogPostMetaArea">
-                            <span>Author: <span className="blogPostAuthorLink" onClick={this.loadAuthorPosts.bind(this)}>Anonymous</span></span>
-                            <span className="blogPostDateText">Date Posted: 12/31/1999</span>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
-                        <div className="blogPostBottomMetaArea">
-                            <span className="blogPostReadMore" onClick={this.loadIndividualPost.bind(this)}>Read More</span>
-                            <span className="blogPostTagText">Tags: <span className="blogPostIndividualTagText" onClick={this.loadTagPosts.bind(this)}>undefined</span>, <span className="blogPostIndividualTagText" onClick={this.loadTagPosts.bind(this)}>tag1</span></span>
-                        </div>
+const FilterByTag = () => (
+    <div>
+        <div id="tagPostsResultString">
+            <h2>Filter by tag: <Link to="/tag/1"><span id="tagPostsIndividualTag">undefined</span></Link></h2>
+        </div>
+        <div className="row">
+            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 blogPost">
+                <Link to="/post/1"><div className="blogPostFeaturePhoto"></div></Link>
+                <Link to="/post/1"><h2 className="blogPostTitle">Title</h2></Link>
+                <div className="blogPostMetaArea">
+                    <div>
+                        <span>Author: </span>
+                        <Link to="/author/1"><span className="blogPostAuthorLink">Anonymous</span></Link>
                     </div>
-                    <div className="col-xs-12 col-sm-6 col-md-6 col-lg-6 blogPost">
-                        <div className="blogPostFeaturePhoto" onClick={this.loadIndividualPost.bind(this)}></div>
-                        <h2 className="blogPostTitle" onClick={this.loadIndividualPost.bind(this)}>Title</h2>
-                        <div className="blogPostMetaArea">
-                            <span>Author: <span className="blogPostAuthorLink" onClick={this.loadAuthorPosts.bind(this)}>Anonymous</span></span>
-                            <span className="blogPostDateText">Date Posted: 12/31/1999</span>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
-                        <div className="blogPostBottomMetaArea">
-                            <span className="blogPostReadMore" onClick={this.loadIndividualPost.bind(this)}>Read More</span>
-                            <span className="blogPostTagText">Tags: <span className="blogPostIndividualTagText" onClick={this.loadTagPosts.bind(this)}>undefined</span>, <span className="blogPostIndividualTagText" onClick={this.loadTagPosts.bind(this)}>tag1</span></span>
-                        </div>
+                    <span className="blogPostDateText">Date Posted: 12/31/1999</span>
+                </div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
+                <div className="blogPostBottomMetaArea">
+                    <Link to="/post/1"><span className="blogPostReadMore">Read More</span></Link>
+                    <div>
+                        <span className="blogPostTagText">Tags: </span>
+                        <Link to="/tag/1"><span className="blogPostIndividualTagText">undefined</span></Link>
                     </div>
                 </div>
             </div>
-        )
-    }
-}
+        </div>
+    </div>
+);
 
 export default FilterByTag;

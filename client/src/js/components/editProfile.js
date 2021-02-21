@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+
 import ViewAllProfiles from './viewAllProfiles';
 
 class EditProfile extends Component {
