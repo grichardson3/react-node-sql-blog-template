@@ -12,6 +12,12 @@ article {
 
 body {
   background: #3f5959;
+  ::-moz-selection {
+    background: #3f5959;
+  }
+  ::selection {
+    background: #3f5959;
+  }
 }
 
 button {
@@ -55,7 +61,7 @@ p {
 
 span {
   font-family: "Roboto Slab", serif;
-  font-weight: 100;
+  font-weight: 200;
   color: white;
 }
 

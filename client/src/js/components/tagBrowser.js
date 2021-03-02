@@ -2,6 +2,17 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class TagBrowser extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            postTags: []
+        }
+        fetch('/tagsFromPosts')
+        .then(response => response.json())
+        .then((postTagsData) => {
+            this.setState({ postTags: postTagsData })
+        });
+    }
     scrollHandler(e){
         const scrollEl = document.querySelector("#tagBrowserTagList");
         const eventId = e.target.id;
@@ -18,7 +29,19 @@ class TagBrowser extends Component {
                 <div id="tagBrowserScroller">
                     <button id="tagBrowserLeftArrow" onClick={this.scrollHandler.bind(this)}>&larr;</button>
                     <ul id="tagBrowserTagList">
-                        <li><Link to="tag/1"><span>tag1</span></Link></li>
+                        {
+                            this.state.postTags.map((tag) => {
+                                return (
+                                    <div key={tag.post_tag}>
+                                        <li>
+                                            <Link to={`/tag/${tag.post_tag}`}>
+                                                <span>{tag.post_tag}</span>
+                                            </Link>
+                                        </li>
+                                    </div>
+                                )
+                            })
+                        }
                     </ul>
                     <button id="tagBrowserRightArrow" onClick={this.scrollHandler.bind(this)}>&rarr;</button>
                 </div>

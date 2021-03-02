@@ -10,6 +10,10 @@ header {
   top: 0;
 }
 
+#logoArea {
+  user-select: none;
+}
+
 #searchIcon {
   cursor: pointer;
   user-select: none;

@@ -2,12 +2,23 @@
   margin: 0 0 50px 0;
 }
 
+.blogPostContent {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+  text-align: justify;
+}
+
 .blogPostFeaturePhoto {
   cursor: pointer;
   background: #ddd;
-  height: 350px;
+  margin: 0 0 6px 0;
   width: 100%;
   transition: 0.15s ease;
+}
+
+.blogPostFeaturePhoto img {
+  width: 100%;
 }
 
 .blogPostFeaturePhoto:hover {
@@ -22,6 +33,10 @@
   text-decoration: underline;
   transition: 0.15s ease;
   width: fit-content;
+  font-size: 1.75rem;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 
 .blogPostTitle:hover {
@@ -35,6 +50,11 @@
   align-items: flex-end;
   justify-content: space-between;
   margin: 0 0 12px 0;
+}
+
+.blogPostReadMore,
+.blogPostFeaturePhoto {
+  user-select: none;
 }
 
 .blogPostAuthorLink,

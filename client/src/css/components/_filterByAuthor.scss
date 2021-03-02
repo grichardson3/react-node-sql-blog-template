@@ -4,6 +4,7 @@
 
 #profilePictureArea {
   padding: 0;
+  user-select: none;
 }
 
 #profilePictureArea img {
@@ -45,6 +46,7 @@
 
 #profileSocialMediaAccounts ul li {
   margin: 0 10px 0 0;
+  user-select: none;
 }
 
 #profilePostsArea {

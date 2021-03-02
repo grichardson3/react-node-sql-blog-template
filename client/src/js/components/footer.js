@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 
 class Footer extends Component {
-    constructor(props){
-        super(props);
-    }
     getDate(){
         const copyrightDate = new Date();
         return copyrightDate.getFullYear();
