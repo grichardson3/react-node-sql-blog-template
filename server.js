@@ -3,9 +3,6 @@ const mysql = require('mysql');
 
 const app = express();
 
-const SELECT_ALL_USERS = 'SELECT * FROM tbl_users';
-const SELECT_USER_PREVIEW = 'SELECT id, firstname, lastname, email, username, profilepic FROM tbl_users';
-
 const connection = mysql.createConnection({
   host: 'localhost',
   port: 3306,
@@ -22,9 +19,18 @@ connection.connect(err => {
 
 app.use(express.json());
 
+// API Calls
+const SELECT_ALL_USERS = 'SELECT * FROM tbl_users';
+const SELECT_ALL_POSTS = 'SELECT * FROM tbl_posts';
+const SELECT_TAGS_FROM_POSTS = 'SELECT DISTINCT post_tag FROM tbl_posts';
+const SELECT_TOP_TWO_LANDING_PAGE_POSTS = 'SELECT * FROM tbl_posts LIMIT 2';
+const SELECT_MIDDLE_LANDING_PAGE_POSTS = 'SELECT * FROM tbl_posts LIMIT 2, 6';
+const SELECT_END_LANDING_PAGE_POSTS = 'SELECT * FROM tbl_posts LIMIT 8, 6';
+const SELECT_USER_PREVIEW = 'SELECT id, firstname, lastname, email, username, profilepic FROM tbl_users';
+
 app.get('/users', (req, res) => {
   connection.query(SELECT_ALL_USERS, (err, results) => {
-    if(err) {
+    if (err) {
       return res.send(err);
     }
     else {
@@ -44,13 +50,102 @@ app.get('/usersPreview', (req, res) => {
   });
 });
 
-app.get('/singleUser', (req, res) => {
-  const SELECT_SINGLE_USER = `SELECT * FROM tbl_users WHERE id = ${req.body.id}`;
+app.get('/userSingle', (req, res) => {
+  // Sketchy way of getting info id from the URL
+  const urlArray = res.req.headers.referer.split("/");
+  const authorID = urlArray[urlArray.length - 1];
+
+  const SELECT_SINGLE_USER = `SELECT * FROM tbl_users WHERE users_username = '${authorID}'`;
   connection.query(SELECT_SINGLE_USER, (err, results) => {
     if (err) {
       return res.send(err);
     } else {
-      return res.json(req);
+      return res.json(results);
+    }
+  });
+});
+
+app.get('/userPosts', (req, res) => {
+  // Sketchy way of getting info id from the URL
+  const urlArray = res.req.headers.referer.split("/");
+  const authorID = urlArray[urlArray.length - 1];
+
+  // const SELECT_USER_POSTS = `SELECT * FROM tbl_posts INNER JOIN tbl_users ON tbl_posts.post_id = tbl_users.users_id WHERE tbl_users.users_username = '${authorID}'`;
+  const SELECT_USER_POSTS = `SELECT * FROM tbl_posts WHERE post_author = '${authorID}'`;
+  connection.query(SELECT_USER_POSTS, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json(results);
+    }
+  });
+});
+
+app.get('/singlePost', (req, res) => {
+  // Sketchy way of getting info id from the URL
+  const urlArray = res.req.headers.referer.split("/");
+  const postID = urlArray[urlArray.length - 1];
+
+  const SELECT_SINGLE_POST = `SELECT * FROM tbl_posts WHERE post_id = '${postID}'`;
+  connection.query(SELECT_SINGLE_POST, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json(results);
+    }
+  });
+});
+
+app.get('/allPosts1', (req, res) => {
+  connection.query(SELECT_TOP_TWO_LANDING_PAGE_POSTS, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json(results);
+    }
+  });
+});
+
+app.get('/allPosts2', (req, res) => {
+  connection.query(SELECT_MIDDLE_LANDING_PAGE_POSTS, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json(results);
+    }
+  });
+});
+
+app.get('/allPosts3', (req, res) => {
+  connection.query(SELECT_END_LANDING_PAGE_POSTS, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json(results);
+    }
+  });
+});
+
+app.get('/tagsFromPosts', (req, res) => {
+  connection.query(SELECT_TAGS_FROM_POSTS, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json(results);
+    }
+  });
+});
+
+app.get('/postsFromTag', (req, res) => {
+  const urlArray = res.req.headers.referer.split("/");
+  const tagID = urlArray[urlArray.length - 1];
+
+  const SELECT_POSTS_FROM_TAGS = `SELECT * FROM tbl_posts WHERE post_tag = '${tagID}'`;
+  connection.query(SELECT_POSTS_FROM_TAGS, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json(results);
     }
   });
 });
@@ -65,7 +160,6 @@ app.post('/addUser', (req,res)=>{
       return res.json('added persons successfully');
     }
   });
-  console.log(INSERT_PERSON);
 });
 
 app.put('/saveUser', (req, res) => {
@@ -92,6 +186,7 @@ app.delete('/deleteUser', (req,res) => {
   });
 });
 
-app.listen(4000, () => {
-  console.log('Server listening on port 4000');
+const appPort = 4000;
+app.listen(appPort, () => {
+  console.log(`Server listening on port ${appPort}`);
 });
