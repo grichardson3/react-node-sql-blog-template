@@ -18,22 +18,20 @@ import NotFoundPage from './js/components/NotFoundPage';
 
 // Main Application Component
 const App = () => (
-        <BrowserRouter>
-            <div>
-                <Header/>
-                    <div id="container" className="container">
-                        <Switch>
-                            <Route path="/" component={LandingPage} exact />
-                            <Route path="/search/:id" component={SearchResults}/>
-                            <Route path="/tag/:id" component={FilterByTag}/>
-                            <Route path="/post/:id" component={IndividualPost} />
-                            <Route path="/author/:id" component={FilterByAuthor} />
-                            <Route component={NotFoundPage} />
-                        </Switch>
-                    </div>
-                <Footer/>
-            </div>
-        </BrowserRouter>
+    <BrowserRouter>
+        <Header/>
+        <div id="container" className="container">
+            <Switch>
+                <Route path="/" component={LandingPage} exact />
+                <Route path="/search/:id" component={SearchResults}/>
+                <Route path="/tag/:id" component={FilterByTag}/>
+                <Route path="/post/:id" component={IndividualPost} />
+                <Route path="/author/:id" component={FilterByAuthor} />
+                <Route component={NotFoundPage} />
+            </Switch>
+        </div>
+        <Footer/>
+    </BrowserRouter>
 );
 
 ReactDOM.render(<App/>, document.querySelector("main"));

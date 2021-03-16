@@ -23,7 +23,10 @@ class SecondPostSection extends Component {
                             <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 blogPost" key={post.post_id}>
                                 <Link to="/post/1">
                                     <div className="blogPostFeaturePhoto">
-                                        <img src={post.post_featurephoto}/>
+                                        <img
+                                            alt=""
+                                            src={post.post_featurephoto}
+                                        />
                                     </div>
                                 </Link>
                                 <Link to="/post/1">

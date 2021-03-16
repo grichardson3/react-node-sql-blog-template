@@ -10,7 +10,7 @@ class FilterByAuthor extends Component {
             userPosts: []
         }
     }
-    componentDidMount(){
+    componentWillMount(){
         fetch('/userSingle')
         .then(response => response.json())
         .then((userInfo) => {
@@ -23,6 +23,7 @@ class FilterByAuthor extends Component {
         });
     }
     render(){
+        console.clear();
         return (
             <div>
                 {
@@ -48,13 +49,55 @@ class FilterByAuthor extends Component {
                                                 <div id="profileSocialMediaAccounts">
                                                     <ul>
                                                         {
-                                                            user.users_facebook !== null ? <li><a href={user.users_facebook} target="_blank" rel="noopener noreferrer"><img src="../img/icon/facebook.png" alt="" title="Facebook"/></a></li> : null
+                                                            user.users_facebook !== null ? 
+                                                            <li>
+                                                                <a 
+                                                                    href={user.users_facebook}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                >
+                                                                    <img 
+                                                                        src="../img/icon/facebook.png"
+                                                                        alt=""
+                                                                        title="Facebook"
+                                                                    />
+                                                                </a>
+                                                            </li> :
+                                                            null
                                                         }
                                                         {
-                                                            user.users_twitter !== null ? <li><a href={user.users_twitter} target="_blank" rel="noopener noreferrer"><img src="../img/icon/twitter.png" alt="" title="Twitter"/></a></li> : null
+                                                            user.users_twitter !== null ?
+                                                            <li>
+                                                                <a 
+                                                                    href={user.users_twitter}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                >
+                                                                    <img 
+                                                                        src="../img/icon/twitter.png"
+                                                                        alt=""
+                                                                        title="Twitter"
+                                                                    />
+                                                                </a>
+                                                            </li> :
+                                                            null
                                                         }
                                                         {
-                                                            user.users_linkedin !== null ? <li><a href={user.users_linkedin} target="_blank" rel="noopener noreferrer"><img src="../img/icon/linkedin.png" alt="" title="LinkedIn"/></a></li> : null
+                                                            user.users_linkedin !== null ?
+                                                            <li>
+                                                                <a 
+                                                                    href={user.users_linkedin}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                >
+                                                                    <img
+                                                                        src="../img/icon/linkedin.png"
+                                                                        alt=""
+                                                                        title="LinkedIn"
+                                                                    />
+                                                                </a>
+                                                            </li> :
+                                                            null
                                                         }
                                                     </ul>
                                                 </div>
@@ -76,7 +119,7 @@ class FilterByAuthor extends Component {
                                         <div className="blogPostMetaArea">
                                             <div>
                                                 <span>Author: </span>
-                                                <Link to={`/author/${post.post_author}`}><span className="blogPostAuthorLink">{document.querySelector("#profileUsername").innerHTML}</span></Link>
+                                                <Link to={`/author/${post.post_author}`}><span className="blogPostAuthorLink">{post.post_author}</span></Link>
                                             </div>
                                             <span>Date Posted: {moment.unix(post.post_date).format("MMM Do, YYYY")}</span>
                                         </div>

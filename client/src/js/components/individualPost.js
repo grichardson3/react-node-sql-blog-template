@@ -9,13 +9,12 @@ class IndividualPost extends Component {
             singlePost: []
         }
     }
-    componentDidMount(){
+    componentWillMount(){
         fetch('/singlePost')
         .then(response => response.json())
         .then((singlePostData) => {
             this.setState({ singlePost: singlePostData })
         });
-        // Create update request for post views
     }
     render(){
         return (
@@ -23,25 +22,28 @@ class IndividualPost extends Component {
                 {
                     this.state.singlePost.map((post) => {
                         return (
-                            <div>
+                            <div key={post.post_id}>
                                 <div id="individualPostMetaArea">
                                     <h2 id="individualPostTitle">{post.post_title}</h2>
                                     <div id="individualPostBottomMeta">
                                         <div>
                                             <span id="individualPostAuthor">Author: </span>
-                                            <Link to="/author/1"><span id="individualPostAuthorLink">{post.post_author}</span></Link>
+                                            <Link to={`/author/${post.post_author}`}><span id="individualPostAuthorLink">{post.post_author}</span></Link>
                                         </div>
                                         <div id="individualPostDateViews">
                                             <span id="individualPostDate">Date Posted: {moment.unix(post.post_date).format("MMM Do, YYYY")}</span>
                                         </div>
                                     </div>
                                     <div id="individualPostFeaturePhoto">
-                                        <img src={post.post_featurephoto}></img>
+                                        <img
+                                            alt=""
+                                            src={post.post_featurephoto}
+                                        />
                                     </div>
                                     <article id="individualPostArticle">{post.post_content}</article>
                                     <div id="individualPostTags">
                                         <span>Tags: </span>
-                                        <Link to="/tag/1"><span className="individualPostIndividualTag">{post.post_tag}</span></Link>
+                                        <Link to={`/tag/${post.post_tag}`}><span className="individualPostIndividualTag">{post.post_tag}</span></Link>
                                     </div>
                                 </div>
                             </div>

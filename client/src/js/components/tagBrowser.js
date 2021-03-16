@@ -33,11 +33,11 @@ class TagBrowser extends Component {
                             this.state.postTags.map((tag) => {
                                 return (
                                     <div key={tag.post_tag}>
-                                        <li>
-                                            <Link to={`/tag/${tag.post_tag}`}>
-                                                <span>{tag.post_tag}</span>
-                                            </Link>
-                                        </li>
+                                        <Link to={`/tag/${tag.post_tag}`}>
+                                            <li>
+                                                {tag.post_tag}
+                                            </li>
+                                        </Link>
                                     </div>
                                 )
                             })

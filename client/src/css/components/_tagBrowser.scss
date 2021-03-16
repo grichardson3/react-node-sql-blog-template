@@ -39,6 +39,10 @@
   border-radius: 30px;
 }
 
+#tagBrowserTagList li:hover {
+  text-decoration: underline;
+}
+
 #tagBrowserLeftArrow,
 #tagBrowserRightArrow {
   border: 0;

@@ -9,7 +9,8 @@ class FirstPostSection extends Component {
             posts1: [],
             posts2: []
         }
-
+    }
+    componentWillMount(){
         fetch('/allPosts1')
         .then(response => response.json())
         .then((postsInfo1) => {
@@ -28,12 +29,15 @@ class FirstPostSection extends Component {
                     this.state.posts1.map((post) => {
                         return (
                             <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 blogPost" key={post.post_id}>
-                                <Link to="/post/1">
+                                <Link to={`/post/${post.post_id}`}>
                                     <div className="blogPostFeaturePhoto">
-                                        <img src={post.post_featurephoto}/>
+                                        <img 
+                                            alt=""
+                                            src={post.post_featurephoto}
+                                        />
                                     </div>
                                 </Link>
-                                <Link to="/post/1">
+                                <Link to={`/post/${post.post_id}`}>
                                     <h2>
                                         <span className="blogPostTitle">
                                             {
@@ -77,12 +81,15 @@ class FirstPostSection extends Component {
                     this.state.posts2.map((post) => {
                         return (
                             <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 blogPost" key={post.post_id}>
-                                <Link to="/post/1">
+                                <Link to={`/post/${post.post_id}`}>
                                     <div className="blogPostFeaturePhoto">
-                                        <img src={post.post_featurephoto}/>
+                                        <img 
+                                            alt=""
+                                            src={post.post_featurephoto}
+                                        />
                                     </div>
                                 </Link>
-                                <Link to="/post/1">
+                                <Link to={`/post/${post.post_id}`}>
                                     <h2>
                                         <span className="blogPostTitle">
                                             {

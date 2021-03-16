@@ -17,15 +17,15 @@
   transition: 0.15s ease;
 }
 
-#individualPostDate {
-  margin: 0 20px 0 0;
-}
-
 #individualPostFeaturePhoto {
   display: flex;
   align-items: center;
-  width: 100%;
   margin: 20px 0 20px 0;
+}
+
+#individualPostFeaturePhoto img {
+  width: 100%;
+  user-select: none;
 }
 
 #individualPostTags {

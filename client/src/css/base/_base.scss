@@ -13,10 +13,10 @@ article {
 body {
   background: #3f5959;
   ::-moz-selection {
-    background: #3f5959;
+    background: #4a6969;
   }
   ::selection {
-    background: #3f5959;
+    background: #4a6969;
   }
 }
 
@@ -53,7 +53,8 @@ option {
   font-family: "Roboto Slab", serif;
 }
 
-p {
+p,
+li {
   color: white;
   font-family: "Roboto Slab", serif;
   font-weight: 200;
@@ -150,4 +151,12 @@ span {
   justify-content: space-between;
   padding: 0 0 20px 0;
   align-items: center;
+}
+
+#hidePreloader {
+  display: none;
+}
+
+#showPreloader {
+  display: block;
 }

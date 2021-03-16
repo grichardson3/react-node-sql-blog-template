@@ -6,10 +6,11 @@ class FilterByTag extends Component {
     constructor(props){
         super(props);
         this.state = {
+            loading: true,
             tagPosts: []
         }
     }
-    componentDidMount(){
+    componentWillMount(){
         fetch('/postsFromTag')
         .then(response => response.json())
         .then((tagPostsData) => {
@@ -17,23 +18,22 @@ class FilterByTag extends Component {
         });
     }
     render(){
+        console.clear();
         let count = -1;
         return (
             <div>
                 <div id="tagPostsResultString">
                     <h2>Filter by tag:
-                        <Link to="/tag/1">
-                            <span id="tagPostsIndividualTag">
-                                {
-                                    this.state.tagPosts.map((post) => {
-                                        count++;
-                                        return (
-                                            count < 1 ? post.post_tag : null
-                                        )
-                                    })
-                                }
-                            </span>
-                        </Link>
+                        <span id="tagPostsIndividualTag">
+                            {
+                                this.state.tagPosts.map((post) => {
+                                    count++;
+                                    return (
+                                        count < 1 ? post.post_tag : null
+                                    )
+                                })
+                            }
+                        </span>
                     </h2>
                 </div>
                 <div className="row">
@@ -43,7 +43,10 @@ class FilterByTag extends Component {
                                 <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 blogPost" key={post.post_id}>
                                     <Link to={`/post/${post.post_id}`}>
                                         <div className="blogPostFeaturePhoto">
-                                            <img src={post.post_featurephoto}/>
+                                            <img
+                                                alt=""
+                                                src={post.post_featurephoto}
+                                            />
                                         </div>
                                     </Link>
                                     <Link to={`/post/${post.post_id}`}>
