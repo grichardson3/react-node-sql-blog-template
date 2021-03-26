@@ -39,6 +39,17 @@ app.get('/users', (req, res) => {
   });
 });
 
+app.get('/posts', (req, res) => {
+  connection.query(SELECT_ALL_POSTS, (err, results) => {
+    if (err) {
+      return res.send(err);
+    }
+    else {
+      return res.json(results);
+    }
+  });
+});
+
 app.get('/usersPreview', (req, res) => {
   connection.query(SELECT_USER_PREVIEW, (err, results) => {
     if(err) {
