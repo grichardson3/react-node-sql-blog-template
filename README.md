@@ -9,6 +9,7 @@ Prerequisites:
 Instructions:
 - Install npm packages into root directory & client directory
 - Start XAMPP Control Panel
+- import mern_blog.sql file from /db directory into MySQL database named "mern_blog"
 - Open two bash instances, one in root directory & one in client directory
 - Inside of root directory terminal instance, run "nodemon server.js"
 - Inside of /client directory terminal instance, run "npm start"
