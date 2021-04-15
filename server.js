@@ -161,7 +161,15 @@ app.get('/postsFromTag', (req, res) => {
   });
 });
 
-app.post('/addUser', (req,res)=>{
+app.post('/loadMorePosts', (req, res) => {
+  const { postsLength } = req.body;
+  const LOAD_MORE_POSTS = `SELECT * FROM tbl_posts LIMIT ${postsLength}, 3`
+  connection.query(LOAD_MORE_POSTS, (err, results) => {
+    return res.json(results);
+  });
+});
+
+app.post('/addUser', (req, res)=>{
   const { firstname, lastname, email, username, password, profilepic, bio } = req.body;
   const INSERT_PERSON = `INSERT INTO tbl_users (firstname, lastname, email, username, password, profilepic, bio) VALUES ("${firstname}", "${lastname}", "${email}", "${username}", "${password}", "${profilepic}", "${bio}");`;
   connection.query(INSERT_PERSON, (err) => {
