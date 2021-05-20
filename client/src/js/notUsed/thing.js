@@ -1,16 +1,4 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import moment from 'moment';
-import { connect } from 'react-redux';
-import selectData from '../selectors/data';
-
-class FirstPostSection extends Component {
-    constructor(props){
-        super(props);
-    }
-    render(){
-        return (
-            <div className="row">
+<div className="row">
                 {
                     this.props.data.map((post) => {
                         if (post.post_id && post.post_id < 3) { // Filter if statement
@@ -120,14 +108,3 @@ class FirstPostSection extends Component {
                     })
                 }
             </div>
-        );
-    }
-};
-
-const mapStateToProps = (state) => {
-    return {
-        data: selectData(state.posts, state.authors)
-    };
-};
-
-export default connect(mapStateToProps)(FirstPostSection);

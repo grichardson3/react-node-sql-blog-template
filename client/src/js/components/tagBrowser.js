@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import selectData from '../selectors/data';
 
 class TagBrowser extends Component {
     constructor(props){
@@ -30,16 +32,18 @@ class TagBrowser extends Component {
                     <button id="tagBrowserLeftArrow" onClick={this.scrollHandler.bind(this)}>&larr;</button>
                     <ul id="tagBrowserTagList">
                         {
-                            this.state.postTags.map((tag) => {
-                                return (
-                                    <div key={tag.post_tag}>
-                                        <Link to={`/tag/${tag.post_tag}`}>
-                                            <li>
-                                                {tag.post_tag}
-                                            </li>
-                                        </Link>
-                                    </div>
-                                )
+                            this.props.data.map((tag) => {
+                                if (tag.post_id) {
+                                    return (
+                                        <div key={tag.post_tag}>
+                                            <Link to={`/tag/${tag.post_tag}`}>
+                                                <li>
+                                                    {tag.post_tag}
+                                                </li>
+                                            </Link>
+                                        </div>
+                                    )
+                                }
                             })
                         }
                     </ul>
@@ -50,4 +54,10 @@ class TagBrowser extends Component {
     }
 }
 
-export default TagBrowser;
+const mapStateToProps = (state) => {
+    return {
+        data: selectData(state.posts, state.authors)
+    };
+};
+
+export default connect(mapStateToProps)(TagBrowser);
