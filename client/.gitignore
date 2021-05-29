@@ -7,10 +7,7 @@
 /coverage
 
 # production
-# /build
-
-# testing again
-/playground
+/build
 
 # misc
 .DS_Store

@@ -38,7 +38,7 @@ class App extends Component {
         .then((postsData) => {
             this.setState({ posts: postsData });
             this.state.posts.forEach((post) => {
-                store.dispatch(addPost({ 
+                store.dispatch(addPost({
                     post_author: post.post_author,
                     post_content: post.post_content,
                     post_date: post.post_date,

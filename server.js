@@ -2,13 +2,14 @@ const express = require('express');
 const mysql = require('mysql');
 
 const app = express();
+const { PORT = 8000 } = process.env;
 
 const connection = mysql.createConnection({
   host: 'localhost',
   port: 3306,
   user: 'root',
   password: '',
-  database: 'mern_blog'
+  database: 'mern-blog'
 });
 
 connection.connect(err => {
@@ -27,6 +28,10 @@ const SELECT_TOP_TWO_LANDING_PAGE_POSTS = 'SELECT * FROM tbl_posts LIMIT 2';
 const SELECT_MIDDLE_LANDING_PAGE_POSTS = 'SELECT * FROM tbl_posts LIMIT 2, 6';
 const SELECT_END_LANDING_PAGE_POSTS = 'SELECT * FROM tbl_posts LIMIT 8, 6';
 const SELECT_USER_PREVIEW = 'SELECT id, firstname, lastname, email, username, profilepic FROM tbl_users';
+
+app.get('/', (req, res) => {
+ res.json("OK");
+});
 
 app.get('/users', (req, res) => {
   connection.query(SELECT_ALL_USERS, (err, results) => {
@@ -205,7 +210,6 @@ app.delete('/deleteUser', (req,res) => {
   });
 });
 
-const appPort = 4000;
-app.listen(appPort, () => {
-  console.log(`Server listening on port ${appPort}`);
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
 });

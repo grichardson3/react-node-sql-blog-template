@@ -2,7 +2,7 @@
   "name": "react-node-sql-blog-template",
   "version": "1.0.0",
   "description": "sql-express-react-node blog application",
-  "main": "server",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,6 +15,7 @@
   "author": "Gareth Richardson",
   "license": "ISC",
   "dependencies": {
+    "ejs": "^3.1.6",
     "express": "^4.16.4",
     "mysql": "^2.16.0",
     "nodemon": "^1.18.9"
