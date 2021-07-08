@@ -4,6 +4,7 @@ export const addAuthor = (
     // Default Value
       users_id = 0,
       users_profilepic = '',
+      users_email = '',
       users_username = '',
       users_firstname = '',
       users_lastname = '',
@@ -19,6 +20,7 @@ export const addAuthor = (
         // Actual Value
         users_id,
         users_profilepic,
+        users_email,
         users_username,
         users_firstname,
         users_lastname,
@@ -28,4 +30,17 @@ export const addAuthor = (
         users_linkedin,
         users_postamount
     }
+});
+
+// REMOVE_AUTHOR
+export const removeAuthor = ({ id } = {}) => ({
+  type: 'REMOVE_AUTHOR',
+  id
+});
+
+// EDIT_AUTHOR
+export const editAuthor = (users_id, data) => ({
+  type: 'EDIT_AUTHOR',
+  users_id,
+  data
 });

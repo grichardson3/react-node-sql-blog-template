@@ -1,46 +1,109 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
+import { connect } from 'react-redux';
+
+import Header from './header';
+import Footer from './footer';
 
 class SearchResults extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            posts: []
+        }
+    }
+    componentDidMount(){
+        setTimeout(() => {
+            this.setState({
+                posts: this.props.posts.filter((post) => post.post_title.toLowerCase().includes(window.location.href.split("/")[window.location.href.split("/").length - 1]))
+            })
+        }, 200);
+    }
+    componentDidUpdate(){
+        setTimeout(() => {
+            this.setState({
+                posts: this.props.posts.filter((post) => post.post_title.toLowerCase().includes(window.location.href.split("/")[window.location.href.split("/").length - 1]))
+            })
+        }, 200);
+    }
     render(){
         return (
             <div>
-                <div id="searchResultsHeaderArea">
-                    <h2 id="searchResultsResultString">Search results for undefined...</h2>
-                    <div id="searchResultsFilterArea">
-                        <span>Filter By: </span>
-                        <select className="form-control" id="searchResultsFilter">
-                            <option>Most Recent</option>
-                            <option>Post Title</option>
-                            <option>Author Name</option>
-                        </select>
+                <Header/>
+                <div id="container" className="container">
+                    <div id="tagPostsResultString">
+                        <h2>Search results for: {window.location.href.split("/")[window.location.href.split("/").length - 1]}</h2>
                     </div>
-                </div>
-                <div id="searchResultsPostsArea">
                     <div className="row">
-                        <div className="col-xs-12 blogPost">
-                            <Link to="/post/1"><h2 className="blogPostTitle">Title</h2></Link>
-                            <div className="blogPostMetaArea">
-                                <div>
-                                    <span>Author: </span>
-                                    <span className="blogPostAuthorLink">Anonymous</span>
+                        {
+                            this.state.posts.length !== 0 ?
+                            // eslint-disable-next-line
+                            this.state.posts.map((post) => {
+                                return (
+                                    <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 blogPost" key={post.post_id}>
+                                        <Link to={`/post/${post.post_id}`}>
+                                            <div className="blogPostFeaturePhoto">
+                                                <img
+                                                    alt=""
+                                                    src={post.post_featurephoto}
+                                                />
+                                            </div>
+                                        </Link>
+                                        <Link to={`/post/${post.post_id}`}>
+                                            <h2>
+                                                <span className="blogPostTitle">{post.post_title}</span>
+                                            </h2>
+                                        </Link>
+                                        <div className="blogPostMetaArea">
+                                            <div>
+                                                <span>Author: </span>
+                                                <Link to={`/author/${post.post_author}`}>
+                                                    <span className="blogPostAuthorLink">{post.post_author}</span>
+                                                </Link>
+                                            </div>
+                                            <span className="blogPostDateText">
+                                                Date Posted: {moment.unix(post.post_date).format("MMM Do, YYYY")}
+                                            </span>
+                                        </div>
+                                        <p className="blogPostContent">
+                                            {
+                                                post.post_content.length > 200 ? 
+                                                `${post.post_content.substring(0,200)}...` : 
+                                                post.post_content
+                                            }
+                                        </p>
+                                        <div className="blogPostBottomMetaArea">
+                                            <Link to={`/post/${post.post_id}`}>
+                                                <span className="blogPostReadMore">Read More</span>
+                                            </Link>
+                                            <div>
+                                                <span className="blogPostTagText">Tags: </span>
+                                                <Link to={`/tag/${post.post_tag}`}>
+                                                    <span className="blogPostIndividualTagText">{post.post_tag}</span>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            }) : <div className="col col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div className="noContent"><span>No results found...</span></div>
+                                    <br></br>
                                 </div>
-                                <span>Date Posted: 12/31/1999</span>
-                            </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
-                            <div className="blogPostBottomMetaArea">
-                                <span className="blogPostReadMore" /*onClick={this.loadIndividualPost.bind(this)}*/>Read More</span>
-                                <div>
-                                    <span className="blogPostTagText">Tags: </span>
-                                    <span className="blogPostIndividualTagText" /*onClick={this.loadTagPosts.bind(this)}*/>undefined</span>
-                                </div>
-                            </div>
-                        </div>
+                        }
                     </div>
                 </div>
+                <Footer/>
             </div>
         )
     }
 }
 
-export default SearchResults;
+const mapStateToProps = (state) => {
+    return {
+        posts: state.posts,
+        users: state.users
+    };
+};
+
+export default connect(mapStateToProps)(SearchResults);

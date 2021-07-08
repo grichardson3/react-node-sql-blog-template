@@ -1,11 +1,14 @@
 @import "./base/base";
 
+@import "./components/dashboard";
 @import "./components/filterByAuthor";
 @import "./components/filterByTag";
 @import "./components/footer";
 @import "./components/header";
 @import "./components/individualPost";
+@import "./components/loginForm";
 @import "./components/postSection";
 @import "./components/searchResults";
 @import "./components/tagBrowser";
+@import "./components/viewPost";
 @import "./components/viewProfile";

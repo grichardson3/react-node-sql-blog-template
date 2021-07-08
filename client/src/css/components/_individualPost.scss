@@ -19,13 +19,15 @@
 
 #individualPostFeaturePhoto {
   display: flex;
-  align-items: center;
+  justify-content: center;
   margin: 20px 0 20px 0;
+  background-repeat: no-repeat;
+  background-size: auto;
 }
 
 #individualPostFeaturePhoto img {
-  width: 100%;
   user-select: none;
+  max-height: 480px;
 }
 
 #individualPostTags {

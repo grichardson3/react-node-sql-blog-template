@@ -3,18 +3,33 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@tinymce/tinymce-react": "^3.12.6",
+    "bcryptjs": "^2.4.3",
     "css-loader": "^5.0.2",
+    "d3": "^7.0.0",
+    "es6-promise": "^4.2.8",
+    "isomorphic-fetch": "^3.0.0",
     "moment": "^2.29.1",
+    "moment-timezone": "^0.5.33",
     "node-sass": "^4.14.1",
+    "node-storage-polyfill": "^1.0.0",
+    "polyfill-array-includes": "^2.0.0",
     "prop-types": "^15.6.2",
+    "randomstring": "^1.2.1",
     "react": "^16.6.0",
+    "react-app-polyfill": "^2.0.0",
     "react-dom": "^16.6.0",
+    "react-ga": "^3.3.0",
+    "react-modal": "^3.14.3",
     "react-redux": "^5.1.1",
+    "react-responsive-modal": "^6.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "2.0.5",
     "react-spinners": "^0.10.6",
     "redux": "^4.0.1",
-    "uuid": "^3.3.2"
+    "smoothscroll-polyfill": "^0.4.4",
+    "uuid": "^3.3.2",
+    "validator": "^13.6.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -31,5 +46,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "jspolyfill-array.prototype.findIndex": "^0.1.0"
+  }
 }

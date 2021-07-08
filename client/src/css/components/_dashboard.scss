@@ -1,0 +1,108 @@
+#addPostButton {
+    width: 93px;
+}
+
+#addUserButton {
+    width: 95px;
+}
+
+#dashboard {
+    min-width: 1200px;
+    margin: 0 auto;
+}
+
+#dashboardContainer__stats {
+    overflow-y: scroll;
+}
+
+#dashboardContainer__main {
+    padding: 0 20px 20px 20px;
+}
+
+#dashboardContainer__main table {
+    width: 100%;
+}
+
+.dashboardContainer__dataHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#dashboardContainer__graphColumn {
+    width: 40%;
+}
+
+.dashboardContainer__graphBar {
+    background: white;
+    height: 24px;
+    width: 100%;
+}
+
+#dashboardContainer__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#dashboardContainer__navigation {
+    padding: 20px;
+}
+
+#dashboardContainer__navigation a {
+    margin-right: 16px;
+    color: white;
+}
+
+#dashboardContainer__navigation a:hover {
+    text-decoration: underline;
+}
+
+#dashboardContainer__navigation h1 {
+    line-height: 0;
+    margin-top: 20px;
+}
+
+#dashboardContainer__sort {
+    display: flex;
+    padding-bottom: 12px;
+}
+
+#dashboardContainer__sort div {
+    margin-right: 20px;
+}
+
+#dashboardContainer__sort button {
+    background: none;
+    border: none;
+    color: white;
+}
+
+#dashboardContainer__sort button:focus {
+    outline: none;
+}
+
+.noContent {
+    display: flex;
+    justify-content: center;
+}
+
+.statusMessages {
+    background: white;
+    border-radius: 8px;
+}
+
+.statusMessages span {
+    color: red;
+    font-weight: 500;
+}
+
+.statusMessages div {
+    margin: 6px 20px 12px 20px;
+}
+
+// Hides domain notification from TinyMCE WYSIWYG editor
+.tox-notifications-container {
+    display: none;
+}

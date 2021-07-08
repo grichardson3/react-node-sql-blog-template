@@ -4,11 +4,18 @@ import FirstPostSection from './firstPostSection';
 import TagBrowser from './tagBrowser';
 import SecondPostSection from './secondPostSection';
 
+import Header from './header';
+import Footer from './footer';
+
 const LandingPage = () => (
     <div>
-        <FirstPostSection/>
-        <TagBrowser/>
-        <SecondPostSection/>
+        <Header/>
+        <div id="container" className="container">
+            <FirstPostSection/>
+            <TagBrowser/>
+            <SecondPostSection/>
+        </div>
+        <Footer/>
     </div>
 );
 

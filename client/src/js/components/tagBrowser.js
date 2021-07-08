@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import selectData from '../selectors/data';
 
 class TagBrowser extends Component {
     constructor(props){
         super(props);
         this.state = {
-            postTags: []
+            postTags: [],
+            test: []
         }
         fetch('/tagsFromPosts')
         .then(response => response.json())
@@ -29,11 +29,13 @@ class TagBrowser extends Component {
             <div id="tagBrowserArea">
                 <h2>Browse By Tag</h2>
                 <div id="tagBrowserScroller">
-                    <button id="tagBrowserLeftArrow" onClick={this.scrollHandler.bind(this)}>&larr;</button>
+                    <button id="tagBrowserLeftArrow" onClick={this.scrollHandler}><span>&#60;</span></button>
                     <ul id="tagBrowserTagList">
                         {
-                            this.props.data.map((tag) => {
-                                if (tag.post_id) {
+                            this.state.postTags.length !== 0 ?
+                            // eslint-disable-next-line
+                            this.state.postTags.map((tag) => {
+                                if (tag.post_tag) {
                                     return (
                                         <div key={tag.post_tag}>
                                             <Link to={`/tag/${tag.post_tag}`}>
@@ -44,10 +46,13 @@ class TagBrowser extends Component {
                                         </div>
                                     )
                                 }
-                            })
+                            }) : <div className="col col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div className="noContent"><span>No tags</span></div>
+                                    <br></br>
+                                </div>
                         }
                     </ul>
-                    <button id="tagBrowserRightArrow" onClick={this.scrollHandler.bind(this)}>&rarr;</button>
+                    <button id="tagBrowserRightArrow" onClick={this.scrollHandler}><span>&#62;</span></button>
                 </div>
             </div>
         )
@@ -56,7 +61,8 @@ class TagBrowser extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        data: selectData(state.posts, state.authors)
+        posts: state.posts,
+        users: state.users
     };
 };
 

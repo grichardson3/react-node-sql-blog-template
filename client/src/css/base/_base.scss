@@ -4,6 +4,10 @@
   margin-top: 85px;
 }
 
+a {
+  color: white;
+}
+
 article {
   font-family: "Roboto Slab", serif;
   font-weight: 200;
@@ -12,12 +16,14 @@ article {
 
 body {
   background: #3f5959;
-  ::-moz-selection {
+  /*::-moz-selection {
     background: #4a6969;
+    color: white;
   }
   ::selection {
     background: #4a6969;
-  }
+    color: white;
+  }*/
 }
 
 button {
@@ -36,6 +42,15 @@ h4 {
   color: white;
   font-family: "Roboto Slab", serif;
   font-weight: 500;
+}
+
+input {
+  ::-moz-selection {
+    background: #666;
+  }
+  ::selection {
+    background: #666;
+  }
 }
 
 input,
@@ -70,12 +85,53 @@ span {
   color: white;
 }
 
+table {
+  width: 100%;
+}
+
+table a {
+  text-decoration: underline;
+}
+
+table a:hover {
+  color: #ccc;
+}
+
+table div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+table button:focus {
+  outline: none;
+}
+
+th, td {
+  font-family: "Roboto Slab", serif;
+  font-weight: 500;
+  color: white;
+  padding: 8px 25px 8px 0;
+}
+
+td {
+  font-weight: 200;
+}
+
+ul {
+  padding: 0;
+}
+
 .bioArea {
   padding: 0 20px 0 20px;
 }
 
 .block {
   display: block;
+}
+
+.col {
+  margin-top: 12px;
 }
 
 .profileHeaderText {

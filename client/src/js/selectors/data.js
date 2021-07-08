@@ -1,3 +1,3 @@
-export default (posts) => {
-    return posts;
+export default (data) => {
+    return data;
 }

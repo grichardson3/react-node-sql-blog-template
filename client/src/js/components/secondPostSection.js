@@ -2,22 +2,19 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import selectData from '../selectors/data';
 
 class SecondPostSection extends Component {
-    constructor(props){
-        super(props);
-    }
     render(){
         return (
             <div>
                 <div className="row">
                     {
-                        this.props.data.map((post) => {
-                            if (post.post_id && post.post_id > 8) {
+                        // eslint-disable-next-line
+                        this.props.posts.map((post) => {
+                            if (post.post_id && post.post_id > (this.props.posts.findIndex((post) => post.post_id >= 8) + 1)) {
                                 return (
-                                    <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 blogPost" key={post.post_id}>
-                                        <Link to="/post/1">
+                                    <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 blogPost" id={post.post_id} key={post.post_id}>
+                                        <Link to={`/post/${post.post_id}`}>
                                             <div className="blogPostFeaturePhoto">
                                                 <img
                                                     alt=""
@@ -25,7 +22,7 @@ class SecondPostSection extends Component {
                                                 />
                                             </div>
                                         </Link>
-                                        <Link to="/post/1">
+                                        <Link to={`/post/${post.post_id}`}>
                                             <h2 className="blogPostTitle">
                                                 {
                                                     post.post_title.length > 75 ?
@@ -66,6 +63,7 @@ class SecondPostSection extends Component {
                                     </div>
                                 )
                             }
+                            
                         })
                     }
                 </div>
@@ -76,7 +74,8 @@ class SecondPostSection extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        data: selectData(state.posts, state.authors)
+        posts: state.posts,
+        users: state.users
     };
 };
 

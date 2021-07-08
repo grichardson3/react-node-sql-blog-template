@@ -2,36 +2,50 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import selectData from '../selectors/data';
+
+import Header from './header';
+import Footer from './footer';
 
 class FilterByTag extends Component {
     constructor(props){
         super(props);
+        this.state = {
+            posts: []
+        }
+    }
+    componentDidMount(){
+        setTimeout(() => {
+            this.setState({
+                posts: this.props.posts.filter((post) => post.post_tag.toLowerCase() === (window.location.href.split("/")[window.location.href.split("/").length - 1]))
+            })
+        }, 200);
     }
     render(){
         let count = -1;
         return (
             <div>
-                <div id="tagPostsResultString">
-                    <h2>Filter by tag:
-                        <span id="tagPostsIndividualTag">
-                            {
-                                this.props.data.map((post) => {
-                                    if (post.post_id && post.post_tag === window.location.href.split("/")[window.location.href.split("/").length - 1]) {
+                <Header/>
+                <div id="container" className="container">
+                    <div id="tagPostsResultString">
+                        <h2>Filter by tag:
+                            <span id="tagPostsIndividualTag">
+                                {
+                                    // eslint-disable-next-line
+                                    this.state.posts.map((post) => {
                                         count++;
                                         return (
                                             count < 1 ? post.post_tag : null
                                         )
-                                    }
-                                })
-                            }
-                        </span>
-                    </h2>
-                </div>
-                <div className="row">
-                    {
-                        this.props.data.map((post) => {
-                            if (post.post_id && post.post_tag === window.location.href.split("/")[window.location.href.split("/").length - 1]) {
+                                    })
+                                }
+                            </span>
+                        </h2>
+                    </div>
+                    <div className="row">
+                        {
+                            this.state.posts.length !== 0 ?
+                            // eslint-disable-next-line
+                            this.state.posts.map((post) => {
                                 return (
                                     <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 blogPost" key={post.post_id}>
                                         <Link to={`/post/${post.post_id}`}>
@@ -78,10 +92,14 @@ class FilterByTag extends Component {
                                         </div>
                                     </div>
                                 )
-                            }
-                        })
-                    }
+                            }) : <div className="col col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div className="noContent"><span>No results found...</span></div>
+                                    <br></br>
+                                </div>
+                        }
+                    </div>
                 </div>
+                <Footer/>
             </div>
         )
     }
@@ -89,7 +107,8 @@ class FilterByTag extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        data: selectData(state.posts, state.authors)
+        posts: state.posts,
+        users: state.users
     };
 };
 

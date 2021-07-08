@@ -9,7 +9,6 @@ class AddUser extends Component {
     }
     addUser(e){
         e.preventDefault();
-        console.log(e.target.elements.firstname.value);
         let newUser = {
             firstname: e.target.elements.firstname.value,
             lastname: e.target.elements.lastname.value,
