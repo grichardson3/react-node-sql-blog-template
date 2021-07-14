@@ -17,11 +17,11 @@ app.use((req, res, next) => {
 
 const connection = mysql.createPool({
   connectionLimit: 10,
-  host: 'localhost',
+  host: 'us-cdbr-east-04.cleardb.com',
   port: 3306,
-  user: 'root',
-  password: '',
-  database: 'mern-blog'
+  user: 'b0e4a6aece460f',
+  password: '34670ce5',
+  database: 'heroku_9a82676a2c2d448'
 });
 
 // API Call Variables
