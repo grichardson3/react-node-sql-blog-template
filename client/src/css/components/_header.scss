@@ -13,10 +13,12 @@ header {
 #headerRightSide {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 #logoArea {
   user-select: none;
+  display: block;
 }
 
 #searchBar {
@@ -27,5 +29,17 @@ header {
 @media screen and (max-width: 960px) {
   #searchBar {
     width: 240px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  #searchBar {
+    width: 300px;
+  }
+  #logoArea {
+    display: none;
+  }
+  #headerRightSide {
+    width: 100%;
   }
 }

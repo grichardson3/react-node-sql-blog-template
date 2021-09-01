@@ -16,7 +16,7 @@ class DashboardEditTheme extends Component {
         }
     }
     componentDidMount(){
-        fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
+        fetch(`https://react-node-mysql-blog-template.herokuapp.com/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ class DashboardEditTheme extends Component {
                                                         theme_fontParagraph: document.querySelector("#fontParagraph").value,
                                                         theme_fontDetails: document.querySelector("#fontDetails").value
                                                     }
-                                                    fetch("/saveTheme", {
+                                                    fetch("https://react-node-mysql-blog-template.herokuapp.com/saveTheme", {
                                                         method: 'PUT',
                                                         headers: {
                                                             'Content-Type': 'application/json',

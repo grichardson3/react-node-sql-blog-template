@@ -15,7 +15,7 @@ class FilterByAuthor extends Component {
             userExists: false
         }
     }
-    componentDidMount(){
+    fetchData(){
         setTimeout(() => {
             this.setState({
                 users: this.props.users.filter((user) => user.users_username.includes(window.location.href.split("/")[window.location.href.split("/").length - 1]))
@@ -26,7 +26,13 @@ class FilterByAuthor extends Component {
                     posts: this.props.posts.filter((post) => post.post_author.includes(window.location.href.split("/")[window.location.href.split("/").length - 1]))
                 })
             }
-        }, 200)
+        }, 100);
+    }
+    componentDidMount(){
+       this.fetchData(); 
+    }
+    componentWillUpdate(){
+        this.fetchData();
     }
     render(){
         return (
@@ -123,7 +129,7 @@ class FilterByAuthor extends Component {
                                 </div>
                             )
                         }) : <div className="col col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <div className="noContent"><span>No results found...</span></div>
+                                <div className="noContent"><span>Loading...</span></div>
                                 <br></br>
                             </div>
                     }

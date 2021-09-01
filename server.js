@@ -17,16 +17,15 @@ app.use((req, res, next) => {
 
 const connection = mysql.createPool({
   connectionLimit: 10,
-  host: 'us-cdbr-east-04.cleardb.com',
+  host: 'localhost',
   port: 3306,
-  user: 'b0e4a6aece460f',
-  password: '34670ce5',
-  database: 'heroku_9a82676a2c2d448'
+  user: 'root',
+  password: '',
+  database: 'mern-blog'
 });
 
 // API Call Variables
 const SELECT_ALL_USERS = 'SELECT * FROM tbl_users';
-const SELECT_ALL_USER_SESSION_KEYS = 'SELECT users_sessionKey FROM tbl_users';
 const SELECT_ALL_POSTS = 'SELECT * FROM tbl_posts';
 const SELECT_THEME = 'SELECT * FROM tbl_theme';
 const SELECT_TAGS_FROM_POSTS = 'SELECT DISTINCT post_tag FROM tbl_posts';

@@ -13,29 +13,40 @@ class IndividualPost extends Component {
             post: ''
         }
     }
-    componentDidMount(){
-        setTimeout(() => {
+    fetchData(){
+        if (this.props.posts !== []) {
             this.setState({
                 post: this.props.posts[window.location.href.split("/")[window.location.href.split("/").length - 1] - 1]
             })
             this.addPostView();
-        }, 200)
+        } else if (this.props === []) {
+            setTimeout(() => {
+                console.log(this.props);
+                this.fetchData();
+            }, 200);
+        }
     }
+    componentDidMount(){
+        this.fetchData();
+    }
+    /*componentWillUpdate(){
+        this.fetchData();
+    }*/
     addPostView(){
-            let data = {
-                postViews: this.props.posts[window.location.href.split("/")[window.location.href.split("/").length - 1] - 1]
-            }
-            if (data.postViews !== undefined) {
-                fetch("/addPostView", {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': '*'
-                    },
-                    mode: 'cors',
-                    body: JSON.stringify(data)
-                })
-            }
+        let data = {
+            postViews: this.props.posts[window.location.href.split("/")[window.location.href.split("/").length - 1] - 1]
+        }
+        if (data.postViews !== undefined) {
+            fetch("https://react-node-mysql-blog-template.herokuapp.com/addPostView", {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                mode: 'cors',
+                body: JSON.stringify(data)
+            })
+        }
     }
     render(){
         return (
@@ -58,7 +69,8 @@ class IndividualPost extends Component {
                                 </div>
                                 <div id="individualPostFeaturePhoto">
                                     <img
-                                        alt=""
+                                        title={this.state.post.post_title}
+                                        alt={this.state.post.post_title}
                                         src={this.state.post.post_featurephoto}
                                     />
                                 </div>
@@ -69,7 +81,7 @@ class IndividualPost extends Component {
                                 </div>
                             </div>
                         </div> : <div className="col col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div className="noContent"><span>No results found...</span></div>
+                                    <div className="noContent"><span>Loading...</span></div>
                                     <br></br>
                                 </div>
                     }

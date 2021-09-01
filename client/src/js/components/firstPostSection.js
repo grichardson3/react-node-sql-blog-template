@@ -26,7 +26,8 @@ class FirstPostSection extends Component {
                                             <Link to={`/post/${post.post_id}`}>
                                                 <div className="blogPostFeaturePhoto">
                                                     <img 
-                                                        alt=""
+                                                        title={post.post_title}
+                                                        alt={post.post_title}
                                                         src={post.post_featurephoto}
                                                     />
                                                 </div>
@@ -74,7 +75,7 @@ class FirstPostSection extends Component {
                                 )
                             }
                         }) : <div className="col col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <div className="noContent"><span>No posts</span></div>
+                                <div className="noContent"><span>Loading...</span></div>
                                 <br></br><br></br>
                             </div>
                     }
@@ -87,16 +88,20 @@ class FirstPostSection extends Component {
                                 return (
                                     <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 blogPost" id={post.post_id} key={post.post_id}>
                                         <Link to={`/post/${post.post_id}`}>
-                                            <div className="blogPostFeaturePhoto">
-                                                <img 
-                                                    alt=""
+                                            <div 
+                                            className="blogPostFeaturePhoto">
+                                                <img
+                                                    title={post.post_title}
+                                                    alt={post.post_title}
                                                     src={post.post_featurephoto}
                                                 />
                                             </div>
                                         </Link>
                                         <Link to={`/post/${post.post_id}`}>
                                             <h2>
-                                                <span className="blogPostTitle">
+                                                <span 
+                                                title={post.post_title}
+                                                className="blogPostTitle">
                                                     {
                                                         post.post_title.length > 75 ?
                                                         `${post.post_title.substring(0,75)}...` :
@@ -109,7 +114,9 @@ class FirstPostSection extends Component {
                                             <div>
                                                 <span>Author: </span>
                                                 <Link to={`/author/${post.post_author}`}>
-                                                    <span className="blogPostAuthorLink">{post.post_author}</span>
+                                                    <span 
+                                                    className="blogPostAuthorLink"
+                                                    >{post.post_author}</span>
                                                 </Link>
                                             </div>
                                             <span className="blogPostDateText">Date Posted: {moment.unix(post.post_date).format("MMM Do, YYYY")}</span>

@@ -20,7 +20,7 @@ class DashboardCreateProfile extends Component {
         }
     }
     componentDidMount(){
-        fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
+        fetch(`https://react-node-mysql-blog-template.herokuapp.com/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -118,7 +118,7 @@ class DashboardCreateProfile extends Component {
                                                 if (validationStatus.length === 0) {
                                                     const hash = bcrypt.hashSync(data.users_password, salt);
                                                     data.users_password = hash;
-                                                    fetch("/addUser", {
+                                                    fetch("https://react-node-mysql-blog-template.herokuapp.com/addUser", {
                                                         method: 'POST',
                                                         headers: {
                                                             'Content-Type': 'application/json',

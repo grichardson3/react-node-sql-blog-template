@@ -17,7 +17,8 @@ class SecondPostSection extends Component {
                                         <Link to={`/post/${post.post_id}`}>
                                             <div className="blogPostFeaturePhoto">
                                                 <img
-                                                    alt=""
+                                                    title={post.post_title}
+                                                    alt={post.post_title}
                                                     src={post.post_featurephoto}
                                                 />
                                             </div>
@@ -40,7 +41,9 @@ class SecondPostSection extends Component {
                                                     </span>
                                                 </Link>
                                             </div>
-                                            <span className="blogPostDateText">Date Posted: {moment.unix(post.post_date).format("MMM Do, YYYY")}</span>
+                                            <p 
+                                            className="blogPostDateText"
+                                            >Date Posted: {moment.unix(post.post_date).format("MMM Do, YYYY")}</p>
                                         </div>
                                         <p className="blogPostContent">
                                             {

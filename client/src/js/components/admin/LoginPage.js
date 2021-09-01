@@ -13,7 +13,7 @@ class LoginPage extends Component {
             loginContainer.style.height = (window.innerHeight) + "px";
         });
         setTimeout(() => {
-            fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
+            fetch(`https://react-node-mysql-blog-template.herokuapp.com/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ class LoginPage extends Component {
                 }
                 
             });
-        }, 200);
+        }, 1000);
     }
     render(){
         return (
@@ -45,7 +45,7 @@ class LoginPage extends Component {
                     <input id="password" className="form-control" type="password" name="password"/>
                     <br></br>
                     <button className="btn btn-lg btn-primary" onClick={() => {
-                        fetch('/users', {
+                        fetch('https://react-node-mysql-blog-template.herokuapp.com/users', {
                             method: 'GET',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ class LoginPage extends Component {
                                             "sessionKey": hash,
                                             "usernameOrEmail": usernameOrEmailValue
                                         }
-                                        fetch('/setSessionKey', {
+                                        fetch('https://react-node-mysql-blog-template.herokuapp.com/setSessionKey', {
                                             method: 'POST',
                                             headers: {
                                                 'Accept': 'application/json',

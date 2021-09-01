@@ -13,12 +13,25 @@ class FilterByTag extends Component {
             posts: []
         }
     }
+    fetchData(){
+        setTimeout(() => { 
+            if (this.props.posts === []) {
+                console.log("fetch");
+                setTimeout(() => {
+                    this.fetchData();
+                }, 100);
+            } else if (this.props.posts !== []) { 
+                this.setState({
+                    posts: this.props.posts.filter((post) => post.post_tag.toLowerCase().includes(window.location.href.split("/")[window.location.href.split("/").length - 1]))
+                });
+            }
+        }, 50);
+    }
     componentDidMount(){
-        setTimeout(() => {
-            this.setState({
-                posts: this.props.posts.filter((post) => post.post_tag.toLowerCase() === (window.location.href.split("/")[window.location.href.split("/").length - 1]))
-            })
-        }, 200);
+        this.fetchData();
+    }
+    componentWillUpdate(){
+        this.fetchData();
     }
     render(){
         let count = -1;
@@ -51,7 +64,8 @@ class FilterByTag extends Component {
                                         <Link to={`/post/${post.post_id}`}>
                                             <div className="blogPostFeaturePhoto">
                                                 <img
-                                                    alt=""
+                                                    title={post.post_title}
+                                                    alt={post.post_title}
                                                     src={post.post_featurephoto}
                                                 />
                                             </div>
@@ -93,7 +107,7 @@ class FilterByTag extends Component {
                                     </div>
                                 )
                             }) : <div className="col col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div className="noContent"><span>No results found...</span></div>
+                                    <div className="noContent"><span>Loading...</span></div>
                                     <br></br>
                                 </div>
                         }

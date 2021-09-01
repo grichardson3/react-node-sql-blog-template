@@ -9,7 +9,7 @@ class TagBrowser extends Component {
             postTags: [],
             test: []
         }
-        fetch('/tagsFromPosts')
+        fetch('https://react-node-mysql-blog-template.herokuapp.com/tagsFromPosts')
         .then(response => response.json())
         .then((postTagsData) => {
             this.setState({ postTags: postTagsData })
@@ -47,7 +47,7 @@ class TagBrowser extends Component {
                                     )
                                 }
                             }) : <div className="col col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div className="noContent"><span>No tags</span></div>
+                                    <div className="noContent"><span>Loading...</span></div>
                                     <br></br>
                                 </div>
                         }

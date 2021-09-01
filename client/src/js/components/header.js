@@ -8,7 +8,10 @@ class Header extends Component {
             <header>
                 <div id="logoArea">
                     <Link to="/">
-                        <img src="../img/mern-blog-logo-white.png" alt="MERN Blog" />
+                        <img 
+                        src="../img/mern-blog-logo-white.png"
+                        alt="MERN Blog"
+                        title="MERN Blog"/>
                     </Link>
                 </div>
                 <div id="headerRightSide">

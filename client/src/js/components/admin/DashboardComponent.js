@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import DashboardNavigation from './DashboardNavigation';
 
@@ -20,6 +21,41 @@ class DashboardComponent extends Component {
         }
     }
     componentDidMount(){
+        fetch(`https://react-node-mysql-blog-template.herokuapp.com/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+        .then(response => response.json())
+        .then((userData) => {
+            if (!sessionStorage.getItem("sessionKey")) {
+                this.props.history.push('/');
+            } else {
+                setTimeout(() => {
+                    this.setState({ 
+                        authenticated: true,
+                        posts: this.props.posts.sort((a, b) => b.post_views - a.post_views)
+                    })
+                    this.setState({
+                        highestNumber: this.state.posts[0].post_views
+                    })
+                    document.querySelectorAll(".dashboardContainer__postViews").forEach((row) => {
+                        this.setState({
+                            postViews: this.state.postViews.concat(row.textContent)
+                        })
+                    });
+                    document.querySelectorAll(".dashboardContainer__graphBar").forEach((bar) => {
+                        bar.style.width = `${(this.state.postViews[this.state.count] / this.state.highestNumber) * 100}%`;
+                        this.setState({
+                            count: this.state.count + 1
+                        })
+                    });
+                }, 500);
+            }
+        });
+
         const loginContainer = document.querySelector("#dashboard");
         const dataContainer = document.querySelector("#dashboardContainer__stats");
 
@@ -52,55 +88,18 @@ class DashboardComponent extends Component {
                         count: this.state.count + 1
                     })
                 });
-            }, 100);
+            }, 1000);
             if (searchInput.value !== "") {
                 setTimeout(() => {
                     this.setState(() => ({
                         posts: this.state.posts.filter((post) => post.post_title.toLowerCase().includes(searchInput.value.toLowerCase()))
                     }));
-                }, 100)
+                }, 1000)
             }
-        })
-        setTimeout(() => {
-            fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                }
-            })
-            .then(response => response.json())
-            .then((userData) => {
-                if (!sessionStorage.getItem("sessionKey")) {
-                    this.props.history.push('/');
-                } else if (sessionStorage.getItem("sessionKey") !== userData[0].users_sessionKey){
-                    this.props.history.push('/');
-                } else {
-                    setTimeout(() => {
-                        this.setState({ 
-                            authenticated: true,
-                            posts: this.props.posts.sort((a, b) => b.post_views - a.post_views)
-                        })
-                        this.setState({
-                            highestNumber: this.state.posts[0].post_views
-                        })
-                        document.querySelectorAll(".dashboardContainer__postViews").forEach((row) => {
-                            this.setState({
-                                postViews: this.state.postViews.concat(row.textContent)
-                            })
-                        });
-                        document.querySelectorAll(".dashboardContainer__graphBar").forEach((bar) => {
-                            bar.style.width = `${(this.state.postViews[this.state.count] / this.state.highestNumber) * 100}%`;
-                            this.setState({
-                                count: this.state.count + 1
-                            })
-                        });
-                    }, 200);
-                }
-            });
-        }, 200)
+        });
     }
     render(){
+        console.log(this.state);
         return (
             <div id="dashboard">
                 <DashboardNavigation/>
@@ -153,14 +152,10 @@ class DashboardComponent extends Component {
                                                 return (
                                                     <tr className="postRow" key={post.post_id}>
                                                         <td>
-                                                            <a target="_blank" rel="noopener noreferrer" href={`/post/${post.post_id}`}>
-                                                                {post.post_title}
-                                                            </a>
+                                                            <Link to={`/post/${post.post_id}`}><span>{post.post_title}</span></Link>
                                                         </td>
                                                         <td>
-                                                            <a target="_blank" rel="noopener noreferrer" href={`/author/${post.post_author}`}>
-                                                                {post.post_author}
-                                                            </a>
+                                                            <Link to={`/author/${post.post_author}`}><span>{post.post_author}</span></Link>
                                                         </td>
                                                         <td>{momentTZ.unix(post.post_date).tz("America/Toronto").format('MMMM Do YYYY, h:mm:ss a')} (E.S.T)</td>
                                                         <td>
@@ -171,7 +166,7 @@ class DashboardComponent extends Component {
                                                         </td>
                                                     </tr>
                                                 )
-                                            }) : <tr><td className="noContent"><span>No Posts</span></td></tr>
+                                            }) : <tr><td className="noContent"><span>Loading...</span></td></tr>
                                         }
                                 </tbody>
                             </table>

@@ -13,19 +13,30 @@ class SearchResults extends Component {
             posts: []
         }
     }
-    componentDidMount(){
-        setTimeout(() => {
+    fetchData(){
+        if (this.props.posts === []) {
+            console.log("fetch");
+            setTimeout(() => {
+                this.fetchData();
+            }, 200);
+        } else if (this.props.posts !== []) { 
             this.setState({
                 posts: this.props.posts.filter((post) => post.post_title.toLowerCase().includes(window.location.href.split("/")[window.location.href.split("/").length - 1]))
-            })
-        }, 200);
+            });
+        }
+    }
+    componentDidMount(){
+        this.fetchData();
     }
     componentDidUpdate(){
-        setTimeout(() => {
-            this.setState({
-                posts: this.props.posts.filter((post) => post.post_title.toLowerCase().includes(window.location.href.split("/")[window.location.href.split("/").length - 1]))
-            })
-        }, 200);
+        console.log("updated");
+        /*if (this.state.isMounted) {
+            setTimeout(() => {
+                this.setState({
+                    posts: this.props.posts.filter((post) => post.post_title.toLowerCase().includes(window.location.href.split("/")[window.location.href.split("/").length - 1]))
+                })
+            }, 500);
+        }*/
     }
     render(){
         return (
@@ -45,7 +56,8 @@ class SearchResults extends Component {
                                         <Link to={`/post/${post.post_id}`}>
                                             <div className="blogPostFeaturePhoto">
                                                 <img
-                                                    alt=""
+                                                    title={post.post_title}
+                                                    alt={post.post_title}
                                                     src={post.post_featurephoto}
                                                 />
                                             </div>

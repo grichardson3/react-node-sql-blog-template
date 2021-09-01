@@ -55,8 +55,8 @@ class DashboardCreatePost extends Component {
                     );
                 });
             }
-        }, 500);
-        fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
+        }, 1000);
+        fetch(`https://react-node-mysql-blog-template.herokuapp.com/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -138,7 +138,7 @@ class DashboardCreatePost extends Component {
                                                 }
                                                 const validationStatus = createPostValidation(data);
                                                 if (validationStatus.length === 0) {
-                                                    fetch("/addPost", {
+                                                    fetch("https://react-node-mysql-blog-template.herokuapp.com/addPost", {
                                                         method: 'POST',
                                                         headers: {
                                                             'Content-Type': 'application/json',

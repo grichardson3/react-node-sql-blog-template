@@ -50,7 +50,7 @@ class DashboardViewProfiles extends Component {
                 }));
             }
         })
-        fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
+        fetch(`https://react-node-mysql-blog-template.herokuapp.com/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -61,15 +61,13 @@ class DashboardViewProfiles extends Component {
         .then((userData) => {
             if (!sessionStorage.getItem("sessionKey")) {
                 this.props.history.push("/");
-            } else if (sessionStorage.getItem("sessionKey") !== userData[0].users_sessionKey){
-                this.props.history.push("/");
             } else {
                 setTimeout(() => {
                     this.setState({
                         authenticated: true,
                         users: this.props.users.sort((a, b) => ('' + b.users_username).localeCompare(a.users_username))
                     })
-                }, 200)
+                }, 500)
             }
         });
     }
@@ -81,7 +79,7 @@ class DashboardViewProfiles extends Component {
         let data = {
             "userid": value
         }
-        fetch(`/deleteUser/${value}`, {
+        fetch(`https://react-node-mysql-blog-template.herokuapp.com/deleteUser/${value}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -259,7 +257,7 @@ class DashboardViewProfiles extends Component {
                                                     </td>
                                                 </tr>
                                             )
-                                        }) : <tr><td className="noContent"><span>No Profiles</span></td></tr>
+                                        }) : <tr><td className="noContent"><span>Loading...</span></td></tr>
                                     }
                                 </tbody>
                             </table>

@@ -17,7 +17,7 @@ class DashboardEditPost extends Component {
         }
     }
     componentDidMount(){
-        fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
+        fetch(`https://react-node-mysql-blog-template.herokuapp.com/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ class DashboardEditPost extends Component {
                                                                 post_content: document.querySelector(".tox-edit-area__iframe").contentDocument.body.innerText,
                                                                 post_tag: document.querySelector("#posttag").value,
                                                             }
-                                                            fetch("/savePost", {
+                                                            fetch("https://react-node-mysql-blog-template.herokuapp.com/savePost", {
                                                                 method: 'PUT',
                                                                 headers: {
                                                                     'Content-Type': 'application/json',

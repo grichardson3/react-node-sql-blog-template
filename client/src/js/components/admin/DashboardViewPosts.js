@@ -45,7 +45,7 @@ class DashboardViewPosts extends Component {
                 }));
             }
         })
-        fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
+        fetch(`https://react-node-mysql-blog-template.herokuapp.com/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -56,15 +56,13 @@ class DashboardViewPosts extends Component {
         .then((userData) => {
             if (!sessionStorage.getItem("sessionKey")) {
                 this.props.history.push("/");
-            } else if (sessionStorage.getItem("sessionKey") !== userData[0].users_sessionKey){
-                this.props.history.push("/");
             } else {
                 setTimeout(() => {
                     this.setState({
                         authenticated: true,
                         posts: this.props.posts.sort((a, b) => ('' + b.post_date).localeCompare(a.post_date))
                     })
-                }, 200)
+                }, 500);
             }
         });
     }
@@ -73,7 +71,7 @@ class DashboardViewPosts extends Component {
         this.setState(() => ({
             posts: this.state.posts.filter((post) => value !== post.post_id)
         }));
-        fetch(`/deletePost/${value}`, {
+        fetch(`https://react-node-mysql-blog-template.herokuapp.com/deletePost/${value}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -189,14 +187,10 @@ class DashboardViewPosts extends Component {
                                             return (
                                                  <tr className="post" key={post.post_id}>
                                                  <td>
-                                                     <a target="_blank" rel="noopener noreferrer" href={`/post/${post.post_id}`}>
-                                                         {post.post_title}
-                                                     </a>
+                                                     <Link to={`/post/${post.post_id}`}><span>{post.post_title}</span></Link>
                                                  </td>
                                                  <td>
-                                                     <a target="_blank" rel="noopener noreferrer" href={`/author/${post.post_author}`}>
-                                                         {post.post_author}
-                                                     </a>
+                                                    <Link to={`/author/${post.post_author}`}><span>{post.post_author}</span></Link>
                                                  </td>
                                                  <td>{momentTZ.unix(post.post_date).tz("America/Toronto").format('MMMM Do YYYY, h:mm:ss a')} (E.S.T)</td>
                                                  <td>
@@ -212,7 +206,7 @@ class DashboardViewPosts extends Component {
                                                  </td>
                                              </tr>
                                             )
-                                        }) : <tr><td className="noContent"><span>No posts</span></td></tr>
+                                        }) : <tr><td className="noContent"><span>Loading...</span></td></tr>
                                     }
                                 </tbody>
                             </table>
