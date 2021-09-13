@@ -19,7 +19,7 @@ class DashboardUpdatePassword extends Component {
         }
     }
     componentDidMount(){
-        fetch(`https://react-node-mysql-blog-template.herokuapp.com/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
+        fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ class DashboardUpdatePassword extends Component {
                                                     if (updatePasswordValidation(data).length === 0) {
                                                         const hash = bcrypt.hashSync(data.password, salt);
                                                         data.password = hash;
-                                                        fetch("https://react-node-mysql-blog-template.herokuapp.com/updatePassword", {
+                                                        fetch("/updatePassword", {
                                                             method: 'PUT',
                                                             headers: {
                                                                 'Content-Type': 'application/json',

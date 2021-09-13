@@ -6,10 +6,9 @@ class TagBrowser extends Component {
     constructor(props){
         super(props);
         this.state = {
-            postTags: [],
-            test: []
+            postTags: []
         }
-        fetch('https://react-node-mysql-blog-template.herokuapp.com/tagsFromPosts')
+        fetch('/tagsFromPosts')
         .then(response => response.json())
         .then((postTagsData) => {
             this.setState({ postTags: postTagsData })
@@ -29,7 +28,7 @@ class TagBrowser extends Component {
             <div id="tagBrowserArea">
                 <h2>Browse By Tag</h2>
                 <div id="tagBrowserScroller">
-                    <button id="tagBrowserLeftArrow" onClick={this.scrollHandler}><span>&#60;</span></button>
+                    <button id="tagBrowserLeftArrow" onClick={this.scrollHandler}>&#60;</button>
                     <ul id="tagBrowserTagList">
                         {
                             this.state.postTags.length !== 0 ?
@@ -52,7 +51,7 @@ class TagBrowser extends Component {
                                 </div>
                         }
                     </ul>
-                    <button id="tagBrowserRightArrow" onClick={this.scrollHandler}><span>&#62;</span></button>
+                    <button id="tagBrowserRightArrow" onClick={this.scrollHandler}>&#62;</button>
                 </div>
             </div>
         )

@@ -18,7 +18,7 @@ class Header extends Component {
                     <div id="searchBar" className="input-group">
                         <input id="searchInput" className="form-control" placeholder="Search..."></input>
                         <div className="input-group-append">
-                            <button className="btn btn-primary" type="button" onClick={() => {
+                            <button id="searchButton" className="btn btn-primary" type="button" onClick={() => {
                                 this.props.history.push(`/search/${document.querySelector("#searchInput").value.toLowerCase()}`);
                             }}>Search</button>
                         </div>

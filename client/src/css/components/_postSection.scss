@@ -1,6 +1,7 @@
 .blogPost {
   margin: 0 0 50px 0;
   width: 100%;
+  padding: 12px;
 }
 
 .blogPostContent {
@@ -53,6 +54,22 @@
   margin: 0 0 12px 0;
 }
 
+.blogPostBottomMetaArea {
+  position: absolute;
+  bottom: -38px;
+  width: 100%;
+  left: 0;
+  right: 0;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 20px;
+}
+
+.blogPostBottomMetaAreaTwo {
+  display: flex;
+  justify-content: space-between;
+}
+
 .blogPostReadMore,
 .blogPostFeaturePhoto {
   user-select: none;
@@ -83,6 +100,7 @@
 .blogPostTagText {
   text-align: right;
   font-size: 14px;
+  margin-bottom: 0;
 }
 
 .blogPostIndividualTagText {
@@ -94,4 +112,8 @@
 .blogPostIndividualTagText:hover {
   opacity: 0.75;
   transition: 0.15s ease;
+}
+
+.blogPostTextArea {
+  padding: 12px;
 }

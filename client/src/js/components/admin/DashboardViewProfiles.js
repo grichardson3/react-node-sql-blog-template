@@ -21,6 +21,7 @@ class DashboardViewProfiles extends Component {
         this.state = {
             authenticated: false,
             users: [],
+            userAmount: 0,
             firstName: { firstNameAscendingSort: null, firstNameIcon: "•" },
             lastName: { lastNameAscendingSort: null, lastNameIcon: "•" },
             email: { emailAscendingSort: null, emailIcon: "•" },
@@ -50,7 +51,7 @@ class DashboardViewProfiles extends Component {
                 }));
             }
         })
-        fetch(`https://react-node-mysql-blog-template.herokuapp.com/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
+        fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -59,15 +60,28 @@ class DashboardViewProfiles extends Component {
         })
         .then(response => response.json())
         .then((userData) => {
-            if (!sessionStorage.getItem("sessionKey")) {
-                this.props.history.push("/");
-            } else {
-                setTimeout(() => {
+            if (sessionStorage.getItem("sessionKey")) {
+                if (sessionStorage.getItem("sessionKey") !== userData[0].users_sessionKey) {
+                    this.props.history.push("/");
+                } else {
                     this.setState({
-                        authenticated: true,
-                        users: this.props.users.sort((a, b) => ('' + b.users_username).localeCompare(a.users_username))
+                        authenticated: true
                     })
-                }, 500)
+                    fetch('/totalUserAmount')
+                    .then(response => response.json())
+                    .then((data) => {
+                        this.setState({
+                            userAmount: data[0].theme_userAmount
+                        })
+                        if (this.props.users.length !== 0) {
+                            this.setState({
+                                users: this.props.users.sort((a, b) => ('' + b.users_username).localeCompare(a.users_username))
+                            })
+                        }
+                    })
+                }
+            } else {
+                this.props.history.push("/");
             }
         });
     }
@@ -79,7 +93,7 @@ class DashboardViewProfiles extends Component {
         let data = {
             "userid": value
         }
-        fetch(`https://react-node-mysql-blog-template.herokuapp.com/deleteUser/${value}`, {
+        fetch(`/deleteUser/${value}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -87,6 +101,16 @@ class DashboardViewProfiles extends Component {
             },
             mode: 'cors',
             body: JSON.stringify(data)
+        })
+        .then((res) => {
+            return res.json();
+        });
+        fetch("/decrementTotalUserAmount", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            }
         })
         .then((res) => {
             return res.json();
@@ -179,11 +203,6 @@ class DashboardViewProfiles extends Component {
                                 <h2>Profiles</h2>
                                 <div id="searchBar" className="input-group">
                                     <input id="searchInput" className="form-control" placeholder="Search..."></input>
-                                    <div className="input-group-append">
-                                        <button className="btn btn-primary" type="button" onClick={() => {
-                                            this.props.history.push(`/search/${document.querySelector("#searchInput").value.toLowerCase()}`);
-                                        }}>Search</button>
-                                    </div>
                                 </div>
                             </div>
                             <Link to={`/createProfile`}>

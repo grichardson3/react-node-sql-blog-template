@@ -1,6 +1,6 @@
 {
   "name": "react-node-sql-blog-template",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "dependencies": {
     "@tinymce/tinymce-react": "^3.12.6",
@@ -37,7 +37,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "https://database-1.cznvaca8yg3h.us-east-2.rds.amazonaws.com",
+  "proxy": "http://localhost:8000",
   "eslintConfig": {
     "extends": "react-app"
   },

@@ -18,7 +18,7 @@ class DashboardEditProfile extends Component {
         }
     }
     componentDidMount(){
-        fetch(`https://react-node-mysql-blog-template.herokuapp.com/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
+        fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ class DashboardEditProfile extends Component {
                                                                 newUsername: data.users_username
                                                             }
                                                             if (dataTwo.post_author !== localStorage.getItem("user_username")) {
-                                                                fetch("https://react-node-mysql-blog-template.herokuapp.com/updateUsernameOnPosts", {
+                                                                fetch("/updateUsernameOnPosts", {
                                                                     method: 'PUT',
                                                                     headers: {
                                                                         'Content-Type': 'application/json',
@@ -123,7 +123,7 @@ class DashboardEditProfile extends Component {
                                                                     }
                                                                 });
                                                             }
-                                                            fetch("https://react-node-mysql-blog-template.herokuapp.com/saveUser", {
+                                                            fetch("/saveUser", {
                                                                 method: 'PUT',
                                                                 headers: {
                                                                     'Content-Type': 'application/json',

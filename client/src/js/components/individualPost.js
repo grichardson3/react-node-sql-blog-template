@@ -13,31 +13,30 @@ class IndividualPost extends Component {
             post: ''
         }
     }
-    fetchData(){
+    componentDidMount(){
         if (this.props.posts !== []) {
             this.setState({
                 post: this.props.posts[window.location.href.split("/")[window.location.href.split("/").length - 1] - 1]
             })
-            this.addPostView();
-        } else if (this.props === []) {
-            setTimeout(() => {
-                console.log(this.props);
-                this.fetchData();
-            }, 200);
+        }
+        this.addPostView();
+    }
+    componentWillUpdate(){
+        if (
+            this.props.posts[window.location.href.split("/")[window.location.href.split("/").length - 1] - 1] &&
+            this.props.posts.length === this.props.posts[window.location.href.split("/")[window.location.href.split("/").length - 1] - 1].post_id
+        ) {
+            this.setState({
+                post: this.props.posts[window.location.href.split("/")[window.location.href.split("/").length - 1] - 1]
+            })
         }
     }
-    componentDidMount(){
-        this.fetchData();
-    }
-    /*componentWillUpdate(){
-        this.fetchData();
-    }*/
     addPostView(){
         let data = {
             postViews: this.props.posts[window.location.href.split("/")[window.location.href.split("/").length - 1] - 1]
         }
         if (data.postViews !== undefined) {
-            fetch("https://react-node-mysql-blog-template.herokuapp.com/addPostView", {
+            fetch("/addPostView", {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

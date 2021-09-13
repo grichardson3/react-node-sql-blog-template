@@ -21,42 +21,40 @@ class DashboardCreatePost extends Component {
         }
     }
     componentDidMount(){
-        setTimeout(() => {
-            if (document.querySelector("#featurephoto")) {
-                document.querySelector("#featurephoto").addEventListener('change', () => {
-                    const toDataURL = (src, callback, outputFormat) => {
-                        var img = new Image();
-                        img.crossOrigin = 'Anonymous';
-                        img.onload = function() {
-                            var canvas = document.createElement('CANVAS');
-                            var ctx = canvas.getContext('2d');
-                            let dataURL;
-                    
-                            canvas.width = this.naturalWidth;
-                            canvas.height = this.naturalHeight;
-                    
-                            ctx.drawImage(this, 0, 0);
-                    
-                            dataURL = canvas.toDataURL(outputFormat);
-                    
-                            callback(dataURL);
-                        };
+        if (document.querySelector("#featurephoto")) {
+            document.querySelector("#featurephoto").addEventListener('change', () => {
+                const toDataURL = (src, callback, outputFormat) => {
+                    var img = new Image();
+                    img.crossOrigin = 'Anonymous';
+                    img.onload = function() {
+                        var canvas = document.createElement('CANVAS');
+                        var ctx = canvas.getContext('2d');
+                        let dataURL;
+                
+                        canvas.width = this.naturalWidth;
+                        canvas.height = this.naturalHeight;
+                
+                        ctx.drawImage(this, 0, 0);
+                
+                        dataURL = canvas.toDataURL(outputFormat);
+                
+                        callback(dataURL);
+                    };
+                    img.src = src;
+                    if (!img.complete || img.complete === undefined) {
+                        img.src = "data:image/png;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="; // empty value
                         img.src = src;
-                        if (!img.complete || img.complete === undefined) {
-                            img.src = "data:image/png;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="; // empty value
-                            img.src = src;
-                        }
                     }
-                    toDataURL(
-                        `${document.querySelector('#featurephoto').value}`,
-                        function(dataURL) {
-                            thing = dataURL;
-                        }
-                    );
-                });
-            }
-        }, 1000);
-        fetch(`https://react-node-mysql-blog-template.herokuapp.com/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
+                }
+                toDataURL(
+                    `${document.querySelector('#featurephoto').value}`,
+                    function(dataURL) {
+                        thing = dataURL;
+                    }
+                );
+            });
+        }
+        fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -138,7 +136,7 @@ class DashboardCreatePost extends Component {
                                                 }
                                                 const validationStatus = createPostValidation(data);
                                                 if (validationStatus.length === 0) {
-                                                    fetch("https://react-node-mysql-blog-template.herokuapp.com/addPost", {
+                                                    fetch("/addPost", {
                                                         method: 'POST',
                                                         headers: {
                                                             'Content-Type': 'application/json',
@@ -158,6 +156,16 @@ class DashboardCreatePost extends Component {
                                                             document.querySelector(".addPost").appendChild(editStatus);
                                                         }
                                                     });
+                                                    fetch("/incrementTotalPostAmount", {
+                                                        method: 'GET',
+                                                        headers: {
+                                                            'Content-Type': 'application/json',
+                                                            'Access-Control-Allow-Origin': '*'
+                                                        }
+                                                    })
+                                                    .then((res) => {
+                                                        return res.json();
+                                                    })
                                                 } else {
                                                     document.querySelector(".statusMessages").innerHTML = "";
                                                     validationStatus.forEach((status) => {

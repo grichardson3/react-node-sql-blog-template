@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const DashboardNavigation = () => (
     <div>
         <div id="dashboardContainer__navigation">
-            <Link to="/viewPosts"><h1>MERN Blog Dashboard</h1></Link>
+            <Link to="/dashboard"><h1>MERN Blog Dashboard</h1></Link>
             <ul>
                 <div>
                     <Link to="/dashboard"><span>Home</span></Link>

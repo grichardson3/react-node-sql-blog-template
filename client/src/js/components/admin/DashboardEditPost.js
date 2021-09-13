@@ -17,7 +17,7 @@ class DashboardEditPost extends Component {
         }
     }
     componentDidMount(){
-        fetch(`https://react-node-mysql-blog-template.herokuapp.com/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
+        fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ class DashboardEditPost extends Component {
                 this.props.history.push("/");
             } else {
                 this.setState({ authenticated: true })
-            }     
+            }
         });
     }
     render(){
@@ -43,7 +43,7 @@ class DashboardEditPost extends Component {
                     <div id="dashboardContainer__main">
                         <h1>Edit Post</h1>
                         {
-                            this.state.authenticated &&
+                            this.state.authenticated ?
                             // eslint-disable-next-line
                             this.props.posts.map((post) => {
                                 if (post.post_id && post.post_id === JSON.parse(window.location.href.split("/")[window.location.href.split("/").length - 1])) {
@@ -94,7 +94,7 @@ class DashboardEditPost extends Component {
                                                                 post_content: document.querySelector(".tox-edit-area__iframe").contentDocument.body.innerText,
                                                                 post_tag: document.querySelector("#posttag").value,
                                                             }
-                                                            fetch("https://react-node-mysql-blog-template.herokuapp.com/savePost", {
+                                                            fetch("/savePost", {
                                                                 method: 'PUT',
                                                                 headers: {
                                                                     'Content-Type': 'application/json',
@@ -121,7 +121,7 @@ class DashboardEditPost extends Component {
                                         </div>
                                     )
                                 }
-                            })
+                            }) : <span>Loading...</span>
                         }
                     </div>
                 </div>

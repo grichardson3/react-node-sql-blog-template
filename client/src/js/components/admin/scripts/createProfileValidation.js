@@ -3,9 +3,6 @@ import validator from 'validator';
 const createProfileValidation = (data, props) => {
     let statusArray = []
 
-    // THE YANDERE DEV IF STATEMENT METHOD LOL
-    console.log(data);
-
     if (
         !(
             validator.isLength(data.users_firstname, {min: 1})

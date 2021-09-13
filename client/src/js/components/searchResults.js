@@ -10,33 +10,47 @@ class SearchResults extends Component {
     constructor(props){
         super(props);
         this.state = {
-            posts: []
-        }
-    }
-    fetchData(){
-        if (this.props.posts === []) {
-            console.log("fetch");
-            setTimeout(() => {
-                this.fetchData();
-            }, 200);
-        } else if (this.props.posts !== []) { 
-            this.setState({
-                posts: this.props.posts.filter((post) => post.post_title.toLowerCase().includes(window.location.href.split("/")[window.location.href.split("/").length - 1]))
-            });
+            posts: [],
+            postAmount: 0,
+            count: 0,
+            currentSearch: window.location.href.split("/")[window.location.href.split("/").length - 1]
         }
     }
     componentDidMount(){
-        this.fetchData();
+        fetch('/totalPostAmount', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+        .then(response => response.json())
+        .then((data) => {
+            this.setState({
+                postAmount: data[0].theme_postAmount,
+                currentSearch: window.location.href.split("/")[window.location.href.split("/").length - 1]
+            });
+            this.setState({
+                posts: this.props.posts.filter((post) => post.post_title.toLowerCase().includes(window.location.href.split("/")[window.location.href.split("/").length - 1]))
+            });
+        });
+        document.querySelector("#searchButton").addEventListener("click", () => {
+            this.setState({
+                posts: this.props.posts.filter((post) => post.post_title.toLowerCase().includes(document.querySelector("#searchInput").value))
+            })
+        });
     }
     componentDidUpdate(){
-        console.log("updated");
-        /*if (this.state.isMounted) {
+        // This fetches the number of posts in props and tells componentDidUpdate() component to stop updating
+        // when the number of post props reaches the total number of posts in the components state
+        // ( to avoid infinite looping of componentDidUpdate() )
+        if (this.props.posts.length > 0 && this.props.posts.length < this.state.postAmount) {
             setTimeout(() => {
                 this.setState({
                     posts: this.props.posts.filter((post) => post.post_title.toLowerCase().includes(window.location.href.split("/")[window.location.href.split("/").length - 1]))
-                })
-            }, 500);
-        }*/
+                });
+            }, 1);
+        }
     }
     render(){
         return (

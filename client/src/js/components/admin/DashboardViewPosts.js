@@ -16,6 +16,7 @@ class DashboardViewPosts extends Component {
         this.state = {
             authenticated: false,
             posts: [],
+            postAmount: 0,
             title: { titleAscendingSort: null, titleIcon: "•" },
             author: { authorAscendingSort: null, authorIcon: "•" },
             date: { dateAscendingSort: true, dateIcon: "▼" },
@@ -45,7 +46,7 @@ class DashboardViewPosts extends Component {
                 }));
             }
         })
-        fetch(`https://react-node-mysql-blog-template.herokuapp.com/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
+        fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -54,15 +55,24 @@ class DashboardViewPosts extends Component {
         })
         .then(response => response.json())
         .then((userData) => {
-            if (!sessionStorage.getItem("sessionKey")) {
+            if (sessionStorage.getItem("sessionKey") !== userData[0].users_sessionKey) {
                 this.props.history.push("/");
             } else {
-                setTimeout(() => {
+                this.setState({
+                    authenticated: true
+                })
+                fetch('/totalPostAmount')
+                .then(response => response.json())
+                .then((data) => {
                     this.setState({
-                        authenticated: true,
-                        posts: this.props.posts.sort((a, b) => ('' + b.post_date).localeCompare(a.post_date))
+                        postAmount: data[0].theme_postAmount
                     })
-                }, 500);
+                    if (this.props.posts.length !== 0) {
+                        this.setState({
+                            posts: this.props.posts.sort((a, b) => ('' + b.post_date).localeCompare(a.post_date))
+                        })
+                    }
+                })
             }
         });
     }
@@ -71,7 +81,7 @@ class DashboardViewPosts extends Component {
         this.setState(() => ({
             posts: this.state.posts.filter((post) => value !== post.post_id)
         }));
-        fetch(`https://react-node-mysql-blog-template.herokuapp.com/deletePost/${value}`, {
+        fetch(`/deletePost/${value}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -79,6 +89,16 @@ class DashboardViewPosts extends Component {
             },
             mode: 'cors',
             body: JSON.stringify({ "postid": value })
+        })
+        .then((res) => {
+            return res.json();
+        })
+        fetch("/decrementTotalPostAmount", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            }
         })
         .then((res) => {
             return res.json();
@@ -152,11 +172,6 @@ class DashboardViewPosts extends Component {
                                 <h2>Posts</h2>
                                 <div id="searchBar" className="input-group">
                                     <input id="searchInput" className="form-control" placeholder="Search..."></input>
-                                    <div className="input-group-append">
-                                        <button className="btn btn-primary" type="button" onClick={() => {
-                                            this.props.history.push(`/search/${document.querySelector("#searchInput").value.toLowerCase()}`);
-                                        }}>Search</button>
-                                    </div>
                                 </div>
                             </div>
                             <Link to="/createPost">
@@ -182,7 +197,7 @@ class DashboardViewPosts extends Component {
                             <table>
                                 <tbody>
                                     {
-                                        this.state.authenticated && this.state.posts.length !== 0 ?
+                                        this.state.authenticated ?
                                         this.state.posts.map((post) => {
                                             return (
                                                  <tr className="post" key={post.post_id}>

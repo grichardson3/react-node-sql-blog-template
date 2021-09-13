@@ -10,28 +10,42 @@ class FilterByTag extends Component {
     constructor(props){
         super(props);
         this.state = {
-            posts: []
+            posts: [],
+            postAmount: 0
         }
     }
-    fetchData(){
-        setTimeout(() => { 
-            if (this.props.posts === []) {
-                console.log("fetch");
-                setTimeout(() => {
-                    this.fetchData();
-                }, 100);
-            } else if (this.props.posts !== []) { 
+    componentDidMount(){
+        fetch("/getTagPostAmount", {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            mode: 'cors',
+            body: JSON.stringify({ "tag": window.location.href.split("/")[window.location.href.split("/").length - 1] })
+        })
+        .then(response => response.json())
+        .then((data) => {
+            this.setState({
+                postAmount: JSON.parse(data[0])
+            })
+            if (this.props.posts.length !== 0) {
                 this.setState({
                     posts: this.props.posts.filter((post) => post.post_tag.toLowerCase().includes(window.location.href.split("/")[window.location.href.split("/").length - 1]))
                 });
             }
-        }, 50);
-    }
-    componentDidMount(){
-        this.fetchData();
+        })
     }
     componentWillUpdate(){
-        this.fetchData();
+        if (this.props.posts.length !== 0) {
+            if (this.props.posts.length < this.state.postAmount) {
+                setTimeout(() => {
+                    this.setState({
+                        posts: this.props.posts.filter((post) => post.post_tag.toLowerCase().includes(window.location.href.split("/")[window.location.href.split("/").length - 1]))
+                    });
+                }, 1)
+            }
+        }
     }
     render(){
         let count = -1;

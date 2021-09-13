@@ -65,7 +65,7 @@ app.get('/theme', (req, res) => {
 });
 
 app.get('/singleUser/:id', (req, res) => {
-  const SELECT_USER_SESSIONKEY = `SELECT * FROM tbl_users WHERE users_email = "${req.params.id}" OR users_username = "${req.params.id}";`;
+  const SELECT_USER_SESSIONKEY = `SELECT users_sessionKey FROM tbl_users WHERE users_email = "${req.params.id}" OR users_username = "${req.params.id}";`;
   connection.query(SELECT_USER_SESSIONKEY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -76,7 +76,6 @@ app.get('/singleUser/:id', (req, res) => {
 });
 
 app.post('/setSessionKey', (req, res) => {
-  console.log(req.body);
   const INSERT_SESSION_KEY = `UPDATE tbl_users SET users_sessionKey = "${req.body.sessionKey}" WHERE users_email = "${req.body.usernameOrEmail}" OR users_username = "${req.body.usernameOrEmail}";`;
   connection.query(INSERT_SESSION_KEY, (err) => {
     if(err) {
@@ -104,6 +103,103 @@ app.get('/tagsFromPosts', (req, res) => {
     }
   });
 });
+
+app.get('/totalPostAmount', (req, res) => {
+  const SELECT_TOTAL_POST_AMOUNT = `SELECT theme_postAmount FROM tbl_theme WHERE theme_id = 0`;
+  connection.query(SELECT_TOTAL_POST_AMOUNT, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json(results);
+    }
+  })
+})
+
+app.get('/totalUserAmount', (req, res) => {
+  const SELECT_TOTAL_POST_AMOUNT = `SELECT theme_userAmount FROM tbl_theme WHERE theme_id = 0`;
+  connection.query(SELECT_TOTAL_POST_AMOUNT, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json(results);
+    }
+  })
+})
+
+app.post('/checkUser', (req, res) => {
+  const {user} = req.body;
+  const CHECK_USER = `SELECT users_username, users_postamount FROM tbl_users WHERE users_username = '${user}'`;
+  connection.query(CHECK_USER, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json(results);
+    }
+  })
+})
+
+app.put('/getTagPostAmount', (req, res) => {
+  const { tag } = req.body;
+  const GET_TAG_POST_AMOUNT = `SELECT COUNT(post_tag) FROM tbl_posts WHERE post_tag = '${tag}'`;
+  connection.query(GET_TAG_POST_AMOUNT, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      Object.keys(results)[0];
+      let key = Object.keys(results)[0];
+      let returnStatement = JSON.stringify(results[key]).split("")[JSON.stringify(results[key]).split("").length - 2]
+      return res.json(returnStatement);
+    }
+  })
+})
+
+// DashboardCreatePost.js
+app.get('/incrementTotalPostAmount', (req, res) => {
+  const DECREMENT_TOTAL_POST_AMOUNT = `UPDATE tbl_theme SET theme_postAmount = theme_postAmount + 1 WHERE theme_id = 0;`;
+  connection.query(DECREMENT_TOTAL_POST_AMOUNT, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json(results);
+    }
+  })
+})
+
+// DashboardViewPosts.js
+app.get('/decrementTotalPostAmount', (req, res) => {
+  const DECREMENT_TOTAL_POST_AMOUNT = `UPDATE tbl_theme SET theme_postAmount = theme_postAmount - 1 WHERE theme_id = 0;`;
+  connection.query(DECREMENT_TOTAL_POST_AMOUNT, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json(results);
+    }
+  })
+})
+
+// DashboardCreateProfile.js
+app.get('/incrementTotalUserAmount', (req, res) => {
+  const DECREMENT_TOTAL_POST_AMOUNT = `UPDATE tbl_theme SET theme_userAmount = theme_userAmount + 1 WHERE theme_id = 0;`;
+  connection.query(DECREMENT_TOTAL_POST_AMOUNT, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json(results);
+    }
+  })
+})
+
+// DashboardViewProfiles.js
+app.get('/decrementTotalUserAmount', (req, res) => {
+  const DECREMENT_TOTAL_POST_AMOUNT = `UPDATE tbl_theme SET theme_userAmount = theme_userAmount - 1 WHERE theme_id = 0;`;
+  connection.query(DECREMENT_TOTAL_POST_AMOUNT, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json(results);
+    }
+  })
+})
 
 app.post('/addUser', (req, res)=>{
   const { users_firstname, users_lastname, users_email, users_username, users_password, users_facebook, users_twitter, users_linkedin, users_profilepic, users_bio } = req.body;

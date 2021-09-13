@@ -16,12 +16,13 @@ class DashboardComponent extends Component {
             authenticated: false,
             posts: [],
             postViews: [],
+            postAmount: 0,
             highestNumber: 0,
             count: 0
         }
     }
     componentDidMount(){
-        fetch(`https://react-node-mysql-blog-template.herokuapp.com/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
+        fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -30,30 +31,81 @@ class DashboardComponent extends Component {
         })
         .then(response => response.json())
         .then((userData) => {
-            if (!sessionStorage.getItem("sessionKey")) {
-                this.props.history.push('/');
-            } else {
-                setTimeout(() => {
-                    this.setState({ 
-                        authenticated: true,
-                        posts: this.props.posts.sort((a, b) => b.post_views - a.post_views)
-                    })
+            if (sessionStorage.getItem("sessionKey")) {
+                // Authenticates current user session key with server
+                if (sessionStorage.getItem("sessionKey") !== userData[0].users_sessionKey) {
+                    this.props.history.push('/');
+                } else {
                     this.setState({
-                        highestNumber: this.state.posts[0].post_views
+                        authenticated: true
                     })
-                    document.querySelectorAll(".dashboardContainer__postViews").forEach((row) => {
+                    fetch('/totalPostAmount')
+                    .then((response) => {
+                        if (response.status >= 500) {
+                            throw new Error("Server error.");
+                        } else if (response.status < 500 && response.status >= 400) {
+                            throw new Error("Page error.");
+                        } else if (response.status < 400) {
+                            return response.json();
+                        }
+                    })
+                    .then((data) => {
                         this.setState({
-                            postViews: this.state.postViews.concat(row.textContent)
+                            postAmount: data[0].theme_postAmount
+                        });
+
+                        const promise = new Promise((resolve, reject) => {
+                            // Retries the promise if the information isn't loaded in fast enough
+                            const retryPromise = () => {
+                                console.log("retry");
+                                setTimeout(() => {
+                                    if (this.props.posts.length !== 0) {
+                                        resolve('Success');
+                                    } else {
+                                        retryPromise();
+                                    }
+                                }, 25);
+                            }
+
+                            if (this.props.posts.length !== 0) {
+                                resolve('Success');
+                            } else {
+                                retryPromise();
+                            }
                         })
-                    });
-                    document.querySelectorAll(".dashboardContainer__graphBar").forEach((bar) => {
-                        bar.style.width = `${(this.state.postViews[this.state.count] / this.state.highestNumber) * 100}%`;
-                        this.setState({
-                            count: this.state.count + 1
+
+                        promise.then(() => {
+                            this.setState({ 
+                                posts: this.props.posts.sort((a, b) => b.post_views - a.post_views)
+                            })
+                        }).then(() => {
+                            this.setState({
+                                highestNumber: this.state.posts[0].post_views
+                            })
                         })
-                    });
-                }, 500);
+                        .then(() => {
+                            const postViews = document.querySelectorAll(".dashboardContainer__postViews")
+                            postViews.forEach((row) => {
+                                this.setState({
+                                    postViews: this.state.postViews.concat(row.textContent)
+                                })
+                            });
+                        })
+                        .then(() => {
+                            const graphBar = document.querySelectorAll(".dashboardContainer__graphBar");
+                            graphBar.forEach((bar) => {
+                                bar.style.width = `${(this.state.postViews[this.state.count] / this.state.highestNumber) * 100}%`;
+                                this.setState({
+                                    count: this.state.count + 1
+                                })
+                            });
+                        })
+                    })
+                }
+            } else {
+                this.props.history.push('/');
             }
+            
         });
 
         const loginContainer = document.querySelector("#dashboard");
@@ -69,37 +121,32 @@ class DashboardComponent extends Component {
 
         const searchInput = document.querySelector("#searchInput");
         searchInput.addEventListener("input", () => {
-            setTimeout(() => {
-                this.setState({ count: 0 })
+            this.setState({ count: 0 })
+            this.setState({
+                posts: this.props.posts.sort((a, b) => b.post_views - a.post_views)
+            })
+            this.setState({
+                highestNumber: this.state.posts[0].post_views
+            })
+            document.querySelectorAll(".dashboardContainer__postViews").forEach((row) => {
                 this.setState({
-                    posts: this.props.posts.sort((a, b) => b.post_views - a.post_views)
+                    postViews: this.state.postViews.concat(row.textContent)
                 })
+            });
+            document.querySelectorAll(".dashboardContainer__graphBar").forEach((bar) => {
+                bar.style.width = `${(this.state.postViews[this.state.count] / this.state.highestNumber) * 100}%`;
                 this.setState({
-                    highestNumber: this.state.posts[0].post_views
+                    count: this.state.count + 1
                 })
-                document.querySelectorAll(".dashboardContainer__postViews").forEach((row) => {
-                    this.setState({
-                        postViews: this.state.postViews.concat(row.textContent)
-                    })
-                });
-                document.querySelectorAll(".dashboardContainer__graphBar").forEach((bar) => {
-                    bar.style.width = `${(this.state.postViews[this.state.count] / this.state.highestNumber) * 100}%`;
-                    this.setState({
-                        count: this.state.count + 1
-                    })
-                });
-            }, 1000);
+            });
             if (searchInput.value !== "") {
-                setTimeout(() => {
-                    this.setState(() => ({
-                        posts: this.state.posts.filter((post) => post.post_title.toLowerCase().includes(searchInput.value.toLowerCase()))
-                    }));
-                }, 1000)
+                this.setState(() => ({
+                    posts: this.state.posts.filter((post) => post.post_title.toLowerCase().includes(searchInput.value.toLowerCase()))
+                }));
             }
         });
     }
     render(){
-        console.log(this.state);
         return (
             <div id="dashboard">
                 <DashboardNavigation/>
@@ -109,11 +156,6 @@ class DashboardComponent extends Component {
                             <h2>Stats</h2>
                             <div id="searchBar" className="input-group">
                                 <input id="searchInput" className="form-control" placeholder="Search..."></input>
-                                <div className="input-group-append">
-                                    <button className="btn btn-primary" type="button" onClick={() => {
-                                        this.props.history.push(`/search/${document.querySelector("#searchInput").value.toLowerCase()}`);
-                                    }}>Search</button>
-                                </div>
                             </div>
                         </div>
                         <div id="dashboardContainer__stats">
@@ -166,7 +208,7 @@ class DashboardComponent extends Component {
                                                         </td>
                                                     </tr>
                                                 )
-                                            }) : <tr><td className="noContent"><span>Loading...</span></td></tr>
+                                            }) : <tr><td className="noContent"><span>No posts.</span></td></tr>
                                         }
                                 </tbody>
                             </table>

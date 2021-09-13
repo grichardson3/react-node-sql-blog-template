@@ -20,7 +20,7 @@ class DashboardCreateProfile extends Component {
         }
     }
     componentDidMount(){
-        fetch(`https://react-node-mysql-blog-template.herokuapp.com/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
+        fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -118,7 +118,7 @@ class DashboardCreateProfile extends Component {
                                                 if (validationStatus.length === 0) {
                                                     const hash = bcrypt.hashSync(data.users_password, salt);
                                                     data.users_password = hash;
-                                                    fetch("https://react-node-mysql-blog-template.herokuapp.com/addUser", {
+                                                    fetch("/addUser", {
                                                         method: 'POST',
                                                         headers: {
                                                             'Content-Type': 'application/json',
@@ -137,6 +137,16 @@ class DashboardCreateProfile extends Component {
                                                             document.querySelector(".addProfile").appendChild(editStatus);
                                                         }
                                                     });
+                                                    fetch("/incrementTotalUserAmount", {
+                                                        method: 'GET',
+                                                        headers: {
+                                                            'Content-Type': 'application/json',
+                                                            'Access-Control-Allow-Origin': '*'
+                                                        }
+                                                    })
+                                                    .then((res) => {
+                                                        return res.json();
+                                                    })
                                                 } else {
                                                     document.querySelector(".statusMessages").innerHTML = "";
                                                     validationStatus.forEach((status) => {

@@ -67,7 +67,7 @@ class App extends Component {
         this.count = 0;
     }
     componentDidMount(){
-        fetch('https://react-node-mysql-blog-template.herokuapp.com/theme')
+        fetch('/theme')
         .then(response => response.json())
         .then((themeData) => {
             this.setState({ 
@@ -86,7 +86,7 @@ class App extends Component {
                 theme_colorGraph: this.state.theme[0].theme_colorGraph
             }));
         });
-        fetch('https://react-node-mysql-blog-template.herokuapp.com/posts')
+        fetch('/posts')
         .then(response => response.json())
         .then((postsData) => {
             this.setState({ 
@@ -107,7 +107,7 @@ class App extends Component {
                 }));
             });
         });
-        fetch('https://react-node-mysql-blog-template.herokuapp.com/users')
+        fetch('/users')
         .then(response => response.json())
         .then((usersData) => {
             this.setState({

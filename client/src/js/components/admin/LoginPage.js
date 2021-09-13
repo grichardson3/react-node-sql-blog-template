@@ -12,25 +12,21 @@ class LoginPage extends Component {
         window.addEventListener("resize", () => {
             loginContainer.style.height = (window.innerHeight) + "px";
         });
-        setTimeout(() => {
-            fetch(`https://react-node-mysql-blog-template.herokuapp.com/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
+        fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
+        .then(response => response.json())
+        .then((userData) => {
+            if (sessionStorage.getItem("sessionKey")) {
+                if (sessionStorage.getItem("sessionKey") === userData[0].users_sessionKey) {
+                    this.props.history.push('/dashboard');
                 }
-            })
-            .then(response => response.json())
-            .then((userData) => {
-                console.log(userData);
-                if (sessionStorage.getItem("sessionKey")) {
-                    if (sessionStorage.getItem("sessionKey") === userData[0].users_sessionKey) {
-                        this.props.history.push('/dashboard');
-                    }
-                }
-                
-            });
-        }, 1000);
+            }   
+        });
     }
     render(){
         return (
@@ -39,13 +35,13 @@ class LoginPage extends Component {
                     <h1>Login</h1>
                     <br></br>
                     <label>Username or E-Mail</label>
-                    <input id="usernameoremail" className="form-control" type="text" name="usernameoremail"/>
+                    <input id="usernameoremail" className="form-control" type="text" name="usernameoremail" defaultValue="johnappleseed@gmail.com"/>
                     <br></br>
                     <label>Password</label>
-                    <input id="password" className="form-control" type="password" name="password"/>
+                    <input id="password" className="form-control" type="password" name="password" defaultValue="Test1234!"/>
                     <br></br>
                     <button className="btn btn-lg btn-primary" onClick={() => {
-                        fetch('https://react-node-mysql-blog-template.herokuapp.com/users', {
+                        fetch('/users', {
                             method: 'GET',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -68,7 +64,7 @@ class LoginPage extends Component {
                                             "sessionKey": hash,
                                             "usernameOrEmail": usernameOrEmailValue
                                         }
-                                        fetch('https://react-node-mysql-blog-template.herokuapp.com/setSessionKey', {
+                                        fetch('/setSessionKey', {
                                             method: 'POST',
                                             headers: {
                                                 'Accept': 'application/json',
@@ -83,11 +79,14 @@ class LoginPage extends Component {
                                         })
                                         .then((res) => {
                                             if (res.status >= 400) {
-                                                throw new Error("Bad response from server");
+                                                throw new Error("Server error");
+                                            } else if (res.status < 500 && res.status >= 400) {
+                                                throw new Error("Page error.");
+                                            } else if (res.status < 400) {
+                                                this.props.history.push("/dashboard");
                                             }
                                             return res.json();
                                         })
-                                        this.props.history.push("/dashboard");
                                     } else if (err) {
                                         throw err;
                                     }
@@ -95,6 +94,9 @@ class LoginPage extends Component {
                             }
                         });
                     }}>Submit</button>
+                    <br></br>
+                    <br></br>
+                    <span>Login with the default credential values above!</span>
                 </div>
             </div>
             

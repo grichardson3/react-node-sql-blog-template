@@ -11,28 +11,54 @@ class FilterByAuthor extends Component {
         super(props);
         this.state = {
             posts: [],
-            users: [],
-            userExists: false
+            user: [],
+            username: '',
+            postAmount: 0
         }
     }
-    fetchData(){
-        setTimeout(() => {
+    componentDidMount(){
+        fetch('/checkUser', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Access-Control-Request-Headers': 'X-PINGOTHER, Content-Type',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+                'Access-Control-Request-Method': 'POST',
+                'Access-Control-Allow-Origin': '*'
+            },
+            mode: 'cors',
+            body: JSON.stringify({ "user": window.location.href.split("/")[window.location.href.split("/").length - 1] })
+        })
+        .then(response => response.json())
+        .then((data) => {
             this.setState({
-                users: this.props.users.filter((user) => user.users_username.includes(window.location.href.split("/")[window.location.href.split("/").length - 1]))
+                username: data[0].users_username,
+                postAmount: data[0].users_postamount
             })
-            if (this.state.users.length !== 0) {
+            if (this.props.users.length !== 0) {
                 this.setState({
-                    userExists: true,
-                    posts: this.props.posts.filter((post) => post.post_author.includes(window.location.href.split("/")[window.location.href.split("/").length - 1]))
+                    user: this.props.users.filter((user) => user.users_username.includes(data[0].users_username)),
+                })
+                this.setState({
+                    posts: this.props.posts.filter((post) => post.post_author.includes(data[0].users_username))
                 })
             }
-        }, 100);
-    }
-    componentDidMount(){
-       this.fetchData(); 
+        })
     }
     componentWillUpdate(){
-        this.fetchData();
+        if ( this.props.users.length !== 0 ) {
+            if (this.props.posts.length < this.state.postAmount) {
+                setTimeout(() => {
+                    this.setState({
+                        user: this.props.users.filter((user) => user.users_username.includes(this.state.username)),
+                    })
+                    this.setState({
+                        posts: this.props.posts.filter((post) => post.post_author.includes(this.state.username))
+                    })
+                }, 1)
+            }
+        }
     }
     render(){
         return (
@@ -40,9 +66,9 @@ class FilterByAuthor extends Component {
                 <Header/>
                 <div id="container" className="container">
                     {
-                        this.state.users.length !== 0 ?
+                        this.state.user.length !== 0 ?
                         // eslint-disable-next-line
-                        this.state.users.map((user) => {
+                        this.state.user.map((user) => {
                             return (
                                 <div id="profileArea" key={user.users_username}>
                                     <div className="row">
@@ -122,6 +148,9 @@ class FilterByAuthor extends Component {
                                                             }
                                                         </ul>
                                                     </div>
+                                                    <div id="profilePostsCount">
+                                                        <span>Posts: {this.state.postAmount}</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -136,7 +165,8 @@ class FilterByAuthor extends Component {
                     <div id="profilePostsArea">
                         <div className="row">
                             {
-                                this.state.posts.length !== 0 && this.state.userExists ?
+                                this.state.posts.length !== 0 ?
+                                // this.state.posts.length !== 0 && this.state.userExists ?
                                 // eslint-disable-next-line
                                 this.state.posts.map((post) => {
                                     return (
@@ -156,7 +186,7 @@ class FilterByAuthor extends Component {
                                                     post.post_content
                                                 }
                                             </p>
-                                            <div className="blogPostBottomMetaArea">
+                                            <div className="blogPostBottomMetaAreaTwo">
                                                 <Link to={`/post/${post.post_id}`}><span className="blogPostReadMore">Read More</span></Link>
                                                 <div>
                                                     <span className="blogPostTagText">Tags: </span>
