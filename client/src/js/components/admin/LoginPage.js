@@ -78,7 +78,7 @@ class LoginPage extends Component {
                                             body: JSON.stringify(data)
                                         })
                                         .then((res) => {
-                                            if (res.status >= 400) {
+                                            if (res.status >= 500) {
                                                 throw new Error("Server error");
                                             } else if (res.status < 500 && res.status >= 400) {
                                                 throw new Error("Page error.");

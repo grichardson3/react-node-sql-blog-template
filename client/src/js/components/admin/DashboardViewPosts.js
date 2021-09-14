@@ -93,6 +93,18 @@ class DashboardViewPosts extends Component {
         .then((res) => {
             return res.json();
         })
+        fetch("/decrementUserPostAmount", {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            mode: 'cors',
+            body: JSON.stringify(this.state.posts.filter((post) => value === post.post_id))
+        })
+        .then((res) => {
+            return res.json();
+        })
         fetch("/decrementTotalPostAmount", {
             method: 'GET',
             headers: {

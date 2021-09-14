@@ -57,7 +57,6 @@ class DashboardComponent extends Component {
                         const promise = new Promise((resolve, reject) => {
                             // Retries the promise if the information isn't loaded in fast enough
                             const retryPromise = () => {
-                                console.log("retry");
                                 setTimeout(() => {
                                     if (this.props.posts.length !== 0) {
                                         resolve('Success');
@@ -66,7 +65,6 @@ class DashboardComponent extends Component {
                                     }
                                 }, 25);
                             }
-
                             if (this.props.posts.length !== 0) {
                                 resolve('Success');
                             } else {

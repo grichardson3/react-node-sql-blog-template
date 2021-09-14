@@ -63,17 +63,17 @@ class DashboardCreatePost extends Component {
         })
         .then(response => response.json())
         .then((userData) => {
+            console.log(userData);
             if (!sessionStorage.getItem("sessionKey")) {
                 this.props.history.push("/");
             } else if (sessionStorage.getItem("sessionKey") !== userData[0].users_sessionKey){
                 this.props.history.push("/");
             } else {
                 this.setState({
-                    authenticated: true,
-                    username: userData[0].users_username
+                    authenticated: true
                 })
                 localStorage.setItem("username", userData[0].users_username);
-            }     
+            }
         });
     }
     render(){
@@ -156,6 +156,18 @@ class DashboardCreatePost extends Component {
                                                             document.querySelector(".addPost").appendChild(editStatus);
                                                         }
                                                     });
+                                                    fetch("/incrementUserPostAmount", {
+                                                        method: 'PUT',
+                                                        headers: {
+                                                            'Content-Type': 'application/json',
+                                                            'Access-Control-Allow-Origin': '*'
+                                                        },
+                                                        mode: 'cors',
+                                                        body: JSON.stringify({ "id": sessionStorage.getItem("usernameOrEmail") })
+                                                    })
+                                                    .then((res) => {
+                                                        return res.json();
+                                                    })
                                                     fetch("/incrementTotalPostAmount", {
                                                         method: 'GET',
                                                         headers: {

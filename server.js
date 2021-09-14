@@ -65,11 +65,12 @@ app.get('/theme', (req, res) => {
 });
 
 app.get('/singleUser/:id', (req, res) => {
-  const SELECT_USER_SESSIONKEY = `SELECT users_sessionKey FROM tbl_users WHERE users_email = "${req.params.id}" OR users_username = "${req.params.id}";`;
+  const SELECT_USER_SESSIONKEY = `SELECT users_sessionKey, users_username FROM tbl_users WHERE users_email = "${req.params.id}" OR users_username = "${req.params.id}";`;
   connection.query(SELECT_USER_SESSIONKEY, (err, results) => {
     if (err) {
       return res.send(err);
     } else {
+      console.log(results);
       return res.json(results);
     }
   });
@@ -169,6 +170,30 @@ app.get('/incrementTotalPostAmount', (req, res) => {
 app.get('/decrementTotalPostAmount', (req, res) => {
   const DECREMENT_TOTAL_POST_AMOUNT = `UPDATE tbl_theme SET theme_postAmount = theme_postAmount - 1 WHERE theme_id = 0;`;
   connection.query(DECREMENT_TOTAL_POST_AMOUNT, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json(results);
+    }
+  })
+})
+
+// incrementUserPostAmount
+app.put('/incrementUserPostAmount', (req, res) => {
+  const DECREMENT_USER_POST_AMOUNT = `UPDATE tbl_users SET users_postamount = users_postamount + 1 WHERE users_email = '${req.body.id}';`;
+  connection.query(DECREMENT_USER_POST_AMOUNT, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json(results);
+    }
+  })
+})
+
+app.put('/decrementUserPostAmount', (req, res) => {
+  console.log(req.body[0].post_author);
+  const DECREMENT_USER_POST_AMOUNT = `UPDATE tbl_users SET users_postamount = users_postamount - 1 WHERE users_username = '${req.body[0].post_author}';`;
+  connection.query(DECREMENT_USER_POST_AMOUNT, (err, results) => {
     if (err) {
       return res.send(err);
     } else {
