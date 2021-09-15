@@ -1,6 +1,6 @@
 {
   "name": "react-node-sql-blog-template",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "dependencies": {
     "@tinymce/tinymce-react": "^3.12.6",

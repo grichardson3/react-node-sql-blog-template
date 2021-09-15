@@ -122,34 +122,36 @@ class DashboardComponent extends Component {
         const searchInput = document.querySelector("#searchInput");
 
         searchInput.addEventListener("input", () => {
-            this.setState({ // Sorts state posts by post views in descending order
-                posts: this.props.posts.sort((a, b) => b.post_views - a.post_views)
-            });
-            if (searchInput.value !== "") {
-                this.setState({
-                    posts: this.state.posts.filter((post) => post.post_title.toLowerCase().includes(searchInput.value.toLowerCase()))
+            setTimeout(() => { // This setTimeout call is present to prevent application lag interfering with user's typing, giving users time to type
+                this.setState({ // Sorts state posts by post views in descending order
+                    posts: this.props.posts.sort((a, b) => b.post_views - a.post_views)
                 });
-            }
-            if (this.state.posts.length > 0) {
-                this.setState({ // Sets the highest number in the graph 
-                    highestNumber: this.state.posts[0].post_views,
-                    postViews: []
-                });
-                this.state.posts.forEach((post) => {
-                    this.setState(prevState => ({
-                        postViews: prevState.postViews.concat(post.post_views)
-                    }));
-                });
-                this.setState({ count: 0 });
-                const dataRow = document.querySelectorAll(".postRow");
-                dataRow.forEach(() => {
-                    const graphBar = document.querySelectorAll(".dashboardContainer__graphBar")[this.state.count];
-                    graphBar.style.width = `${(this.state.postViews[this.state.count] / this.state.highestNumber) * 100}%`;
+                if (searchInput.value !== "") {
                     this.setState({
-                        count: this.state.count + 1
+                        posts: this.state.posts.filter((post) => post.post_title.toLowerCase().includes(searchInput.value.toLowerCase()))
                     });
-                });
-            }
+                }
+                if (this.state.posts.length > 0) {
+                    this.setState({ // Sets the highest number in the graph 
+                        highestNumber: this.state.posts[0].post_views,
+                        postViews: []
+                    });
+                    this.state.posts.forEach((post) => {
+                        this.setState(prevState => ({
+                            postViews: prevState.postViews.concat(post.post_views)
+                        }));
+                    });
+                    this.setState({ count: 0 });
+                    const dataRow = document.querySelectorAll(".postRow");
+                    dataRow.forEach(() => {
+                        const graphBar = document.querySelectorAll(".dashboardContainer__graphBar")[this.state.count];
+                        graphBar.style.width = `${(this.state.postViews[this.state.count] / this.state.highestNumber) * 100}%`;
+                        this.setState({
+                            count: this.state.count + 1
+                        });
+                    });
+                }
+            }, 500);
         });
     }
     render(){
