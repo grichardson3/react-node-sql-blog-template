@@ -26,7 +26,7 @@ const connection = mysql.createPool({
 
 // API Call Variables
 const SELECT_ALL_USERS = 'SELECT * FROM tbl_users';
-const SELECT_ALL_POSTS = 'SELECT * FROM tbl_posts';
+const SELECT_ALL_POSTS = 'SELECT * FROM tbl_posts ORDER BY post_date DESC'; // In Desc order for landing page posts
 const SELECT_THEME = 'SELECT * FROM tbl_theme';
 const SELECT_TAGS_FROM_POSTS = 'SELECT DISTINCT post_tag FROM tbl_posts';
 
@@ -191,7 +191,6 @@ app.put('/incrementUserPostAmount', (req, res) => {
 })
 
 app.put('/decrementUserPostAmount', (req, res) => {
-  console.log(req.body[0].post_author);
   const DECREMENT_USER_POST_AMOUNT = `UPDATE tbl_users SET users_postamount = users_postamount - 1 WHERE users_username = '${req.body[0].post_author}';`;
   connection.query(DECREMENT_USER_POST_AMOUNT, (err, results) => {
     if (err) {

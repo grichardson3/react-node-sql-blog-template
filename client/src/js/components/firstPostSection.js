@@ -10,12 +10,19 @@ class FirstPostSection extends Component {
             posts: []
         }
     }
+    /*componentDidMount(){
+        setTimeout(() => {
+            this.setState({ 
+                posts: this.props.posts.sort((a, b) => ('' + b.post_date).localeCompare(a.post_date))
+            })
+            console.log(this.state.posts);
+        }, 1000);
+    }*/
     render(){
         return (
             <div>
                 <div className="row">
                     {
-                        
                         this.props.posts.length !== 0 ?
                         // eslint-disable-next-line
                         this.props.posts.map((post) => {

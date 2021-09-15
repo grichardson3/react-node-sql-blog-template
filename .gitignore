@@ -1,4 +1,4 @@
 /node_modules
-client.zip
+.gitignore
 mysql-credentials.txt
 important.txt

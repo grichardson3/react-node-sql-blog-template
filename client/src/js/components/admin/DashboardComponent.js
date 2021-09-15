@@ -38,7 +38,7 @@ class DashboardComponent extends Component {
                 } else {
                     this.setState({
                         authenticated: true
-                    })
+                    });
                     fetch('/totalPostAmount')
                     .then((response) => {
                         if (response.status >= 500) {
@@ -58,47 +58,49 @@ class DashboardComponent extends Component {
                             // Retries the promise if the information isn't loaded in fast enough
                             const retryPromise = () => {
                                 setTimeout(() => {
-                                    if (this.props.posts.length !== 0) {
+                                    if (this.props.posts.length > 0) {
                                         resolve('Success');
-                                    } else {
+                                    } else if (this.props.posts.length === 0) {
                                         retryPromise();
+                                    } else {
+                                        reject("Failed.");
                                     }
                                 }, 25);
                             }
-                            if (this.props.posts.length !== 0) {
+                            if (this.props.posts.length > 0) {
                                 resolve('Success');
-                            } else {
+                            } else if (this.props.posts.length === 0) {
                                 retryPromise();
+                            } else {
+                                reject("Failed.");
                             }
-                        })
-
+                        });
                         promise.then(() => {
                             this.setState({ 
                                 posts: this.props.posts.sort((a, b) => b.post_views - a.post_views)
-                            })
+                            });
                         }).then(() => {
                             this.setState({
                                 highestNumber: this.state.posts[0].post_views
-                            })
-                        })
-                        .then(() => {
+                            });
+                        }).then(() => {
                             const postViews = document.querySelectorAll(".dashboardContainer__postViews")
                             postViews.forEach((row) => {
                                 this.setState({
                                     postViews: this.state.postViews.concat(row.textContent)
-                                })
+                                });
                             });
-                        })
-                        .then(() => {
+                        }).then(() => {
                             const graphBar = document.querySelectorAll(".dashboardContainer__graphBar");
                             graphBar.forEach((bar) => {
+                                console.log(JSON.parse(this.state.postViews[this.state.count]));
                                 bar.style.width = `${(this.state.postViews[this.state.count] / this.state.highestNumber) * 100}%`;
                                 this.setState({
                                     count: this.state.count + 1
-                                })
+                                });
                             });
-                        })
-                    })
+                        });
+                    });
                 }
             } else {
                 this.props.history.push('/');
@@ -118,29 +120,35 @@ class DashboardComponent extends Component {
         });
 
         const searchInput = document.querySelector("#searchInput");
+
         searchInput.addEventListener("input", () => {
-            this.setState({ count: 0 })
-            this.setState({
+            this.setState({ // Sorts state posts by post views in descending order
                 posts: this.props.posts.sort((a, b) => b.post_views - a.post_views)
-            })
-            this.setState({
-                highestNumber: this.state.posts[0].post_views
-            })
-            document.querySelectorAll(".dashboardContainer__postViews").forEach((row) => {
-                this.setState({
-                    postViews: this.state.postViews.concat(row.textContent)
-                })
-            });
-            document.querySelectorAll(".dashboardContainer__graphBar").forEach((bar) => {
-                bar.style.width = `${(this.state.postViews[this.state.count] / this.state.highestNumber) * 100}%`;
-                this.setState({
-                    count: this.state.count + 1
-                })
             });
             if (searchInput.value !== "") {
-                this.setState(() => ({
+                this.setState({
                     posts: this.state.posts.filter((post) => post.post_title.toLowerCase().includes(searchInput.value.toLowerCase()))
-                }));
+                });
+            }
+            if (this.state.posts.length > 0) {
+                this.setState({ // Sets the highest number in the graph 
+                    highestNumber: this.state.posts[0].post_views,
+                    postViews: []
+                });
+                this.state.posts.forEach((post) => {
+                    this.setState(prevState => ({
+                        postViews: prevState.postViews.concat(post.post_views)
+                    }));
+                });
+                this.setState({ count: 0 });
+                const dataRow = document.querySelectorAll(".postRow");
+                dataRow.forEach(() => {
+                    const graphBar = document.querySelectorAll(".dashboardContainer__graphBar")[this.state.count];
+                    graphBar.style.width = `${(this.state.postViews[this.state.count] / this.state.highestNumber) * 100}%`;
+                    this.setState({
+                        count: this.state.count + 1
+                    });
+                });
             }
         });
     }
