@@ -93,7 +93,6 @@ class DashboardComponent extends Component {
                         }).then(() => {
                             const graphBar = document.querySelectorAll(".dashboardContainer__graphBar");
                             graphBar.forEach((bar) => {
-                                console.log(JSON.parse(this.state.postViews[this.state.count]));
                                 bar.style.width = `${(this.state.postViews[this.state.count] / this.state.highestNumber) * 100}%`;
                                 this.setState({
                                     count: this.state.count + 1
@@ -157,7 +156,7 @@ class DashboardComponent extends Component {
     render(){
         return (
             <div id="dashboard">
-                <DashboardNavigation/>
+                <DashboardNavigation history={this.props.history}/>
                 <div id="dashboardContainer" className="fluid-container">
                     <div id="dashboardContainer__main">
                         <div className="dashboardContainer__dataHeader">

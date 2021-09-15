@@ -65,6 +65,12 @@
     margin-top: 20px;
 }
 
+#dashboardContainer__navigationItems {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 #dashboardContainer__sort {
     display: flex;
     padding-bottom: 12px;

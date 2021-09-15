@@ -195,7 +195,7 @@ class DashboardViewProfiles extends Component {
     render(){
         return (
             <div id="dashboard">
-                <DashboardNavigation/>
+                <DashboardNavigation history={this.props.history}/>
                 <div id="dashboardContainer" className="container-fluid">
                     <div id="dashboardContainer__main">
                         <div id="dashboardContainer__header">
