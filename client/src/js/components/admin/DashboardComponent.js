@@ -129,6 +129,10 @@ class DashboardComponent extends Component {
                     this.setState({
                         posts: this.state.posts.filter((post) => post.post_title.toLowerCase().includes(searchInput.value.toLowerCase()))
                     });
+                } else if (searchInput.value === "") {
+                    this.setState({
+                        posts: this.props.posts.sort((a, b) => b.post_views - a.post_views)
+                    });
                 }
                 if (this.state.posts.length > 0) {
                     this.setState({ // Sets the highest number in the graph 
@@ -154,6 +158,7 @@ class DashboardComponent extends Component {
         });
     }
     render(){
+        console.log(this.state.posts);
         return (
             <div id="dashboard">
                 <DashboardNavigation history={this.props.history}/>
@@ -196,12 +201,12 @@ class DashboardComponent extends Component {
                                         </th>
                                     </tr>
                                         {
-                                            this.state.authenticated && this.state.posts.length !== 0 ?
+                                            this.state.authenticated ?
                                             this.state.posts.map((post) => {
                                                 return (
                                                     <tr className="postRow" key={post.post_id}>
                                                         <td>
-                                                            <Link to={`/post/${post.post_id}`}><span>{post.post_title}</span></Link>
+                                                            <Link to={`/post/${post.post_id}`}>{`Post ID: ${post.post_id}) `}{post.post_title}</Link>
                                                         </td>
                                                         <td>
                                                             <Link to={`/author/${post.post_author}`}><span>{post.post_author}</span></Link>

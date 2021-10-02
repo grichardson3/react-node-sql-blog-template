@@ -21,7 +21,7 @@ class IndividualPost extends Component {
         }
         this.addPostView();
     }
-    componentWillUpdate(){
+    /*componentWillUpdate(){
         if (
             this.props.posts[window.location.href.split("/")[window.location.href.split("/").length - 1] - 1] &&
             this.props.posts.length === this.props.posts[window.location.href.split("/")[window.location.href.split("/").length - 1] - 1].post_id
@@ -30,7 +30,7 @@ class IndividualPost extends Component {
                 post: this.props.posts[window.location.href.split("/")[window.location.href.split("/").length - 1] - 1]
             })
         }
-    }
+    }*/
     addPostView(){
         let data = {
             postViews: this.props.posts[window.location.href.split("/")[window.location.href.split("/").length - 1] - 1]
@@ -66,13 +66,16 @@ class IndividualPost extends Component {
                                         <span id="individualPostDate">Date Posted: {moment.unix(this.state.post.post_date).format("MMM Do, YYYY")}</span>
                                     </div>
                                 </div>
-                                <div id="individualPostFeaturePhoto">
-                                    <img
-                                        title={this.state.post.post_title}
-                                        alt={this.state.post.post_title}
-                                        src={this.state.post.post_featurephoto}
-                                    />
-                                </div>
+                                {
+                                    this.state.post.post_featurephoto ?
+                                    <div id="individualPostFeaturePhoto">
+                                        <img
+                                            title={this.state.post.post_title}
+                                            alt={this.state.post.post_title}
+                                            src={this.state.post.post_featurephoto}
+                                        />
+                                    </div> : null
+                                }
                                 <article id="individualPostArticle">{this.state.post.post_content}</article>
                                 <div id="individualPostTags">
                                     <span>Tags: </span>

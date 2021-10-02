@@ -35,7 +35,6 @@ import DashboardUpdatePassword from './js/components/admin/DashboardUpdatePasswo
 import smoothscroll from 'smoothscroll-polyfill';
 import 'polyfill-array-includes';
 import 'react-app-polyfill/ie9';
-import DashboardNavigation from './js/components/admin/DashboardNavigation';
 
 if (!String.prototype.includes) {
 // eslint-disable-next-line

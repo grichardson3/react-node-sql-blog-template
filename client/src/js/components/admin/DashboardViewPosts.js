@@ -62,7 +62,7 @@ class DashboardViewPosts extends Component {
                     authenticated: true
                 })
                 fetch('/totalPostAmount')
-                .then(response => response.json())
+                .then(res => res.json())
                 .then((data) => {
                     this.setState({
                         postAmount: data[0].theme_postAmount
@@ -174,6 +174,7 @@ class DashboardViewPosts extends Component {
         }
     }
     render(){
+        console.log(this.state.posts);
         return (
             <div id="dashboard">
                 <DashboardNavigation history={this.props.history}/>
