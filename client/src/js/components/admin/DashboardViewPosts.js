@@ -116,7 +116,7 @@ class DashboardViewPosts extends Component {
     deletePost(value){
         this.props.dispatch(removePost({ post_id: value }));
         this.setState(() => ({
-            posts: this.state.posts.filter((post) => value !== post.post_id)
+            posts: this.state.posts.filter((post) => value !== post.post_dbid)
         }));
         fetch(`/deletePost/${value}`, {
             method: 'DELETE',
@@ -135,7 +135,7 @@ class DashboardViewPosts extends Component {
             } else if (response.status < 400) {
                 return response.json();
             }
-        })
+        });
         fetch("/decrementUserPostAmount", {
             method: 'PUT',
             headers: {
@@ -143,7 +143,7 @@ class DashboardViewPosts extends Component {
                 'Access-Control-Allow-Origin': '*'
             },
             mode: 'cors',
-            body: JSON.stringify(this.state.posts.filter((post) => value === post.post_id))
+            body: JSON.stringify(this.state.posts.filter((post) => value !== post.post_dbid))
         })
         .then((response) => {
             if (response.status >= 500) {
@@ -284,7 +284,7 @@ class DashboardViewPosts extends Component {
                                                  <td>
                                                      <button 
                                                          className="btn btn-sm btn-danger"
-                                                         onClick={() => this.deletePost(post.post_id)}
+                                                         onClick={() => this.deletePost(post.post_dbid)}
                                                      >Delete Post</button>
                                                  </td>
                                              </tr>
