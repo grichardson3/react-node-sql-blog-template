@@ -23,7 +23,15 @@ class DashboardEditTheme extends Component {
                 'Access-Control-Allow-Origin': '*'
             }
         })
-        .then(response => response.json())
+        .then((response) => {
+            if (response.status >= 500) {
+                throw new Error("Server error.");
+            } else if (response.status < 500 && response.status >= 400) {
+                throw new Error("Page error.");
+            } else if (response.status < 400) {
+                return response.json();
+            }
+        })
         .then((userData) => {
             if (!sessionStorage.getItem("sessionKey")) {
                 this.props.history.push("/");
@@ -113,9 +121,14 @@ class DashboardEditTheme extends Component {
                                                         mode: 'cors',
                                                         body: JSON.stringify(data)
                                                     })
-                                                    .then((res) => {
-                                                        if (res.status === 200) {
+                                                    .then((response) => {
+                                                        if (response.status >= 500) {
+                                                            throw new Error("Server error.");
+                                                        } else if (response.status < 500 && response.status >= 400) {
+                                                            throw new Error("Page error.");
+                                                        } else if (response.status < 400) {
                                                             this.props.dispatch(editTheme(data));
+                                                            return response.json();
                                                         }
                                                     });
                                                 }}>Submit</button>

@@ -30,7 +30,15 @@ class FilterByAuthor extends Component {
             mode: 'cors',
             body: JSON.stringify({ "user": window.location.href.split("/")[window.location.href.split("/").length - 1] })
         })
-        .then(response => response.json())
+        .then((response) => {
+            if (response.status >= 500) {
+                throw new Error("Server error.");
+            } else if (response.status < 500 && response.status >= 400) {
+                throw new Error("Page error.");
+            } else if (response.status < 400) {
+                return response.json();
+            }
+        })
         .then((data) => {
             this.setState({
                 username: data[0].users_username,

@@ -58,7 +58,15 @@ class DashboardViewProfiles extends Component {
                 'Access-Control-Allow-Origin': '*'
             }
         })
-        .then(response => response.json())
+        .then((response) => {
+            if (response.status >= 500) {
+                throw new Error("Server error.");
+            } else if (response.status < 500 && response.status >= 400) {
+                throw new Error("Page error.");
+            } else if (response.status < 400) {
+                return response.json();
+            }
+        })
         .then((userData) => {
             if (sessionStorage.getItem("sessionKey")) {
                 if (sessionStorage.getItem("sessionKey") !== userData[0].users_sessionKey) {
@@ -68,7 +76,15 @@ class DashboardViewProfiles extends Component {
                         authenticated: true
                     })
                     fetch('/totalUserAmount')
-                    .then(response => response.json())
+                    .then((response) => {
+                        if (response.status >= 500) {
+                            throw new Error("Server error.");
+                        } else if (response.status < 500 && response.status >= 400) {
+                            throw new Error("Page error.");
+                        } else if (response.status < 400) {
+                            return response.json();
+                        }
+                    })
                     .then((data) => {
                         this.setState({
                             userAmount: data[0].theme_userAmount
@@ -102,8 +118,14 @@ class DashboardViewProfiles extends Component {
             mode: 'cors',
             body: JSON.stringify(data)
         })
-        .then((res) => {
-            return res.json();
+        .then((response) => {
+            if (response.status >= 500) {
+                throw new Error("Server error.");
+            } else if (response.status < 500 && response.status >= 400) {
+                throw new Error("Page error.");
+            } else if (response.status < 400) {
+                return response.json();
+            }
         });
         fetch("/decrementTotalUserAmount", {
             method: 'GET',
@@ -112,8 +134,14 @@ class DashboardViewProfiles extends Component {
                 'Access-Control-Allow-Origin': '*'
             }
         })
-        .then((res) => {
-            return res.json();
+        .then((response) => {
+            if (response.status >= 500) {
+                throw new Error("Server error.");
+            } else if (response.status < 500 && response.status >= 400) {
+                throw new Error("Page error.");
+            } else if (response.status < 400) {
+                return response.json();
+            }
         })
     }
     toggleSortFirstName(){
@@ -254,9 +282,9 @@ class DashboardViewProfiles extends Component {
                                                         {user.users_email}
                                                     </td>
                                                     <td>
-                                                        <a target="_blank" rel="noopener noreferrer" href={`/author/${user.users_username}`}>
+                                                        <Link to={`/author/${user.users_username}`}>
                                                             {user.users_username}
-                                                        </a>
+                                                        </Link>
                                                     </td>
                                                     <td>
                                                     <Link to={`/editProfile/${user.users_username}`}>

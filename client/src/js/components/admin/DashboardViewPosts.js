@@ -62,7 +62,15 @@ class DashboardViewPosts extends Component {
                     authenticated: true
                 })
                 fetch('/totalPostAmount')
-                .then(res => res.json())
+                .then((response) => {
+                    if (response.status >= 500) {
+                        throw new Error("Server error.");
+                    } else if (response.status < 500 && response.status >= 400) {
+                        throw new Error("Page error.");
+                    } else if (response.status < 400) {
+                        return response.json();
+                    }
+                })
                 .then((data) => {
                     this.setState({
                         postAmount: data[0].theme_postAmount
@@ -90,8 +98,14 @@ class DashboardViewPosts extends Component {
             mode: 'cors',
             body: JSON.stringify({ "postid": value })
         })
-        .then((res) => {
-            return res.json();
+        .then((response) => {
+            if (response.status >= 500) {
+                throw new Error("Server error.");
+            } else if (response.status < 500 && response.status >= 400) {
+                throw new Error("Page error.");
+            } else if (response.status < 400) {
+                return response.json();
+            }
         })
         fetch("/decrementUserPostAmount", {
             method: 'PUT',
@@ -102,8 +116,14 @@ class DashboardViewPosts extends Component {
             mode: 'cors',
             body: JSON.stringify(this.state.posts.filter((post) => value === post.post_id))
         })
-        .then((res) => {
-            return res.json();
+        .then((response) => {
+            if (response.status >= 500) {
+                throw new Error("Server error.");
+            } else if (response.status < 500 && response.status >= 400) {
+                throw new Error("Page error.");
+            } else if (response.status < 400) {
+                return response.json();
+            }
         })
         fetch("/decrementTotalPostAmount", {
             method: 'GET',
@@ -112,8 +132,14 @@ class DashboardViewPosts extends Component {
                 'Access-Control-Allow-Origin': '*'
             }
         })
-        .then((res) => {
-            return res.json();
+        .then((response) => {
+            if (response.status >= 500) {
+                throw new Error("Server error.");
+            } else if (response.status < 500 && response.status >= 400) {
+                throw new Error("Page error.");
+            } else if (response.status < 400) {
+                return response.json();
+            }
         })
     }
     toggleSortTitle(){

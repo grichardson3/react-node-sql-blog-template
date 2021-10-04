@@ -25,7 +25,15 @@ class DashboardEditProfile extends Component {
                 'Access-Control-Allow-Origin': '*'
             }
         })
-        .then(response => response.json())
+        .then((response) => {
+            if (response.status >= 500) {
+                throw new Error("Server error.");
+            } else if (response.status < 500 && response.status >= 400) {
+                throw new Error("Page error.");
+            } else if (response.status < 400) {
+                return response.json();
+            }
+        })
         .then((userData) => {
             if (!sessionStorage.getItem("sessionKey")) {
                 this.props.history.push("/");
@@ -113,13 +121,17 @@ class DashboardEditProfile extends Component {
                                                                     mode: 'cors',
                                                                     body: JSON.stringify(compareUsername)
                                                                 })
-                                                                .then((res) => {
-                                                                    if (res.status === 200) {
+                                                                .then((response) => {
+                                                                    if (response.status >= 200 && response.status < 400) {
                                                                         this.props.posts.forEach((post) => {
                                                                             if (dataTwo.users_username !== post.post_author) {
                                                                                 this.props.dispatch(editPostUsername(post.post_id, dataTwo));
                                                                             }
                                                                         })
+                                                                    } else if (response.status < 500 && response.status >= 400) {
+                                                                        throw new Error("Page error.");
+                                                                    } else if (response.status >= 500) {
+                                                                        throw new Error("Server error.");
                                                                     }
                                                                 });
                                                             }
@@ -132,15 +144,19 @@ class DashboardEditProfile extends Component {
                                                                 mode: 'cors',
                                                                 body: JSON.stringify(data)
                                                             })
-                                                            .then((res) => {
-                                                                if (res.status === 200) {
+                                                            .then((response) => {
+                                                                if (response.status >= 200 && response.status < 400) {
                                                                     localStorage.removeItem("user_id");
                                                                     localStorage.removeItem("user_username");
                                                                     this.props.dispatch(editAuthor(user.users_id, data));
                                                                     this.props.history.push("/viewProfiles");
-                                                                } else if (res.status >= 400) {
+                                                                } else if (response.status >= 400 && response.status < 500) {
                                                                     const editStatus = document.createElement("span");
-                                                                    editStatus.textContent = "An error has occured";
+                                                                    editStatus.textContent = "A page error has occured";
+                                                                    document.querySelector(".editProfile").appendChild(editStatus);
+                                                                } else if (response.status > 500) {
+                                                                    const editStatus = document.createElement("span");
+                                                                    editStatus.textContent = "A server error has occured";
                                                                     document.querySelector(".editProfile").appendChild(editStatus);
                                                                 }
                                                             });

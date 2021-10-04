@@ -68,7 +68,15 @@ class App extends Component {
     }
     componentDidMount(){
         fetch('/theme')
-        .then(response => response.json())
+        .then((response) => {
+            if (response.status >= 500) {
+                throw new Error("Server error.");
+            } else if (response.status < 500 && response.status >= 400) {
+                throw new Error("Page error.");
+            } else if (response.status < 400) {
+                return response.json();
+            }
+        })
         .then((themeData) => {
             this.setState({ 
                 theme: themeData
@@ -87,7 +95,15 @@ class App extends Component {
             }));
         });
         fetch('/posts')
-        .then(response => response.json())
+        .then((response) => {
+            if (response.status >= 500) {
+                throw new Error("Server error.");
+            } else if (response.status < 500 && response.status >= 400) {
+                throw new Error("Page error.");
+            } else if (response.status < 400) {
+                return response.json();
+            }
+        })
         .then((postsData) => {
             this.setState({ 
                 posts: postsData
@@ -108,7 +124,15 @@ class App extends Component {
             });
         });
         fetch('/users')
-        .then(response => response.json())
+        .then((response) => {
+            if (response.status >= 500) {
+                throw new Error("Server error.");
+            } else if (response.status < 500 && response.status >= 400) {
+                throw new Error("Page error.");
+            } else if (response.status < 400) {
+                return response.json();
+            }
+        })
         .then((usersData) => {
             this.setState({
                 users: usersData

@@ -158,7 +158,6 @@ class DashboardComponent extends Component {
         });
     }
     render(){
-        console.log(this.state.posts);
         return (
             <div id="dashboard">
                 <DashboardNavigation history={this.props.history}/>

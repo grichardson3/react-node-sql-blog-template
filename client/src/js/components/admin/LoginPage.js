@@ -25,7 +25,7 @@ class LoginPage extends Component {
                 if (sessionStorage.getItem("sessionKey") === userData[0].users_sessionKey) {
                     this.props.history.push('/dashboard');
                 }
-            }   
+            }
         });
     }
     render(){
@@ -48,7 +48,15 @@ class LoginPage extends Component {
                                 'Access-Control-Allow-Origin': '*'
                             }
                         })
-                        .then(response => response.json())
+                        .then((response) => {
+                            if (response.status >= 500) {
+                                throw new Error("Server error.");
+                            } else if (response.status < 500 && response.status >= 400) {
+                                throw new Error("Page error.");
+                            } else if (response.status < 400) {
+                                return response.json();
+                            }
+                        })
                         .then((userData) => {
                             const usernameOrEmailValue = document.querySelector("#usernameoremail").value;
                             const passwordValue = document.querySelector("#password").value;

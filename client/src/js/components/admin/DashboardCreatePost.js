@@ -61,7 +61,15 @@ class DashboardCreatePost extends Component {
                 'Access-Control-Allow-Origin': '*'
             }
         })
-        .then(response => response.json())
+        .then((response) => {
+            if (response.status >= 500) {
+                throw new Error("Server error.");
+            } else if (response.status < 500 && response.status >= 400) {
+                throw new Error("Page error.");
+            } else if (response.status < 400) {
+                return response.json();
+            }
+        })
         .then((userData) => {
             console.log(userData);
             if (!sessionStorage.getItem("sessionKey")) {
@@ -145,14 +153,18 @@ class DashboardCreatePost extends Component {
                                                         mode: 'cors',
                                                         body: JSON.stringify(data)
                                                     })
-                                                    .then((res) => {
-                                                        if (res.status === 200) {
+                                                    .then((response) => {
+                                                        if (response.status >= 200 && response.status < 400) {
                                                             localStorage.removeItem("post_id");
                                                             this.props.dispatch(addPost(data));
                                                             this.props.history.push("/viewPosts");
-                                                        } else if (res.status >= 400) {
+                                                        } else if (response.status >= 400 && response.status < 500) {
                                                             const editStatus = document.createElement("span");
-                                                            editStatus.textContent = "An error has occured";
+                                                            editStatus.textContent = "A page error has occured";
+                                                            document.querySelector(".addPost").appendChild(editStatus);
+                                                        } else if (response.status >= 500) {
+                                                            const editStatus = document.createElement("span");
+                                                            editStatus.textContent = "A server error has occured";
                                                             document.querySelector(".addPost").appendChild(editStatus);
                                                         }
                                                     });
@@ -165,8 +177,14 @@ class DashboardCreatePost extends Component {
                                                         mode: 'cors',
                                                         body: JSON.stringify({ "id": sessionStorage.getItem("usernameOrEmail") })
                                                     })
-                                                    .then((res) => {
-                                                        return res.json();
+                                                    .then((response) => {
+                                                        if (response.status >= 500) {
+                                                            throw new Error("Server error.");
+                                                        } else if (response.status < 500 && response.status >= 400) {
+                                                            throw new Error("Page error.");
+                                                        } else if (response.status < 400) {
+                                                            return response.json();
+                                                        }
                                                     })
                                                     fetch("/incrementTotalPostAmount", {
                                                         method: 'GET',
@@ -175,8 +193,14 @@ class DashboardCreatePost extends Component {
                                                             'Access-Control-Allow-Origin': '*'
                                                         }
                                                     })
-                                                    .then((res) => {
-                                                        return res.json();
+                                                    .then((response) => {
+                                                        if (response.status >= 500) {
+                                                            throw new Error("Server error.");
+                                                        } else if (response.status < 500 && response.status >= 400) {
+                                                            throw new Error("Page error.");
+                                                        } else if (response.status < 400) {
+                                                            return response.json();
+                                                        }
                                                     })
                                                 } else {
                                                     document.querySelector(".statusMessages").innerHTML = "";

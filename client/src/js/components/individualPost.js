@@ -45,6 +45,15 @@ class IndividualPost extends Component {
                 mode: 'cors',
                 body: JSON.stringify(data)
             })
+            .then((response) => {
+                if (response.status >= 500) {
+                    throw new Error("Server error.");
+                } else if (response.status < 500 && response.status >= 400) {
+                    throw new Error("Page error.");
+                } else if (response.status < 400) {
+                    return response.json();
+                }
+            });
         }
     }
     render(){
