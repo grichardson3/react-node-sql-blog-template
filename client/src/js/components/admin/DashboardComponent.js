@@ -200,7 +200,7 @@ class DashboardComponent extends Component {
                                         </th>
                                     </tr>
                                         {
-                                            this.state.authenticated ?
+                                            this.state.authenticated && this.state.posts.length !== 0 ?
                                             this.state.posts.map((post) => {
                                                 return (
                                                     <tr className="postRow" key={post.post_id}>
@@ -219,7 +219,19 @@ class DashboardComponent extends Component {
                                                         </td>
                                                     </tr>
                                                 )
-                                            }) : <tr><td className="noContent"><span>No posts.</span></td></tr>
+                                            }) : <tr className="row">
+                                                        <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                        <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                        <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                        <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                        <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                        <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                        <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                        <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                        <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                        <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                </tr>
+                                            
                                         }
                                 </tbody>
                             </table>

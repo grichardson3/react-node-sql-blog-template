@@ -86,15 +86,17 @@ span {
 }
 
 table {
-  width: 100%;
+  width: calc(100% - 30px);
 }
 
 table a {
   text-decoration: underline;
+  transition: .3s ease;
 }
 
-table a:hover {
+table a:hover, table span:hover {
   color: #ccc;
+  transition: .3s ease;
 }
 
 table div {
@@ -111,7 +113,7 @@ th, td {
   font-family: "Roboto Slab", serif;
   font-weight: 500;
   color: white;
-  padding: 8px 25px 8px 0;
+  padding: 8px 25px 8px 12px;
 }
 
 td {
@@ -120,6 +122,25 @@ td {
 
 ul {
   padding: 0;
+}
+
+::-webkit-scrollbar {
+  width: 16px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
 }
 
 .bioArea {

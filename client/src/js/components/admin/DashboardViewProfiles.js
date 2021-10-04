@@ -292,7 +292,7 @@ class DashboardViewProfiles extends Component {
                                         this.state.authenticated && this.state.users.length !== 0 ?
                                         this.state.users.map((user) => {
                                             return (
-                                                <tr key={user.users_id}>
+                                                <tr className="profile" key={user.users_id}>
                                                     <td>
                                                         {user.users_firstname}
                                                     </td>
@@ -307,17 +307,13 @@ class DashboardViewProfiles extends Component {
                                                             {user.users_username}
                                                         </Link>
                                                     </td>
-                                                    <td>
-                                                    <Link to={`/editProfile/${user.users_username}`}>
-                                                        <button className="btn btn-sm btn-secondary">Edit Profile</button>
-                                                    </Link>
-                                                    </td>
-                                                    <td>
+                                                    <td className="crudButtons">
+                                                        <Link to={`/editProfile/${user.users_username}`}>
+                                                            <button className="btn btn-sm btn-secondary">Edit Profile</button>
+                                                        </Link>
                                                         <Link to={`/updatePassword/${user.users_username}`}>
                                                             <button className="btn btn-sm btn-secondary">Update Password</button>
                                                         </Link>
-                                                    </td>
-                                                    <td>
                                                         <button 
                                                         className="btn btn-sm btn-danger"
                                                         onClick={() => this.deleteProfile(user.users_id)}
@@ -325,7 +321,18 @@ class DashboardViewProfiles extends Component {
                                                     </td>
                                                 </tr>
                                             )
-                                        }) : <tr><td className="noContent"><span>Loading...</span></td></tr>
+                                        }) : <div className="row">
+                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                            </div>
                                     }
                                 </tbody>
                             </table>

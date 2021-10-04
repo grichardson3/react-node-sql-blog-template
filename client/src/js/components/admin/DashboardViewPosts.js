@@ -68,7 +68,7 @@ class DashboardViewPosts extends Component {
             } else {
                 this.setState({
                     authenticated: true
-                })
+                });
                 fetch('/totalPostAmount')
                 .then((response) => {
                     if (response.status >= 500) {
@@ -265,31 +265,40 @@ class DashboardViewPosts extends Component {
                             <table>
                                 <tbody>
                                     {
-                                        this.state.authenticated ?
+                                        this.state.authenticated && this.state.posts.length !== 0 ?
                                         this.state.posts.map((post) => {
                                             return (
                                                  <tr className="post" key={post.post_id}>
-                                                 <td>
-                                                     <Link to={`/post/${post.post_id}`}><span>{post.post_title}</span></Link>
-                                                 </td>
-                                                 <td>
-                                                    <Link to={`/author/${post.post_author}`}><span>{post.post_author}</span></Link>
-                                                 </td>
-                                                 <td>{momentTZ.unix(post.post_date).tz("America/Toronto").format('MMMM Do YYYY, h:mm:ss a')} (E.S.T)</td>
-                                                 <td>
-                                                     <Link to={`/editPost/${post.post_id}`}>
-                                                         <button className="btn btn-sm btn-secondary">Edit Post</button>
-                                                     </Link>
-                                                 </td>
-                                                 <td>
-                                                     <button 
-                                                         className="btn btn-sm btn-danger"
-                                                         onClick={() => this.deletePost(post.post_dbid)}
-                                                     >Delete Post</button>
-                                                 </td>
-                                             </tr>
+                                                    <td>
+                                                        <Link to={`/post/${post.post_id}`}><span>{post.post_title}</span></Link>
+                                                    </td>
+                                                    <td>
+                                                        <Link to={`/author/${post.post_author}`}><span>{post.post_author}</span></Link>
+                                                    </td>
+                                                    <td>{momentTZ.unix(post.post_date).tz("America/Toronto").format('MMMM Do YYYY, h:mm:ss a')} (E.S.T)</td>
+                                                    <td className="crudButtons">
+                                                        <Link to={`/editPost/${post.post_id}`}>
+                                                            <button className="btn btn-sm btn-secondary">Edit Post</button>
+                                                        </Link>
+                                                        <button 
+                                                            className="btn btn-sm btn-danger"
+                                                            onClick={() => this.deletePost(post.post_dbid)}
+                                                        >Delete Post</button>
+                                                    </td>
+                                                </tr>
                                             )
-                                        }) : <tr><td className="noContent"><span>Loading...</span></td></tr>
+                                        }) : <div className="row">
+                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                            </div>
                                     }
                                 </tbody>
                             </table>

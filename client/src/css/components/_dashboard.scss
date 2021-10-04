@@ -90,9 +90,54 @@
     outline: none;
 }
 
-.noContent {
-    display: flex;
-    justify-content: center;
+.col-xs-12 {
+    padding: 0 !important;
+    width: 95% !important;
+}
+
+.crudButtons button {
+    margin-right: 12px;
+}
+
+.loadingBar {
+    border-radius: 20px;
+    width: 100%;
+    height: 20px;
+    margin: 20px;
+    background: linear-gradient(270deg, #2e4848, #4a6969);
+    background-size: 400% 400%;
+
+    -webkit-animation: LoadingBarAnimation 1.25s ease infinite;
+    -moz-animation: LoadingBarAnimation 1.25s ease infinite;
+    animation: LoadingBarAnimation 1.25s ease infinite;
+}
+
+@-webkit-keyframes LoadingBarAnimation {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes LoadingBarAnimation {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes LoadingBarAnimation {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+.noContent tr, .noContent td {
+    width: 100%;
+}
+
+.post:first-child, .post:nth-child(2n+3), .profile:first-child, .profile:nth-child(2n+3) {
+    background: #2e4848;
+}
+
+.row {
+    width: 100%;
 }
 
 .statusMessages {
