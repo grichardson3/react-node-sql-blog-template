@@ -88,13 +88,34 @@ class DashboardViewProfiles extends Component {
                     .then((data) => {
                         this.setState({
                             userAmount: data[0].theme_userAmount
-                        })
-                        if (this.props.users.length !== 0) {
+                        });
+                        const promise = new Promise((resolve, reject) => {
+                            // Retries the promise if the information isn't loaded in fast enough
+                            const retryPromise = () => {
+                                setTimeout(() => {
+                                    if (this.props.users.length > 0) {
+                                        resolve('Success');
+                                    } else if (this.props.users.length === 0) {
+                                        retryPromise();
+                                    } else {
+                                        reject("Failed.");
+                                    }
+                                }, 25);
+                            }
+                            if (this.props.users.length > 0) {
+                                resolve('Success');
+                            } else if (this.props.users.length === 0) {
+                                retryPromise();
+                            } else {
+                                reject("Failed.");
+                            }
+                        });
+                        promise.then(() => {
                             this.setState({
                                 users: this.props.users.sort((a, b) => ('' + b.users_username).localeCompare(a.users_username))
-                            })
-                        }
-                    })
+                            });
+                        });
+                    });
                 }
             } else {
                 this.props.history.push("/");

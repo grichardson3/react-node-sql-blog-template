@@ -53,7 +53,15 @@ class DashboardViewPosts extends Component {
                 'Access-Control-Allow-Origin': '*'
             }
         })
-        .then(response => response.json())
+        .then((response) => {
+            if (response.status >= 500) {
+                throw new Error("Server error.");
+            } else if (response.status < 500 && response.status >= 400) {
+                throw new Error("Page error.");
+            } else if (response.status < 400) {
+                return response.json();
+            }
+        })
         .then((userData) => {
             if (sessionStorage.getItem("sessionKey") !== userData[0].users_sessionKey) {
                 this.props.history.push("/");
@@ -75,12 +83,33 @@ class DashboardViewPosts extends Component {
                     this.setState({
                         postAmount: data[0].theme_postAmount
                     })
-                    if (this.props.posts.length !== 0) {
+                    const promise = new Promise((resolve, reject) => {
+                        // Retries the promise if the information isn't loaded in fast enough
+                        const retryPromise = () => {
+                            setTimeout(() => {
+                                if (this.props.posts.length > 0) {
+                                    resolve('Success');
+                                } else if (this.props.posts.length === 0) {
+                                    retryPromise();
+                                } else {
+                                    reject("Failed.");
+                                }
+                            }, 25);
+                        }
+                        if (this.props.posts.length > 0) {
+                            resolve('Success');
+                        } else if (this.props.posts.length === 0) {
+                            retryPromise();
+                        } else {
+                            reject("Failed.");
+                        }
+                    });
+                    promise.then(() => {
                         this.setState({
                             posts: this.props.posts.sort((a, b) => ('' + b.post_date).localeCompare(a.post_date))
-                        })
-                    }
-                })
+                        });
+                    });
+                });
             }
         });
     }

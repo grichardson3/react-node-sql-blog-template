@@ -44,15 +44,36 @@ class FilterByAuthor extends Component {
                 username: data[0].users_username,
                 postAmount: data[0].users_postamount
             })
-            if (this.props.users.length !== 0) {
+            const promise = new Promise((resolve, reject) => {
+                // Retries the promise if the information isn't loaded in fast enough
+                const retryPromise = () => {
+                    setTimeout(() => {
+                        if (this.props.users.length > 0) {
+                            resolve('Success');
+                        } else if (this.props.users.length === 0) {
+                            retryPromise();
+                        } else {
+                            reject("Failed.");
+                        }
+                    }, 25);
+                }
+                if (this.props.users.length > 0) {
+                    resolve('Success');
+                } else if (this.props.users.length === 0) {
+                    retryPromise();
+                } else {
+                    reject("Failed.");
+                }
+            });
+            promise.then(() => {
                 this.setState({
                     user: this.props.users.filter((user) => user.users_username.includes(data[0].users_username)),
-                })
+                });
                 this.setState({
                     posts: this.props.posts.filter((post) => post.post_author.includes(data[0].users_username))
-                })
-            }
-        })
+                });
+            });
+        });
     }
     componentWillUpdate(){
         if ( this.props.users.length !== 0 ) {

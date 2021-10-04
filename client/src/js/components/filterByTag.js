@@ -37,12 +37,33 @@ class FilterByTag extends Component {
             this.setState({
                 postAmount: JSON.parse(data[0])
             })
-            if (this.props.posts.length !== 0) {
+            const promise = new Promise((resolve, reject) => {
+                // Retries the promise if the information isn't loaded in fast enough
+                const retryPromise = () => {
+                    setTimeout(() => {
+                        if (this.props.posts.length > 0) {
+                            resolve('Success');
+                        } else if (this.props.posts.length === 0) {
+                            retryPromise();
+                        } else {
+                            reject("Failed.");
+                        }
+                    }, 25);
+                }
+                if (this.props.posts.length > 0) {
+                    resolve('Success');
+                } else if (this.props.posts.length === 0) {
+                    retryPromise();
+                } else {
+                    reject("Failed.");
+                }
+            });
+            promise.then(() => {
                 this.setState({
                     posts: this.props.posts.filter((post) => post.post_tag.toLowerCase().includes(window.location.href.split("/")[window.location.href.split("/").length - 1]))
                 });
-            }
-        })
+            });
+        });
     }
     componentWillUpdate(){
         if (this.props.posts.length !== 0) {
