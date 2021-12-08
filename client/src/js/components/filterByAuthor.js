@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import Header from './header';
 import Footer from './footer';
 
+// filter by author component
+
 class FilterByAuthor extends Component {
     constructor(props){
         super(props);
