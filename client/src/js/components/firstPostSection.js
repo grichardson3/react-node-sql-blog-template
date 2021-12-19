@@ -20,6 +20,7 @@ class FirstPostSection extends Component {
     }*/
     render(){
         // console.log("test");
+        // console.log("test");
         return (
             <div>
                 <div className="row">
