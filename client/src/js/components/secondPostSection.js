@@ -14,7 +14,7 @@ class SecondPostSection extends Component {
                             if (post.post_id && post.post_id > (this.props.posts.findIndex((post) => post.post_id >= 8) + 1)) {
                                 return (
                                     <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 blogPost" id={post.post_id} key={post.post_id}>
-                                        <Link to={`/post/${post.post_id}`}>
+                                        <Link to={`/post/${post.post_dbid}`}>
                                             <div className="blogPostFeaturePhoto">
                                                 <img
                                                     title={post.post_title}
@@ -23,7 +23,7 @@ class SecondPostSection extends Component {
                                                 />
                                             </div>
                                         </Link>
-                                        <Link to={`/post/${post.post_id}`}>
+                                        <Link to={`/post/${post.post_dbid}`}>
                                             <h2 className="blogPostTitle">
                                                 {
                                                     post.post_title.length > 75 ?
@@ -53,7 +53,7 @@ class SecondPostSection extends Component {
                                             }
                                         </p>
                                         <div className="blogPostBottomMetaArea">
-                                            <Link to={`/post/${post.post_id}`}>
+                                            <Link to={`/post/${post.post_dbid}`}>
                                                 <span className="blogPostReadMore">Read More</span>
                                             </Link>
                                             <div>

@@ -104,7 +104,7 @@ class FilterByTag extends Component {
                             this.state.posts.map((post) => {
                                 return (
                                     <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 blogPost" key={post.post_id}>
-                                        <Link to={`/post/${post.post_id}`}>
+                                        <Link to={`/post/${post.post_dbid}`}>
                                             <div className="blogPostFeaturePhoto">
                                                 <img
                                                     title={post.post_title}
@@ -113,7 +113,7 @@ class FilterByTag extends Component {
                                                 />
                                             </div>
                                         </Link>
-                                        <Link to={`/post/${post.post_id}`}>
+                                        <Link to={`/post/${post.post_dbid}`}>
                                             <h2>
                                                 <span className="blogPostTitle">{post.post_title}</span>
                                             </h2>
@@ -137,7 +137,7 @@ class FilterByTag extends Component {
                                             }
                                         </p>
                                         <div className="blogPostBottomMetaArea">
-                                            <Link to={`/post/${post.post_id}`}>
+                                            <Link to={`/post/${post.post_dbid}`}>
                                                 <span className="blogPostReadMore">Read More</span>
                                             </Link>
                                             <div>

@@ -200,7 +200,7 @@ class FilterByAuthor extends Component {
                                 this.state.posts.map((post) => {
                                     return (
                                         <div className="col-xs-12 blogPost" key={post.post_id}>
-                                            <Link to={`/post/${post.post_id}`}><h2 className="blogPostTitle">{post.post_title}</h2></Link>
+                                            <Link to={`/post/${post.post_dbid}`}><h2 className="blogPostTitle">{post.post_title}</h2></Link>
                                             <div className="blogPostMetaArea">
                                                 <div>
                                                     <span>Author: </span>
@@ -216,7 +216,7 @@ class FilterByAuthor extends Component {
                                                 }
                                             </p>
                                             <div className="blogPostBottomMetaAreaTwo">
-                                                <Link to={`/post/${post.post_id}`}><span className="blogPostReadMore">Read More</span></Link>
+                                                <Link to={`/post/${post.post_dbid}`}><span className="blogPostReadMore">Read More</span></Link>
                                                 <div>
                                                     <span className="blogPostTagText">Tags: </span>
                                                     <Link to={`/tag/${post.post_tag}`}><span className="blogPostIndividualTagText">{post.post_tag}</span></Link>

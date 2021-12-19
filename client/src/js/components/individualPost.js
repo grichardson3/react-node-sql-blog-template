@@ -10,14 +10,15 @@ class IndividualPost extends Component {
     constructor(props){
         super(props);
         this.state = {
-            post: ''
+            posts: [],
+            post: {}
         }
     }
     componentDidMount(){
         if (this.props.posts !== []) {
             this.setState({
-                post: this.props.posts[window.location.href.split("/")[window.location.href.split("/").length - 1] - 1]
-            })
+                posts: this.props.posts
+            });
         }
         this.addPostView();
     }
@@ -53,6 +54,11 @@ class IndividualPost extends Component {
                 } else if (response.status < 400) {
                     return response.json();
                 }
+            })
+            .then(() => {
+                this.setState({
+                    post: this.state.posts.filter((post) => post.post_dbid === JSON.parse(window.location.href.split("/")[window.location.href.split("/").length - 1]))[0]
+                });
             });
         }
     }
@@ -63,7 +69,7 @@ class IndividualPost extends Component {
                 <div id="container" className="container">
                     {
                         this.state.post && this.state.post !== '' ?
-                        <div key={this.state.post.post_id}>
+                        <div key={this.state.post.post_dbid}>
                             <div id="individualPostMetaArea">
                                 <h2 id="individualPostTitle">{this.state.post.post_title}</h2>
                                 <div id="individualPostBottomMeta">

@@ -23,9 +23,29 @@ class Header extends Component {
                             }}>Search</button>
                         </div>
                     </div>
-                    <Link to="/login">
-                        <button className="btn btn-secondary">Login</button>
-                    </Link>
+                    
+                    <button className="btn btn-secondary" onClick={() => {
+                        fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then((userData) => {
+                            if (sessionStorage.getItem("sessionKey")) {
+                                if (sessionStorage.getItem("sessionKey") !== userData[0].users_sessionKey) {
+                                    this.props.history.push('/');
+                                } else {
+                                    this.props.history.push('/dashboard');
+                                }
+                            } else {
+                                this.props.history.push("/login");
+                            }
+                        });
+                    }}>Login</button>
+
                 </div>
             </header>
         )

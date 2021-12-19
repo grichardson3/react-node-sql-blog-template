@@ -19,6 +19,7 @@ class FirstPostSection extends Component {
         }, 1000);
     }*/
     render(){
+        // console.log("test");
         return (
             <div>
                 <div className="row">
@@ -30,7 +31,7 @@ class FirstPostSection extends Component {
                                 return (
                                     <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 blogPost" id={`post${post.post_id}`} key={post.post_id}>
                                         <div>
-                                            <Link to={`/post/${post.post_id}`}>
+                                            <Link to={`/post/${post.post_dbid}`}>
                                                 <div className="blogPostFeaturePhoto">
                                                     <img 
                                                         title={post.post_title}
@@ -41,7 +42,7 @@ class FirstPostSection extends Component {
                                             </Link>
                                         </div>
                                         <div className={`blogPostTextArea postTextArea${post.post_id}`}>
-                                            <Link to={`/post/${post.post_id}`}>
+                                            <Link to={`/post/${post.post_dbid}`}>
                                                 <h2>
                                                     <span className="blogPostTitle">
                                                         {
@@ -69,7 +70,7 @@ class FirstPostSection extends Component {
                                                 }
                                             </p>
                                             <div className="blogPostBottomMetaArea">
-                                                <Link to={`/post/${post.post_id}`}><span className="blogPostReadMore">Read More</span></Link>
+                                                <Link to={`/post/${post.post_dbid}`}><span className="blogPostReadMore">Read More</span></Link>
                                                 <div>
                                                     <span className="blogPostTagText">Tags: </span>
                                                     <Link to={`/tag/${post.post_tag}`}>
@@ -94,7 +95,7 @@ class FirstPostSection extends Component {
                                 post.post_id <= (this.props.posts.findIndex((post) => post.post_id >= 8) + 1)) {
                                 return (
                                     <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 blogPost" id={post.post_id} key={post.post_id}>
-                                        <Link to={`/post/${post.post_id}`}>
+                                        <Link to={`/post/${post.post_dbid}`}>
                                             <div 
                                             className="blogPostFeaturePhoto">
                                                 <img
@@ -104,7 +105,7 @@ class FirstPostSection extends Component {
                                                 />
                                             </div>
                                         </Link>
-                                        <Link to={`/post/${post.post_id}`}>
+                                        <Link to={`/post/${post.post_dbid}`}>
                                             <h2>
                                                 <span 
                                                 title={post.post_title}
@@ -136,7 +137,7 @@ class FirstPostSection extends Component {
                                             }
                                         </p>
                                         <div className="blogPostBottomMetaArea">
-                                            <Link to={`/post/${post.post_id}`}><span className="blogPostReadMore">Read More</span></Link>
+                                            <Link to={`/post/${post.post_dbid}`}><span className="blogPostReadMore">Read More</span></Link>
                                             <div>
                                                 <span className="blogPostTagText">Tags: </span>
                                                 <Link to={`/tag/${post.post_tag}`}>

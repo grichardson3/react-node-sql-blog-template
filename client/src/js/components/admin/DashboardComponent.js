@@ -6,12 +6,14 @@ import { Link } from 'react-router-dom';
 import DashboardNavigation from './DashboardNavigation';
 
 const momentTZ = require('moment-timezone');
+
 ReactGA.initialize('G-RTLFZS92ZM');
 ReactGA.pageview(window.location.pathname + window.location.search);
 
 class DashboardComponent extends Component {
     constructor(props){
         super(props);
+        console.log(props);
         this.state = {
             authenticated: false,
             posts: [],
@@ -104,7 +106,6 @@ class DashboardComponent extends Component {
             } else {
                 this.props.history.push('/');
             }
-            
         });
 
         const loginContainer = document.querySelector("#dashboard");
@@ -174,24 +175,16 @@ class DashboardComponent extends Component {
                                 <tbody>
                                     <tr>
                                         <th>
-                                            <div>
-                                                <span>Post Title</span>
-                                            </div>
+                                            <span>Post Title</span>
                                         </th>
                                         <th>
-                                            <div>
-                                                <span>Post Author</span>
-                                            </div>
+                                            <span>Post Author</span>
                                         </th>
                                         <th>
-                                            <div>
-                                                <span>Post Date</span>
-                                            </div>
+                                            <span>Post Date</span>
                                         </th>
                                         <th>
-                                            <div>
-                                                <span>Post Views</span>
-                                            </div>
+                                            <span>Post Views</span>
                                         </th>
                                         <th id="dashboardContainer__graphColumn">
                                             <div>
@@ -220,16 +213,16 @@ class DashboardComponent extends Component {
                                                     </tr>
                                                 )
                                             }) : <tr className="row">
-                                                        <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
-                                                        <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
-                                                        <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
-                                                        <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
-                                                        <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
-                                                        <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
-                                                        <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
-                                                        <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
-                                                        <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
-                                                        <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
+                                                        <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                        <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                        <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                        <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                        <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                        <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                        <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                        <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                        <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                        <td className="col-xs-12 col-md-12 loadingBar"></td>
                                                 </tr>
                                             
                                         }

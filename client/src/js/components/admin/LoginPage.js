@@ -4,7 +4,7 @@ const randomstring = require("randomstring");
 const salt = bcrypt.genSaltSync(10);
 
 class LoginPage extends Component {
-    componentDidMount(){
+    componentDidMount(){   
         const loginContainer = document.querySelector(".loginContainer");
 
         loginContainer.style.height = (window.innerHeight) + "px";
@@ -12,23 +12,9 @@ class LoginPage extends Component {
         window.addEventListener("resize", () => {
             loginContainer.style.height = (window.innerHeight) + "px";
         });
-        fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            }
-        })
-        .then(response => response.json())
-        .then((userData) => {
-            if (sessionStorage.getItem("sessionKey")) {
-                if (sessionStorage.getItem("sessionKey") === userData[0].users_sessionKey) {
-                    this.props.history.push('/dashboard');
-                }
-            }
-        });
     }
     render(){
+        // In the inputs for this JSX Component, a placeholder username and password value are given for CMS demo purposes
         return (
             <div className="loginContainer">
                 <div className="loginContainer__form">
@@ -91,6 +77,7 @@ class LoginPage extends Component {
                                             } else if (res.status < 500 && res.status >= 400) {
                                                 throw new Error("Page error.");
                                             } else if (res.status < 400) {
+                                                localStorage.setItem("lastURL", this.props.history.location.pathname);
                                                 this.props.history.push("/dashboard");
                                             }
                                             return res.json();

@@ -321,18 +321,18 @@ class DashboardViewProfiles extends Component {
                                                     </td>
                                                 </tr>
                                             )
-                                        }) : <div className="row">
-                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
-                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
-                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
-                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
-                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
-                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
-                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
-                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
-                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
-                                                <div className="col-xs-12 col-md-12"><div className="loadingBar"></div></div>
-                                            </div>
+                                        }) : <tr className="row">
+                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                            </tr>
                                     }
                                 </tbody>
                             </table>

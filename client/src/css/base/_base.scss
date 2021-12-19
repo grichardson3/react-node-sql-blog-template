@@ -91,12 +91,13 @@ table {
 
 table a {
   text-decoration: underline;
-  transition: .3s ease;
+  transition: 0.3s ease;
 }
 
-table a:hover, table span:hover {
+table a:hover,
+table span:hover {
   color: #ccc;
-  transition: .3s ease;
+  transition: 0.3s ease;
 }
 
 table div {
@@ -109,7 +110,8 @@ table button:focus {
   outline: none;
 }
 
-th, td {
+th,
+td {
   font-family: "Roboto Slab", serif;
   font-weight: 500;
   color: white;
@@ -124,23 +126,24 @@ ul {
   padding: 0;
 }
 
+/* width */
 ::-webkit-scrollbar {
-  width: 16px;
+  width: 10px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: rgba(0,0,0,0);
+  background: #f1f1f1;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0);
+  background: #888;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #aaa;
+  background: #555;
 }
 
 .bioArea {

@@ -1,3 +1,4 @@
+// Base Functional Imports
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
@@ -31,7 +32,7 @@ import DashboardViewPosts from './js/components/admin/DashboardViewPosts';
 import DashboardViewProfiles from './js/components/admin/DashboardViewProfiles';
 import DashboardUpdatePassword from './js/components/admin/DashboardUpdatePassword';
 
-// Polyfills for ES6 Functions & IE11
+// *** Polyfills for ES6 Functions & IE11 *** //
 import smoothscroll from 'smoothscroll-polyfill';
 import 'polyfill-array-includes';
 import 'react-app-polyfill/ie9';
@@ -53,6 +54,9 @@ require('es6-promise').polyfill();
 require('isomorphic-fetch');
 require("jspolyfill-array.prototype.findIndex");
 
+// ****************************************** //
+
+// Configuring the Redux Store
 const store = configureStore();
 
 // Main Application Component
@@ -62,8 +66,9 @@ class App extends Component {
         this.state = {
             theme: [],
             posts: [],
-            users: []
+            users: [],
         }
+        // Count used to auto-increment client side IDs for posts
         this.count = 0;
     }
     componentDidMount(){
