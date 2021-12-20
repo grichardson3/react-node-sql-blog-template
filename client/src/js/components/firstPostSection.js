@@ -10,25 +10,43 @@ class FirstPostSection extends Component {
             posts: []
         }
     }
-    /*componentDidMount(){
-        setTimeout(() => {
-            this.setState({ 
+    componentDidMount(){
+        const promise = new Promise((resolve, reject) => {
+            // Retries the promise if the information isn't loaded in fast enough
+            const retryPromise = () => {
+                setTimeout(() => {
+                    if (this.props.posts.length > 0) {
+                        resolve('Success');
+                    } else if (this.props.posts.length === 0) {
+                        retryPromise();
+                    } else {
+                        reject("Failed.");
+                    }
+                }, 25);
+            }
+            if (this.props.posts.length > 0) {
+                resolve('Success');
+            } else if (this.props.posts.length === 0) {
+                retryPromise();
+            } else {
+                reject("Failed.");
+            }
+        });
+        promise.then(() => {
+            this.setState({
                 posts: this.props.posts.sort((a, b) => ('' + b.post_date).localeCompare(a.post_date))
-            })
-            console.log(this.state.posts);
-        }, 1000);
-    }*/
+            });
+        });
+    }
     render(){
-        // console.log("test");
-        // console.log("test");
         return (
             <div>
                 <div className="row">
                     {
-                        this.props.posts.length !== 0 ?
+                        this.state.posts.length !== 0 ?
                         // eslint-disable-next-line
-                        this.props.posts.map((post) => {
-                            if (post.post_id && post.post_id <= (this.props.posts.findIndex((post) => post.post_id >= 2) + 1)) { // Filter if statement
+                        this.state.posts.map((post) => {
+                            if (post.post_id && post.post_id <= (this.state.posts.findIndex((post) => post.post_id >= 2) + 1)) { // Filter if statement
                                 return (
                                     <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 blogPost" id={`post${post.post_id}`} key={post.post_id}>
                                         <div>
@@ -90,10 +108,10 @@ class FirstPostSection extends Component {
                     }
                     {
                         // eslint-disable-next-line
-                        this.props.posts.map((post) => {
+                        this.state.posts.map((post) => {
                             if (post.post_id && 
-                                post.post_id > (this.props.posts.findIndex((post) => post.post_id >= 2) + 1) && 
-                                post.post_id <= (this.props.posts.findIndex((post) => post.post_id >= 8) + 1)) {
+                                post.post_id > (this.state.posts.findIndex((post) => post.post_id >= 2) + 1) && 
+                                post.post_id <= (this.state.posts.findIndex((post) => post.post_id >= 8) + 1)) {
                                 return (
                                     <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4 blogPost" id={post.post_id} key={post.post_id}>
                                         <Link to={`/post/${post.post_dbid}`}>
