@@ -1,160 +1,173 @@
 #addPostButton {
-    width: 93px;
+  width: 93px;
 }
 
 #addUserButton {
-    width: 95px;
+  width: 95px;
 }
 
 #dashboard {
-    min-width: 1200px;
-    margin: 0 auto;
+  min-width: 1200px;
+  margin: 0 auto;
 }
 
 #dashboardContainer__stats {
-    overflow-y: scroll;
+  overflow-y: scroll;
 }
 
 #dashboardContainer__main {
-    padding: 0 20px 20px 20px;
+  padding: 0 20px 20px 20px;
 }
 
 #dashboardContainer__main table {
-    width: 100%;
+  width: 100%;
 }
 
 .dashboardContainer__dataHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 #dashboardContainer__graphColumn {
-    width: 40%;
+  width: 40%;
 }
 
 .dashboardContainer__graphBar {
-    background: white;
-    height: 24px;
-    width: 100%;
-    transition: 1s ease;
+  background: white;
+  height: 24px;
+  width: 100%;
+  transition: 1s ease;
 }
 
 #dashboardContainer__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 #dashboardContainer__navigation {
-    padding: 20px;
+  padding: 20px;
 }
 
 #dashboardContainer__navigation a {
-    margin-right: 16px;
-    color: white;
+  margin-right: 16px;
+  color: white;
 }
 
 #dashboardContainer__navigation a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 #dashboardContainer__navigation h1 {
-    line-height: 0;
-    margin-top: 20px;
+  line-height: 0;
+  margin-top: 20px;
 }
 
 #dashboardContainer__navigationItems {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 #dashboardContainer__sort {
-    display: flex;
-    padding-bottom: 12px;
+  display: flex;
+  padding-bottom: 12px;
 }
 
 #dashboardContainer__sort div {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
 #dashboardContainer__sort button {
-    background: none;
-    border: none;
-    color: white;
+  background: none;
+  border: none;
+  color: white;
 }
 
 #dashboardContainer__sort button:focus {
-    outline: none;
-}
-
-.col-xs-12 {
-    padding: 0 !important;
-    width: 95% !important;
+  outline: none;
 }
 
 .crudButtons button {
-    margin-right: 12px;
+  margin-right: 12px;
 }
 
 .loadingBar {
-    border-radius: 20px;
-    width: 100%;
-    height: 20px;
-    margin: 20px;
-    background: linear-gradient(270deg, #2e4848, #4a6969);
-    background-size: 400% 400%;
+  border-radius: 20px;
+  width: 100%;
+  height: 20px;
+  margin: 20px;
+  background: linear-gradient(270deg, #2e4848, #4a6969);
+  background-size: 400% 400%;
 
-    -webkit-animation: LoadingBarAnimation 1.25s ease infinite;
-    -moz-animation: LoadingBarAnimation 1.25s ease infinite;
-    animation: LoadingBarAnimation 1.25s ease infinite;
+  -webkit-animation: LoadingBarAnimation 1.25s ease infinite;
+  -moz-animation: LoadingBarAnimation 1.25s ease infinite;
+  animation: LoadingBarAnimation 1.25s ease infinite;
 }
 
 @-webkit-keyframes LoadingBarAnimation {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 @-moz-keyframes LoadingBarAnimation {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 @keyframes LoadingBarAnimation {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
-.noContent tr, .noContent td {
-    width: 100%;
+.noContent tr,
+.noContent td {
+  width: 100%;
 }
 
-.post:first-child, .post:nth-child(2n+3), .profile:first-child, .profile:nth-child(2n+3) {
-    background: #2e4848;
-}
-
-.row {
-    width: 100%;
+.post:first-child,
+.post:nth-child(2n + 3),
+.profile:first-child,
+.profile:nth-child(2n + 3) {
+  background: #2e4848;
 }
 
 .statusMessages {
-    background: white;
-    border-radius: 8px;
+  background: white;
+  border-radius: 8px;
 }
 
 .statusMessages span {
-    color: red;
-    font-weight: 500;
+  color: red;
+  font-weight: 500;
 }
 
 .statusMessages div {
-    margin: 6px 20px 12px 20px;
+  margin: 6px 20px 12px 20px;
 }
 
 // Hides domain notification from TinyMCE WYSIWYG editor
 .tox-notifications-container {
-    display: none;
+  display: none;
 }
