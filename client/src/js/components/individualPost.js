@@ -15,12 +15,39 @@ class IndividualPost extends Component {
         }
     }
     componentDidMount(){
-        if (this.props.posts !== []) {
+        const promise = new Promise((resolve, reject) => {
+            // Retries the promise if the information isn't loaded in fast enough
+            const retryPromise = () => {
+                setTimeout(() => {
+                    if (this.props.posts.length > 0) {
+                        resolve('Success');
+                    } else if (this.props.posts.length === 0) {
+                        retryPromise();
+                    } else {
+                        reject("Failed.");
+                    }
+                }, 25);
+            }
+            if (this.props.posts.length > 0) {
+                resolve('Success');
+            } else if (this.props.posts.length === 0) {
+                retryPromise();
+            } else {
+                reject("Failed.");
+            }
+        })
+        promise.then(() => {
             this.setState({
                 posts: this.props.posts
             });
-        }
-        this.addPostView();
+            this.setState({
+                post: this.state.posts.filter((post) => {
+                    return (
+                        post.post_dbid === JSON.parse(window.location.href.split("/")[window.location.href.split("/").length - 1])
+                    );
+                })[0]
+            });
+        })
     }
     /*componentWillUpdate(){
         if (
@@ -56,8 +83,36 @@ class IndividualPost extends Component {
                 }
             })
             .then(() => {
-                this.setState({
-                    post: this.state.posts.filter((post) => post.post_dbid === JSON.parse(window.location.href.split("/")[window.location.href.split("/").length - 1]))[0]
+                const promise = new Promise((resolve, reject) => {
+                    // Retries the promise if the information isn't loaded in fast enough
+                    const retryPromise = () => {
+                        setTimeout(() => {
+                            if (this.props.posts.length > 0) {
+                                resolve('Success');
+                            } else if (this.props.posts.length === 0) {
+                                retryPromise();
+                            } else {
+                                reject("Failed.");
+                            }
+                        }, 25);
+                    }
+                    if (this.props.posts.length > 0) {
+                        resolve('Success');
+                    } else if (this.props.posts.length === 0) {
+                        retryPromise();
+                    } else {
+                        reject("Failed.");
+                    }
+                });
+                promise.then(() => {
+                    this.setState({
+                        post: this.state.posts.filter((post) => {
+                            console.log("DBID:" + post.post_dbid, "Window ID:" + JSON.parse(window.location.href.split("/")[window.location.href.split("/").length - 1]));
+                            return (
+                                post.post_dbid === JSON.parse(window.location.href.split("/")[window.location.href.split("/").length - 1])
+                            );
+                        })[0]
+                    });
                 });
             });
         }
@@ -68,7 +123,7 @@ class IndividualPost extends Component {
                 <Header/>
                 <div id="container" className="container">
                     {
-                        this.state.post && this.state.post !== '' ?
+                        this.state.post ?
                         <div key={this.state.post.post_dbid}>
                             <div id="individualPostMetaArea">
                                 <h2 id="individualPostTitle">{this.state.post.post_title}</h2>

@@ -1,6 +1,6 @@
 {
   "name": "react-node-sql-blog-template",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "sql-express-react-node blog application",
   "main": "server.js",
   "scripts": {

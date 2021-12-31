@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
 
 import DashboardNavigation from './DashboardNavigation';
@@ -11,9 +10,6 @@ const removeAuthor = ({ users_id } = {}) => ({
     type: 'REMOVE_AUTHOR',
     users_id
 });
-
-ReactGA.initialize('G-RTLFZS92ZM');
-ReactGA.pageview(window.location.pathname + window.location.search);
 
 class DashboardViewProfiles extends Component {
     constructor(props){

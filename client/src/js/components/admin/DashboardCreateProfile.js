@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactGA from 'react-ga';
 
 import { connect } from 'react-redux';
 import { addAuthor } from '../../actions/authors';
@@ -8,9 +7,6 @@ import createProfileValidation from './scripts/createProfileValidation';
 
 const bcrypt = require('bcryptjs');
 var salt = bcrypt.genSaltSync(10);
-
-ReactGA.initialize('G-RTLFZS92ZM');
-ReactGA.pageview(window.location.pathname + window.location.search);
 
 class DashboardCreateProfile extends Component {
     constructor(props){

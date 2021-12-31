@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-import ReactGA from 'react-ga';
 import { Editor } from '@tinymce/tinymce-react';
 
 import { connect } from 'react-redux';
 import { editPost } from '../../actions/posts';
 import DashboardNavigation from './DashboardNavigation';
-
-ReactGA.initialize('G-RTLFZS92ZM');
-ReactGA.pageview(window.location.pathname + window.location.search);
 
 class DashboardEditPost extends Component {
     constructor(props){

@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
 
 import DashboardNavigation from './DashboardNavigation';
 import { editTheme } from '../../actions/theme';
-
-ReactGA.initialize('G-RTLFZS92ZM');
-ReactGA.pageview(window.location.pathname + window.location.search);
 
 class DashboardEditTheme extends Component {
     constructor(props){

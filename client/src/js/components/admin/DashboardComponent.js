@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import DashboardNavigation from './DashboardNavigation';
 
 const momentTZ = require('moment-timezone');
-
-ReactGA.initialize('G-RTLFZS92ZM');
-ReactGA.pageview(window.location.pathname + window.location.search);
 
 class DashboardComponent extends Component {
     constructor(props){
@@ -55,7 +51,6 @@ class DashboardComponent extends Component {
                         this.setState({
                             postAmount: data[0].theme_postAmount
                         });
-
                         const promise = new Promise((resolve, reject) => {
                             // Retries the promise if the information isn't loaded in fast enough
                             const retryPromise = () => {
@@ -198,7 +193,7 @@ class DashboardComponent extends Component {
                                                 return (
                                                     <tr className="postRow" key={post.post_id}>
                                                         <td>
-                                                            <Link to={`/post/${post.post_id}`}>{`Post ID: ${post.post_id}) `}{post.post_title}</Link>
+                                                            <Link to={`/post/${post.post_dbid}`}>{post.post_title}</Link>
                                                         </td>
                                                         <td>
                                                             <Link to={`/author/${post.post_author}`}><span>{post.post_author}</span></Link>
@@ -213,18 +208,17 @@ class DashboardComponent extends Component {
                                                     </tr>
                                                 )
                                             }) : <tr className="row">
-                                                        <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                        <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                        <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                        <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                        <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                        <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                        <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                        <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                        <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                        <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                    <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                    <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                    <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                    <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                    <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                    <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                    <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                    <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                    <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                                    <td className="col-xs-12 col-md-12 loadingBar"></td>
                                                 </tr>
-                                            
                                         }
                                 </tbody>
                             </table>

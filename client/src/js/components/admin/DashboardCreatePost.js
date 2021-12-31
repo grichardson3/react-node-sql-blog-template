@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-import ReactGA from 'react-ga';
 import { Editor } from '@tinymce/tinymce-react';
 
 import { connect } from 'react-redux';
 import { addPost } from '../../actions/posts';
 import DashboardNavigation from './DashboardNavigation';
 import createPostValidation from './scripts/createPostValidation';
-
-ReactGA.initialize('G-RTLFZS92ZM');
-ReactGA.pageview(window.location.pathname + window.location.search);
 
 let thing = '';
 

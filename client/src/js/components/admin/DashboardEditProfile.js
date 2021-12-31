@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
 import { editAuthor } from '../../actions/authors';
 import { editPostUsername } from '../../actions/posts';
 
 import DashboardNavigation from './DashboardNavigation';
-
-ReactGA.initialize('G-RTLFZS92ZM');
-ReactGA.pageview(window.location.pathname + window.location.search);
 
 class DashboardEditProfile extends Component {
     constructor(props){

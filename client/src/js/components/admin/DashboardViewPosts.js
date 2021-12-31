@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
 
 import DashboardNavigation from './DashboardNavigation';
 import { removePost } from '../../actions/posts';
 
 const momentTZ = require('moment-timezone');
-ReactGA.initialize('G-RTLFZS92ZM');
-ReactGA.pageview(window.location.pathname + window.location.search);
 
 class DashboardViewPosts extends Component {
     constructor(props){
