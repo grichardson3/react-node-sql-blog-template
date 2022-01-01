@@ -35,6 +35,9 @@ class LoginPage extends Component {
                             }
                         })
                         .then((response) => {
+
+                            // Checks HTTP status code
+
                             if (response.status >= 500) {
                                 throw new Error("Server error.");
                             } else if (response.status < 500 && response.status >= 400) {
@@ -72,6 +75,9 @@ class LoginPage extends Component {
                                             body: JSON.stringify(data)
                                         })
                                         .then((res) => {
+
+                                            // Checks HTTP status code before logging in
+
                                             if (res.status >= 500) {
                                                 throw new Error("Server error");
                                             } else if (res.status < 500 && res.status >= 400) {

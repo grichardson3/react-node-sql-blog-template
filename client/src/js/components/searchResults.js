@@ -25,6 +25,9 @@ class SearchResults extends Component {
             }
         })
         .then((response) => {
+
+            // Checks HTTP status code
+
             if (response.status >= 500) {
                 throw new Error("Server error.");
             } else if (response.status < 500 && response.status >= 400) {

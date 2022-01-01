@@ -10,6 +10,9 @@ class TagBrowser extends Component {
         }
         fetch('/tagsFromPosts')
         .then((response) => {
+
+            // Checks HTTP status code
+
             if (response.status >= 500) {
                 throw new Error("Server error.");
             } else if (response.status < 500 && response.status >= 400) {

@@ -42,7 +42,10 @@ class DashboardViewPosts extends Component {
                     posts: this.state.posts.filter((post) => post.post_title.toLowerCase().includes(searchInput.value.toLowerCase()))
                 }));
             }
-        })
+        });
+
+        // fetches authentication token from server 
+
         fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
             method: 'GET',
             headers: {
@@ -51,6 +54,9 @@ class DashboardViewPosts extends Component {
             }
         })
         .then((response) => {
+
+            // Checks HTTP status code
+
             if (response.status >= 500) {
                 throw new Error("Server error.");
             } else if (response.status < 500 && response.status >= 400) {
@@ -68,6 +74,9 @@ class DashboardViewPosts extends Component {
                 });
                 fetch('/totalPostAmount')
                 .then((response) => {
+
+                    // Checks HTTP status code
+
                     if (response.status >= 500) {
                         throw new Error("Server error.");
                     } else if (response.status < 500 && response.status >= 400) {
@@ -125,6 +134,9 @@ class DashboardViewPosts extends Component {
             body: JSON.stringify({ "postid": value })
         })
         .then((response) => {
+
+            // Checks HTTP status code
+
             if (response.status >= 500) {
                 throw new Error("Server error.");
             } else if (response.status < 500 && response.status >= 400) {
@@ -143,6 +155,9 @@ class DashboardViewPosts extends Component {
             body: JSON.stringify(this.state.posts.filter((post) => value !== post.post_dbid))
         })
         .then((response) => {
+
+            // Checks HTTP status code
+
             if (response.status >= 500) {
                 throw new Error("Server error.");
             } else if (response.status < 500 && response.status >= 400) {
@@ -159,6 +174,9 @@ class DashboardViewPosts extends Component {
             }
         })
         .then((response) => {
+
+            // Checks HTTP status code
+
             if (response.status >= 500) {
                 throw new Error("Server error.");
             } else if (response.status < 500 && response.status >= 400) {
@@ -226,7 +244,6 @@ class DashboardViewPosts extends Component {
         }
     }
     render(){
-        console.log(this.state.posts);
         return (
             <div id="dashboard">
                 <DashboardNavigation history={this.props.history}/>
@@ -267,14 +284,14 @@ class DashboardViewPosts extends Component {
                                             return (
                                                  <tr className="post" key={post.post_id}>
                                                     <td>
-                                                        <Link to={`/post/${post.post_id}`}><span>{post.post_title}</span></Link>
+                                                        <Link to={`/post/${post.post_dbid}`}><span>{post.post_title}</span></Link>
                                                     </td>
                                                     <td>
                                                         <Link to={`/author/${post.post_author}`}><span>{post.post_author}</span></Link>
                                                     </td>
                                                     <td>{momentTZ.unix(post.post_date).tz("America/Toronto").format('MMMM Do YYYY, h:mm:ss a')} (E.S.T)</td>
                                                     <td className="crudButtons">
-                                                        <Link to={`/editPost/${post.post_id}`}>
+                                                        <Link to={`/editPost/${post.post_dbid}`}>
                                                             <button className="btn btn-sm btn-secondary">Edit Post</button>
                                                         </Link>
                                                         <button 
@@ -284,17 +301,10 @@ class DashboardViewPosts extends Component {
                                                     </td>
                                                 </tr>
                                             )
-                                        }) : <tr className="row">
-                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                        }) : <tr>
+                                                <td>
+                                                    <h4 className='dashboardStatusText'>No results found.</h4>
+                                                </td>
                                             </tr>
                                     }
                                 </tbody>

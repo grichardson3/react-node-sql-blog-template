@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { addAuthor } from '../../actions/authors';
@@ -16,6 +17,9 @@ class DashboardCreateProfile extends Component {
         }
     }
     componentDidMount(){
+
+        // fetches authentication token from server 
+
         fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
             method: 'GET',
             headers: {
@@ -24,6 +28,9 @@ class DashboardCreateProfile extends Component {
             }
         })
         .then((response) => {
+
+            // Checks HTTP status code
+
             if (response.status >= 500) {
                 throw new Error("Server error.");
             } else if (response.status < 500 && response.status >= 400) {
@@ -48,7 +55,12 @@ class DashboardCreateProfile extends Component {
                 <DashboardNavigation/>
                 <div id="dashboardContainer" className="container">
                     <div id="dashboardContainer__main">
-                        <h1>Create Profile</h1>
+                        <div id="dashboardContainer__createAndEditHeader">
+                            <h1>Create Profile</h1>
+                            <Link to={'/dashboard'}>
+                                <button className='btn btn-danger'>Cancel</button>
+                            </Link>
+                        </div>
                         <span>Form fields with a <b>*</b> are required in order for your profile to be created</span>
                         <br></br><br></br>
                         <div className="statusMessages"></div>
@@ -115,10 +127,16 @@ class DashboardCreateProfile extends Component {
                                                     users_facebook: document.querySelector("#facebook").value,
                                                     users_twitter: document.querySelector("#twitter").value,
                                                     users_linkedin: document.querySelector("#linkedin").value,
+
+                                                    // Data value for profile pictures currently only accepts 
+                                                    // links that aren't blocked by CORS Policy.
                                                     users_profilepic: document.querySelector("#profilepic").value,
+
                                                     users_bio: document.querySelector("#bio").value,
                                                 }
                                                 const validationStatus = createProfileValidation(data, this.props);
+                                                
+                                                // Checks to see if there are no validation errors.
                                                 if (validationStatus.length === 0) {
                                                     const hash = bcrypt.hashSync(data.users_password, salt);
                                                     data.users_password = hash;
@@ -132,6 +150,9 @@ class DashboardCreateProfile extends Component {
                                                         body: JSON.stringify(data)
                                                     })
                                                     .then((response) => {
+
+                                                        // Checks HTTP status code before creating user
+
                                                         if (response.status >= 200 && response.status < 400) {
                                                             this.props.dispatch(addAuthor(data));
                                                             this.props.history.push("/viewProfiles");
@@ -153,6 +174,9 @@ class DashboardCreateProfile extends Component {
                                                         }
                                                     })
                                                     .then((response) => {
+
+                                                        // Checks HTTP status code
+
                                                         if (response.status >= 500) {
                                                             throw new Error("Server error.");
                                                         } else if (response.status < 500 && response.status >= 400) {

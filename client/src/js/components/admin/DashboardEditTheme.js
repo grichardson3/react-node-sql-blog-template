@@ -12,6 +12,9 @@ class DashboardEditTheme extends Component {
         }
     }
     componentDidMount(){
+
+        // fetches authentication token from server 
+
         fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
             method: 'GET',
             headers: {
@@ -20,6 +23,9 @@ class DashboardEditTheme extends Component {
             }
         })
         .then((response) => {
+
+            // Checks HTTP status code
+
             if (response.status >= 500) {
                 throw new Error("Server error.");
             } else if (response.status < 500 && response.status >= 400) {
@@ -118,6 +124,9 @@ class DashboardEditTheme extends Component {
                                                         body: JSON.stringify(data)
                                                     })
                                                     .then((response) => {
+
+                                                        // Checks HTTP status code before editing theme
+
                                                         if (response.status >= 500) {
                                                             throw new Error("Server error.");
                                                         } else if (response.status < 500 && response.status >= 400) {

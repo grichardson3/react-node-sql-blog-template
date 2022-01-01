@@ -33,6 +33,9 @@ class FilterByAuthor extends Component {
             body: JSON.stringify({ "user": window.location.href.split("/")[window.location.href.split("/").length - 1] })
         })
         .then((response) => {
+
+            // Checks HTTP status code
+
             if (response.status >= 500) {
                 throw new Error("Server error.");
             } else if (response.status < 500 && response.status >= 400) {

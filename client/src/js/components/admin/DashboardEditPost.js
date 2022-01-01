@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Editor } from '@tinymce/tinymce-react';
 
 import { connect } from 'react-redux';
@@ -13,6 +14,9 @@ class DashboardEditPost extends Component {
         }
     }
     componentDidMount(){
+
+        // fetches authentication token from server
+
         fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
             method: 'GET',
             headers: {
@@ -21,6 +25,9 @@ class DashboardEditPost extends Component {
             }
         })
         .then((response) => {
+
+            // Checks HTTP status code
+
             if (response.status >= 500) {
                 throw new Error("Server error.");
             } else if (response.status < 500 && response.status >= 400) {
@@ -45,7 +52,12 @@ class DashboardEditPost extends Component {
                 <DashboardNavigation/>
                 <div id="dashboardContainer" className="container">
                     <div id="dashboardContainer__main">
+                    <div id="dashboardContainer__createAndEditHeader">
                         <h1>Edit Post</h1>
+                        <Link to={'/dashboard'}>
+                            <button className='btn btn-danger'>Cancel</button>
+                        </Link>
+                    </div>
                         {
                             this.state.authenticated ?
                             // eslint-disable-next-line
@@ -108,6 +120,9 @@ class DashboardEditPost extends Component {
                                                                 body: JSON.stringify(data)
                                                             })
                                                             .then((response) => {
+
+                                                                // Checks HTTP status code before editing post
+
                                                                 if (response.status >= 200 && response.status < 400) {
                                                                     localStorage.removeItem("post_id");
                                                                     this.props.dispatch(editPost(post.post_id, data));

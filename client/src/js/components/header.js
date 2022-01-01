@@ -25,6 +25,12 @@ class Header extends Component {
                     </div>
                     
                     <button className="btn btn-secondary" onClick={() => {
+
+                        // fetches authentication token from server
+                        // This fetch call checks to see if you're logged in or not
+                        // if you are, then clicking the button will redirect you to the admin deshboard
+                        // if not, then it will redirect you to the login page
+
                         fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
                             method: 'GET',
                             headers: {

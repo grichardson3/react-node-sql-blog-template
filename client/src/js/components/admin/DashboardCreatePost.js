@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Editor } from '@tinymce/tinymce-react';
 
 import { connect } from 'react-redux';
@@ -50,6 +51,9 @@ class DashboardCreatePost extends Component {
                 );
             });
         }
+
+        // fetches authentication token from server 
+
         fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
             method: 'GET',
             headers: {
@@ -58,6 +62,9 @@ class DashboardCreatePost extends Component {
             }
         })
         .then((response) => {
+
+            // Checks HTTP status code
+
             if (response.status >= 500) {
                 throw new Error("Server error.");
             } else if (response.status < 500 && response.status >= 400) {
@@ -67,7 +74,6 @@ class DashboardCreatePost extends Component {
             }
         })
         .then((userData) => {
-            console.log(userData);
             if (!sessionStorage.getItem("sessionKey")) {
                 this.props.history.push("/");
             } else if (sessionStorage.getItem("sessionKey") !== userData[0].users_sessionKey){
@@ -86,7 +92,12 @@ class DashboardCreatePost extends Component {
                 <DashboardNavigation/>
                 <div id="dashboardContainer" className="container">
                     <div id="dashboardContainer__main">
-                        <h1>Create Post</h1>
+                        <div id="dashboardContainer__createAndEditHeader">
+                            <h1>Create Post</h1>
+                            <Link to={'/dashboard'}>
+                                <button className='btn btn-danger'>Cancel</button>
+                            </Link>
+                        </div>
                         <span>Form fields with a <b>*</b> are required in order for your profile to be created</span>
                         <br></br><br></br>
                         <div className="statusMessages"></div>
@@ -150,6 +161,9 @@ class DashboardCreatePost extends Component {
                                                         body: JSON.stringify(data)
                                                     })
                                                     .then((response) => {
+
+                                                        // Checks HTTP status code before adding post
+
                                                         if (response.status >= 200 && response.status < 400) {
                                                             localStorage.removeItem("post_id");
                                                             this.props.dispatch(addPost(data));
@@ -190,6 +204,9 @@ class DashboardCreatePost extends Component {
                                                         }
                                                     })
                                                     .then((response) => {
+
+                                                        // Checks HTTP status code
+
                                                         if (response.status >= 500) {
                                                             throw new Error("Server error.");
                                                         } else if (response.status < 500 && response.status >= 400) {

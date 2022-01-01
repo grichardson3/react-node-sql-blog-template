@@ -46,7 +46,10 @@ class DashboardViewProfiles extends Component {
                     users: this.state.users.filter((user) => user.users_username.toLowerCase().includes(searchInput.value.toLowerCase()))
                 }));
             }
-        })
+        });
+
+        // fetches authentication token from server 
+
         fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
             method: 'GET',
             headers: {
@@ -55,6 +58,9 @@ class DashboardViewProfiles extends Component {
             }
         })
         .then((response) => {
+
+            // Checks HTTP status code
+
             if (response.status >= 500) {
                 throw new Error("Server error.");
             } else if (response.status < 500 && response.status >= 400) {
@@ -73,6 +79,9 @@ class DashboardViewProfiles extends Component {
                     })
                     fetch('/totalUserAmount')
                     .then((response) => {
+
+                        // Checks HTTP status code
+
                         if (response.status >= 500) {
                             throw new Error("Server error.");
                         } else if (response.status < 500 && response.status >= 400) {
@@ -136,6 +145,9 @@ class DashboardViewProfiles extends Component {
             body: JSON.stringify(data)
         })
         .then((response) => {
+
+            // Checks HTTP status code
+
             if (response.status >= 500) {
                 throw new Error("Server error.");
             } else if (response.status < 500 && response.status >= 400) {
@@ -152,6 +164,9 @@ class DashboardViewProfiles extends Component {
             }
         })
         .then((response) => {
+
+            // Checks HTTP status code
+
             if (response.status >= 500) {
                 throw new Error("Server error.");
             } else if (response.status < 500 && response.status >= 400) {
@@ -317,17 +332,10 @@ class DashboardViewProfiles extends Component {
                                                     </td>
                                                 </tr>
                                             )
-                                        }) : <tr className="row">
-                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
-                                                <td className="col-xs-12 col-md-12 loadingBar"></td>
+                                        }) : <tr>
+                                                <td>
+                                                    <h4 className='dashboardStatusText'>No results found.</h4>
+                                                </td>
                                             </tr>
                                     }
                                 </tbody>

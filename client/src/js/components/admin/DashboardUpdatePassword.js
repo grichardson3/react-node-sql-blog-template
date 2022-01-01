@@ -15,6 +15,9 @@ class DashboardUpdatePassword extends Component {
         }
     }
     componentDidMount(){
+
+        // fetches authentication token from server
+
         fetch(`/singleUser/${sessionStorage.getItem("usernameOrEmail")}`, {
             method: 'GET',
             headers: {
@@ -23,6 +26,9 @@ class DashboardUpdatePassword extends Component {
             }
         })
         .then(response => {
+
+            // Checks HTTP status code
+
             if (response.status >= 500) {
                 throw new Error("Server error.");
             } else if (response.status < 500 && response.status >= 400) {
@@ -90,6 +96,9 @@ class DashboardUpdatePassword extends Component {
                                                             body: JSON.stringify(data)
                                                         })
                                                         .then((response) => {
+
+                                                            // Checks HTTP status code before updating user password
+
                                                             if (response.status >= 200 && response.status < 400) {
                                                                 // this.props.dispatch(editAuthor(data));
                                                                 this.props.history.push("/viewProfiles");

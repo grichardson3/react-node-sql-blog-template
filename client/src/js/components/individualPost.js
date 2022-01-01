@@ -74,6 +74,9 @@ class IndividualPost extends Component {
                 body: JSON.stringify(data)
             })
             .then((response) => {
+
+                // Checks HTTP status code
+
                 if (response.status >= 500) {
                     throw new Error("Server error.");
                 } else if (response.status < 500 && response.status >= 400) {
@@ -107,7 +110,6 @@ class IndividualPost extends Component {
                 promise.then(() => {
                     this.setState({
                         post: this.state.posts.filter((post) => {
-                            console.log("DBID:" + post.post_dbid, "Window ID:" + JSON.parse(window.location.href.split("/")[window.location.href.split("/").length - 1]));
                             return (
                                 post.post_dbid === JSON.parse(window.location.href.split("/")[window.location.href.split("/").length - 1])
                             );

@@ -33,6 +33,7 @@ import DashboardViewProfiles from './js/components/admin/DashboardViewProfiles';
 import DashboardUpdatePassword from './js/components/admin/DashboardUpdatePassword';
 
 // *** Polyfills for ES6 Functions & IE11 *** //
+
 import smoothscroll from 'smoothscroll-polyfill';
 import 'polyfill-array-includes';
 import 'react-app-polyfill/ie9';
@@ -72,8 +73,11 @@ class App extends Component {
         this.count = 0;
     }
     componentDidMount(){
-        fetch('/theme')
+        fetch('/theme') // Currently not being used in project
         .then((response) => {
+
+            // Checks HTTP status code
+
             if (response.status >= 500) {
                 throw new Error("Server error.");
             } else if (response.status < 500 && response.status >= 400) {
@@ -101,6 +105,9 @@ class App extends Component {
         });
         fetch('/posts')
         .then((response) => {
+
+            // Checks HTTP status code
+
             if (response.status >= 500) {
                 throw new Error("Server error.");
             } else if (response.status < 500 && response.status >= 400) {
@@ -130,6 +137,9 @@ class App extends Component {
         });
         fetch('/users')
         .then((response) => {
+
+            // Checks HTTP status code
+
             if (response.status >= 500) {
                 throw new Error("Server error.");
             } else if (response.status < 500 && response.status >= 400) {

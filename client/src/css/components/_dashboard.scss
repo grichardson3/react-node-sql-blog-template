@@ -23,6 +23,12 @@
   width: 100%;
 }
 
+#dashboardContainer__createAndEditHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .dashboardContainer__dataHeader {
   display: flex;
   align-items: center;
