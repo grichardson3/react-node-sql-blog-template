@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import Header from './header';
 import Footer from './footer';
+import DefaultImageData from "./img/defImgData";
 
 class IndividualPost extends Component {
     constructor(props){
@@ -47,7 +48,7 @@ class IndividualPost extends Component {
                     );
                 })[0]
             });
-        })
+        });
     }
     /*componentWillUpdate(){
         if (
@@ -135,8 +136,8 @@ class IndividualPost extends Component {
                                         <Link to={`/author/${this.state.post.post_author}`}><span id="individualPostAuthorLink">{this.state.post.post_author}</span></Link>
                                     </div>
                                     <div id="individualPostDateViews">
-                                        <span id="individualPostDate">Date Posted: {moment.unix(this.state.post.post_date).format("MMM Do, YYYY")}</span>
-                                    </div>
+                                    <span id="individualPostDate">Date Posted: {moment.unix(this.state.post.post_date).format("MMM Do, YYYY")}</span>
+                                </div>
                                 </div>
                                 {
                                     this.state.post.post_featurephoto ?
@@ -146,7 +147,13 @@ class IndividualPost extends Component {
                                             alt={this.state.post.post_title}
                                             src={this.state.post.post_featurephoto}
                                         />
-                                    </div> : null
+                                    </div> : <div>
+                                        <img
+                                            title={this.state.post.post_title}
+                                            alt={this.state.post.post_title}
+                                            src={this.state.post.post_featurephoto}
+                                        />
+                                    </div>
                                 }
                                 <article id="individualPostArticle">{this.state.post.post_content}</article>
                                 <div id="individualPostTags">

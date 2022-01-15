@@ -3,7 +3,7 @@ const mysql = require('mysql');
 const cors = require('cors');
 
 const app = express();
-const PORT = 8000;
+const PORT = 8080;
 
 app.use(express.json({limit: '25mb'}));
 app.use(cors({ origin: '*' }));
